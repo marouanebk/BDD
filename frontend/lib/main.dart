@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/MainScreen/presentation/screens/baseScreen.dart';
 import 'package:frontend/authentication/presentation/screens/loginPage.dart';
 import 'package:frontend/authentication/presentation/screens/registerPage.dart';
 
@@ -14,10 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-  
         primarySwatch: Colors.blue,
       ),
-      home: const RegisterPage(),
+      debugShowCheckedModeBanner: false,
+      home: const BaseScreen(),
     );
   }
 }

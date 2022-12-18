@@ -96,7 +96,7 @@ Widget createAccountText() {
           style: TextStyle(
             fontFamily: AppFonts.mainFont,
             fontWeight: FontWeight.w500,
-            color: Color(AppColros.grey),
+            color: Color(AppColors.grey),
             fontSize: 14,
           ),
         ),
@@ -144,7 +144,7 @@ Widget registerButton() {
           border: Border.all(
             color: const Color(0xFFBEC5D1),
           ),
-          color: Color(AppColros.blue)),
+          color: Color(AppColors.blue)),
       child: const Center(
         child: Text(
           'Create Account',
@@ -204,7 +204,7 @@ Widget registerPage() {
           wordSpacing: 1,
           letterSpacing: 1.2,
           fontWeight: FontWeight.w600,
-          color: Color(AppColros.grey),
+          color: Color(AppColors.grey),
         ),
         children: [
           TextSpan(
@@ -214,7 +214,7 @@ Widget registerPage() {
               wordSpacing: 1,
               letterSpacing: 1.2,
               fontWeight: FontWeight.w600,
-              color: Color(AppColros.blue),
+              color: Color(AppColors.blue),
             ),
           )
         ],
