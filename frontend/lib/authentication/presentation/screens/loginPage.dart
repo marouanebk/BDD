@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/authentication/presentation/screens/registerPage.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 
@@ -8,62 +9,70 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Spacer(),
-              Center(
-                child: Image.asset('assets/images/logo.png'),
-              ),
-              const SizedBox(
-                height: 63,
-              ),
-              createAccountText(),
-              const SizedBox(
-                height: 34,
-              ),
-              fieldController(),
-              const SizedBox(
-                height: 10,
-              ),
-              fieldController(),
-              const SizedBox(
-                height: 10,
-              ),
-              fieldController(),
-              const SizedBox(
-                height: 83,
-              ),
-              registerButton(),
-              const SizedBox(
-                height: 41,
-              ),
-              const Center(
-                child: Text(
-                  'Or With',
-                  style: TextStyle(
-                    fontFamily: AppFonts.mainFont,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    fontSize: 14,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Spacer(),
+                Center(
+                  child: Image.asset('assets/images/logo.png'),
+                ),
+                const SizedBox(
+                  height: 63,
+                ),
+                createAccountText(),
+                const SizedBox(
+                  height: 34,
+                ),
+                fieldController(),
+                const SizedBox(
+                  height: 10,
+                ),
+                fieldController(),
+                const SizedBox(
+                  height: 10,
+                ),
+                fieldController(),
+                const SizedBox(
+                  height: 83,
+                ),
+                registerButton(),
+                const SizedBox(
+                  height: 41,
+                ),
+                const Center(
+                  child: Text(
+                    'Or With',
+                    style: TextStyle(
+                      fontFamily: AppFonts.mainFont,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              registerGoogle(),
-              const SizedBox(
-                height: 33,
-              ),
-              registerPage(),
-              const SizedBox(
-                height: 33,
-              ),
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                registerGoogle(),
+                const SizedBox(
+                  height: 33,
+                ),
+                registerPage(context),
+                const SizedBox(
+                  height: 33,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -194,30 +203,37 @@ Widget registerGoogle() {
   );
 }
 
-Widget registerPage() {
+Widget registerPage(context) {
   return Center(
-    child: RichText(
-      text: TextSpan(
-        text: "Don’t have an account ? ",
-        style: TextStyle(
-          fontSize: 14.0,
-          wordSpacing: 1,
-          letterSpacing: 1.2,
-          fontWeight: FontWeight.w600,
-          color: Color(AppColors.grey),
+    child: GestureDetector(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          builder: (_) => const RegisterPage(),
         ),
-        children: [
-          TextSpan(
-            text: "Log in",
-            style: TextStyle(
-              fontSize: 14.0,
-              wordSpacing: 1,
-              letterSpacing: 1.2,
-              fontWeight: FontWeight.w600,
-              color: Color(AppColors.blue),
-            ),
-          )
-        ],
+      ),
+      child: RichText(
+        text: TextSpan(
+          text: "Don’t have an account ? ",
+          style: TextStyle(
+            fontSize: 14.0,
+            wordSpacing: 1,
+            letterSpacing: 1.2,
+            fontWeight: FontWeight.w600,
+            color: Color(AppColors.grey),
+          ),
+          children: [
+            TextSpan(
+              text: "Log in",
+              style: TextStyle(
+                fontSize: 14.0,
+                wordSpacing: 1,
+                letterSpacing: 1.2,
+                fontWeight: FontWeight.w600,
+                color: Color(AppColors.blue),
+              ),
+            )
+          ],
+        ),
       ),
     ),
   );

@@ -11,7 +11,7 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  var _controller = PersistentTabController(initialIndex: 0);
+  var controller = PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreens() {
     return [
@@ -62,7 +62,7 @@ class _BaseScreenState extends State<BaseScreen> {
   Widget build(BuildContext context) {
     return PersistentTabView(
       context,
-      controller: _controller,
+      controller: controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,

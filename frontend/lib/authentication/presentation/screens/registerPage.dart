@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/MainScreen/presentation/screens/baseScreen.dart';
+import 'package:frontend/authentication/presentation/screens/loginPage.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'dart:math' as math;
@@ -14,62 +16,70 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Spacer(),
-              Center(
-                child: Image.asset('assets/images/logo.png'),
-              ),
-              const SizedBox(
-                height: 63,
-              ),
-              welcomeText(),
-              const SizedBox(
-                height: 33,
-              ),
-              fieldController("Full Name "),
-              const SizedBox(
-                height: 10,
-              ),
-              fieldController("Password"),
-              const SizedBox(
-                height: 18,
-              ),
-              forgotPassword(),
-              const SizedBox(
-                height: 126,
-              ),
-              loginButton(),
-              const SizedBox(
-                height: 41,
-              ),
-              const Center(
-                child: Text(
-                  'Or With',
-                  style: TextStyle(
-                    fontFamily: AppFonts.mainFont,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    fontSize: 14,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Spacer(),
+                Center(
+                  child: Image.asset('assets/images/logo.png'),
+                ),
+                const SizedBox(
+                  height: 63,
+                ),
+                welcomeText(),
+                const SizedBox(
+                  height: 33,
+                ),
+                fieldController("Full Name "),
+                const SizedBox(
+                  height: 10,
+                ),
+                fieldController("Password"),
+                const SizedBox(
+                  height: 18,
+                ),
+                forgotPassword(),
+                const SizedBox(
+                  height: 126,
+                ),
+                loginButton(),
+                const SizedBox(
+                  height: 41,
+                ),
+                const Center(
+                  child: Text(
+                    'Or With',
+                    style: TextStyle(
+                      fontFamily: AppFonts.mainFont,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              loginGoogle(),
-              const SizedBox(
-                height: 33,
-              ),
-              loginPage(),
-              const SizedBox(
-                height: 33,
-              ),
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                loginGoogle(context),
+                const SizedBox(
+                  height: 33,
+                ),
+                loginPage(context),
+                const SizedBox(
+                  height: 33,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -194,10 +204,13 @@ Widget loginButton() {
   );
 }
 
-Widget loginGoogle() {
+Widget loginGoogle(context) {
   return InkWell(
-    onTap: () => {},
-    child: Container(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          builder: (_) => const BaseScreen(),
+        ),
+      ),    child: Container(
         width: double.infinity,
         height: 45,
         decoration: BoxDecoration(
@@ -228,30 +241,37 @@ Widget loginGoogle() {
   );
 }
 
-Widget loginPage() {
+Widget loginPage(context) {
   return Center(
-    child: RichText(
-      text: TextSpan(
-        text: "Don’t have an account ? ",
-        style: TextStyle(
-          fontSize: 14.0,
-          wordSpacing: 1,
-          letterSpacing: 1.2,
-          fontWeight: FontWeight.w600,
-          color: Color(AppColors.grey),
+    child: GestureDetector(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          builder: (_) => const LoginPage(),
         ),
-        children: [
-          TextSpan(
-            text: "Log in",
-            style: TextStyle(
-              fontSize: 14.0,
-              wordSpacing: 1,
-              letterSpacing: 1.2,
-              fontWeight: FontWeight.w600,
-              color: Color(AppColors.blue),
-            ),
-          )
-        ],
+      ),
+      child: RichText(
+        text: TextSpan(
+          text: "Don’t have an account ? ",
+          style: TextStyle(
+            fontSize: 14.0,
+            wordSpacing: 1,
+            letterSpacing: 1.2,
+            fontWeight: FontWeight.w600,
+            color: Color(AppColors.grey),
+          ),
+          children: [
+            TextSpan(
+              text: "Log in",
+              style: TextStyle(
+                fontSize: 14.0,
+                wordSpacing: 1,
+                letterSpacing: 1.2,
+                fontWeight: FontWeight.w600,
+                color: Color(AppColors.blue),
+              ),
+            )
+          ],
+        ),
       ),
     ),
   );
