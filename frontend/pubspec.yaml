@@ -30,10 +30,17 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  file_picker: ^5.2.4
   flutter:
     sdk: flutter
+  flutter_chat_ui: ^1.6.6
+  image_picker: ^0.8.6
+  mime: ^1.0.3
+  open_filex: ^4.3.2
+  path_provider: ^2.0.11
   percent_indicator: ^4.2.2
   persistent_bottom_nav_bar: ^5.0.2
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -56,7 +63,7 @@ flutter:
     - assets/images/googleLogo.png
     - assets/images/bg.png
     - assets/images/pdf.png
-    
+    - assets/messages.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

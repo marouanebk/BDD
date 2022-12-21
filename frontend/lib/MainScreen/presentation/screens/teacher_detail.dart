@@ -17,7 +17,7 @@ class TeacherDetailScreen extends StatelessWidget {
             ClipPath(
               clipper: CustomShape(),
               child: Container(
-                height: 150,
+                height: 200,
                 width: MediaQuery.of(context).size.width,
                 color: Color(AppColors.blue),
               ),
@@ -101,9 +101,8 @@ class CustomShape extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0, size.height);
-    path.quadraticBezierTo(
-        size.width / 2, size.height - 100, size.width, size.height);
+    path.lineTo(0, 100);
+    path.quadraticBezierTo(size.width / 2, 220, size.width, 100);
     path.lineTo(size.width, 0);
     path.close();
     return path;
@@ -120,6 +119,7 @@ Widget teacherHeader(context) {
     padding: const EdgeInsets.only(top: 50.0, left: 20, right: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           width: 54,
@@ -136,14 +136,20 @@ Widget teacherHeader(context) {
           ),
         ),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             Container(
               height: 105,
               width: 105,
               decoration: const BoxDecoration(
                   shape: BoxShape.circle, color: Colors.orange),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             const Text(
               "Djamila merid",
@@ -157,7 +163,10 @@ Widget teacherHeader(context) {
             ),
           ],
         ),
-        const SizedBox(),
+        const SizedBox(
+          width: 54,
+          height: 38,
+        ),
       ],
     ),
   );
