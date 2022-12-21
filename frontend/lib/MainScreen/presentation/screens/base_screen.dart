@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/MainScreen/presentation/screens/mainpage.dart';
+import 'package:frontend/chat/presentation/screens/all_chat_screen.dart';
 import 'package:frontend/cores/const/colors.dart';
+import 'package:frontend/notifications/presentation/screens/notifications.dart';
+import 'package:frontend/to-dos/presentation/screens/todos.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -16,9 +19,9 @@ class _BaseScreenState extends State<BaseScreen> {
   List<Widget> _buildScreens() {
     return [
       const MainScreen(),
-      const MainScreen(),
-      const MainScreen(),
-      const MainScreen(),
+      const AllChatScreen(),
+      const ToDos(),
+      const Notifications(),
       const MainScreen(),
     ];
   }

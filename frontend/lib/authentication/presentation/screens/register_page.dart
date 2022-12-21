@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/authentication/presentation/screens/registerPage.dart';
+import 'package:frontend/MainScreen/presentation/screens/base_screen.dart';
+import 'package:frontend/authentication/presentation/screens/login_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
+import 'dart:math' as math;
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,34 +25,32 @@ class LoginPage extends StatelessWidget {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 10),
+            padding: const EdgeInsets.only(left: 20, right: 10 ,top: 37),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Spacer(),
+                // const Spacer(),
                 Center(
                   child: Image.asset('assets/images/logo.png'),
                 ),
                 const SizedBox(
                   height: 63,
                 ),
-                createAccountText(),
+                welcomeText(),
                 const SizedBox(
-                  height: 34,
+                  height: 33,
                 ),
-                fieldController(),
-                const SizedBox(
-                  height: 10,
-                ),
-                fieldController(),
+                fieldController("Full Name "),
                 const SizedBox(
                   height: 10,
                 ),
-                fieldController(),
+                fieldController("Password"),
                 const SizedBox(
-                  height: 83,
+                  height: 18,
                 ),
-                registerButton(),
+                forgotPassword(),
+             const Spacer(),
+                loginButton(),
                 const SizedBox(
                   height: 41,
                 ),
@@ -63,11 +68,11 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                registerGoogle(),
+                loginGoogle(context),
                 const SizedBox(
                   height: 33,
                 ),
-                registerPage(context),
+                loginPage(context),
                 const SizedBox(
                   height: 33,
                 ),
@@ -80,7 +85,7 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-Widget createAccountText() {
+Widget welcomeText() {
   return Padding(
     padding: const EdgeInsets.only(
       left: 10,
@@ -88,20 +93,33 @@ Widget createAccountText() {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Create an account',
-          style: TextStyle(
-            fontFamily: AppFonts.mainFont,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-            fontSize: 25,
+        RichText(
+          text: TextSpan(
+            text: "Hi, Welcome Back! ",
+            style: const TextStyle(
+              fontFamily: AppFonts.mainFont,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+              fontSize: 25,
+            ),
+            children: [
+              WidgetSpan(
+                  child: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.rotationY(math.pi),
+                child: const Icon(
+                  Icons.waving_hand_sharp,
+                  color: Color(0xFFFFCC99),
+                ),
+              )),
+            ],
           ),
         ),
         const SizedBox(
           height: 4,
         ),
         Text(
-          'Start learning today!',
+          'Hello again, you’ve been missed!',
           style: TextStyle(
             fontFamily: AppFonts.mainFont,
             fontWeight: FontWeight.w500,
@@ -114,13 +132,13 @@ Widget createAccountText() {
   );
 }
 
-Widget fieldController() {
+Widget fieldController(label) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Text(
-        'Full Name',
-        style: TextStyle(
+      Text(
+        label,
+        style: const TextStyle(
           fontFamily: AppFonts.mainFont,
           fontWeight: FontWeight.w600,
           color: Color(0xFF00004D),
@@ -142,7 +160,22 @@ Widget fieldController() {
   );
 }
 
-Widget registerButton() {
+Widget forgotPassword() {
+  return Align(
+    alignment: Alignment.centerRight,
+    child: Text(
+      "Forgot Passowrd ? ",
+      style: TextStyle(
+        fontFamily: AppFonts.mainFont,
+        fontWeight: FontWeight.w600,
+        color: Color(AppColors.blue),
+        fontSize: 14,
+      ),
+    ),
+  );
+}
+
+Widget loginButton() {
   return InkWell(
     onTap: () => {},
     child: Container(
@@ -156,7 +189,7 @@ Widget registerButton() {
           color: Color(AppColors.blue)),
       child: const Center(
         child: Text(
-          'Create Account',
+          'Login',
           style: TextStyle(
             fontFamily: AppFonts.mainFont,
             fontWeight: FontWeight.w600,
@@ -169,10 +202,13 @@ Widget registerButton() {
   );
 }
 
-Widget registerGoogle() {
+Widget loginGoogle(context) {
   return InkWell(
-    onTap: () => {},
-    child: Container(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          builder: (_) => const BaseScreen(),
+        ),
+      ),    child: Container(
         width: double.infinity,
         height: 45,
         decoration: BoxDecoration(
@@ -203,12 +239,12 @@ Widget registerGoogle() {
   );
 }
 
-Widget registerPage(context) {
+Widget loginPage(context) {
   return Center(
     child: GestureDetector(
       onTap: () => Navigator.of(context, rootNavigator: true).push(
         MaterialPageRoute(
-          builder: (_) => const RegisterPage(),
+          builder: (_) => const LoginPage(),
         ),
       ),
       child: RichText(

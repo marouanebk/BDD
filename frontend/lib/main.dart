@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/MainScreen/presentation/screens/baseScreen.dart';
-import 'package:frontend/authentication/presentation/screens/loginPage.dart';
-import 'package:frontend/authentication/presentation/screens/registerPage.dart';
+// import 'package:frontend/MainScreen/presentation/screens/base_screen.dart';
+// import 'package:frontend/authentication/presentation/screens/login_page.dart';
+import 'package:frontend/authentication/presentation/screens/register_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const BaseScreen(),
+      home: const RegisterPage(),
     );
   }
 }
