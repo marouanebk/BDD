@@ -34,6 +34,10 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text("hello world"),
+          backgroundColor: Colors.orange,
+        ),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light.copyWith(
             statusBarColor: Colors.white,
@@ -47,10 +51,12 @@ class _ChatPageState extends State<ChatPage> {
             showUserAvatars: true,
             showUserNames: true,
             user: _user,
-            theme:  const DefaultChatTheme(
+            theme: const DefaultChatTheme(
               inputBackgroundColor: Colors.red,
             ),
             
+
+
             // customBottomWidget: Container(width: double.infinity, height: 60, color: Colors.red,),
           ),
         ),

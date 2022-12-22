@@ -43,7 +43,7 @@ class _BaseScreenState extends State<BaseScreen> {
       ),
       PersistentBottomNavBarItem(
         title: "To-dos",
-        icon: const Icon(Icons.chat),
+        icon: const Icon(Icons.checklist_sharp),
         activeColorPrimary: Color(AppColors.blue),
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
