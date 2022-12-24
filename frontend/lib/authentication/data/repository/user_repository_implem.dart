@@ -1,12 +1,9 @@
-import 'dart:developer';
 import 'package:frontend/authentication/data/datasource/user_datasource.dart';
 import 'package:frontend/authentication/data/models/user_model.dart';
 import 'package:frontend/authentication/domaine/repository/user_repository.dart';
 import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/error/failure.dart';
 import 'package:dartz/dartz.dart';
-
-typedef DeleteOrUpdateOrAddPost = Future<Unit> Function();
 
 class UserRepository implements BaseUserRepository {
   final BaseUserRemoteDateSource baseUserRemoteDateSource;

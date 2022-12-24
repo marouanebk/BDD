@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 34,
                     ),
-                    fieldController("Fullname", context, _fullname ,false),
+                    fieldController("Fullname", context, _fullname, false),
                     const SizedBox(
                       height: 10,
                     ),
@@ -69,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    fieldController("Password", context, _password , true),
+                    fieldController("Password", context, _password, true),
                     BlocListener<UserBloc, UserBlocState>(
                       listener: (context, state) {
                         if (state is ErrorUserBlocState) {
@@ -173,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget fieldController(
-      label, BuildContext context, TextEditingController controller , type) {
+      label, BuildContext context, TextEditingController controller, type) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -199,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 1),
             child: TextFieldInput(
-              hintText: "Please Enter Your ${label}",
+              hintText: "Please Enter Your $label",
               textEditingController: controller,
               textInputType: TextInputType.text,
               isPass: type,

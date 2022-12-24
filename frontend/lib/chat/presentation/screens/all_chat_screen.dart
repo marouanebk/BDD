@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/MainScreen/presentation/screens/mainpage.dart';
+import 'package:frontend/chat/presentation/screens/chat_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
-import 'package:frontend/tempfile.dart';
 
 class AllChatScreen extends StatefulWidget {
   const AllChatScreen({super.key});

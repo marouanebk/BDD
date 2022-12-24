@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dartz/dartz.dart';
 import 'package:frontend/authentication/domaine/entities/user_entitiy.dart';
 import 'package:frontend/cores/error/failure.dart';

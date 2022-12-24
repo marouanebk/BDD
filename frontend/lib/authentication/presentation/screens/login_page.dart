@@ -12,8 +12,6 @@ import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/widgets/text_input_field.dart';
 import 'dart:math' as math;
 
-import 'package:snippet_coder_utils/FormHelper.dart';
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 

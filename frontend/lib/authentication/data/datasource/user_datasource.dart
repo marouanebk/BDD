@@ -1,14 +1,9 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:frontend/authentication/data/models/user_model.dart';
-import 'package:dartz/dartz.dart';
 import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/network/error_message_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uuid/uuid.dart';
 
 abstract class BaseUserRemoteDateSource {
   Future<bool> createUser(UserModel userModel);
@@ -24,7 +19,6 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
-    var uuid = Uuid().v4();
 
     final response = await Dio().post(
       "http://10.0.2.2:4000/users/register",
