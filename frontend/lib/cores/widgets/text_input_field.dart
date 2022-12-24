@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/cores/const/const.dart';
 
 class TextFieldInput extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -23,16 +24,16 @@ class TextFieldInput extends StatelessWidget {
       autocorrect: false,
       enableSuggestions: false,
       style: const TextStyle(
-        color: Colors.black,
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
-      ),
+          color: Color(0xFF1F1F1F),
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          fontFamily: AppFonts.mainFont),
       decoration: InputDecoration(
         hintStyle: const TextStyle(
-          color: Colors.black,
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-        ),
+            color: Color(0xFFB4B4B4),
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            fontFamily: AppFonts.mainFont),
         fillColor: Colors.white,
         hintText: hintText,
         // border: InputBorder,

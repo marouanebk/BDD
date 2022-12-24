@@ -8,7 +8,7 @@ DbConnection()
 
 app.use(json()); 
 app.use(router)
-app.listen(3000,()=> console.log('hahahha mon pote'));
+app.listen(3000,()=> console.log('server running at port 3000 '));
 
 
 app.get('/login', (req, res) => {

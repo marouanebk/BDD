@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/MainScreen/presentation/screens/base_screen.dart';
+import 'package:frontend/authentication/presentation/screens/login_page.dart';
+import 'package:frontend/authentication/presentation/screens/register_page.dart';
+import 'package:frontend/cores/services/service_locator.dart';
 // import 'package:frontend/MainScreen/presentation/screens/base_screen.dart';
 // import 'package:frontend/authentication/presentation/screens/login_page.dart';
-import 'package:frontend/authentication/presentation/screens/register_page.dart';
-import 'package:frontend/tempfile.dart';
 
-void main() {
+void main() async {
+  await ServiceLocator().init();
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const BaseScreen(),
+      home: const LoginPage(),
     );
   }
 }

@@ -4,7 +4,7 @@ import muv from 'mongoose-unique-validator';
 
 const userSchema = Schema(
     {
-        username: {
+        full_name: {
             type: String,
             required: true,
         },
