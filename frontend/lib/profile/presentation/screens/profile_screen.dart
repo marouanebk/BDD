@@ -13,6 +13,7 @@ import 'package:frontend/cores/const/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -22,6 +23,20 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileScreenState extends State<ProfileScreen> {
+  String fullname = "";
+
+  void getuserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    fullname = prefs.getString("fullname")!;
+  }
+
+  @override
+  void initState() {
+    getuserName();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -58,7 +73,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                               shape: BoxShape.circle, color: Colors.orange),
                         ),
                         Text(
-                          "James Bond",
+                          fullname,
                           style: TextStyle(
                             fontFamily: AppFonts.mainFont,
                             fontWeight: FontWeight.w600,
@@ -87,11 +102,15 @@ class ProfileScreenState extends State<ProfileScreen> {
                             listener: (context, state) {
                               if (state is ErrorUserBlocState) {
                               } else if (state is SignOuState) {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
+                                // Navigator.of(context).pushReplacement(
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const LoginPage(),
+                                //   ),
+                                // );
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(MaterialPageRoute(
                                         builder: (context) =>
-                                            const LoginPage()),
-                                    (Route<dynamic> route) => false);
+                                            const LoginPage()));
                               }
                             },
                             child: Container()),

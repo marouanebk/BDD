@@ -22,13 +22,13 @@ class UserRepository implements BaseUserRepository {
       final result = await baseUserRemoteDateSource.createUser(userModel);
 
       return Right(result);
-    }on ServerException catch (failure) {
+    } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
 
   @override
-  Future<Either<Failure, bool>> loginUser(user) async {
+  Future<Either<Failure, int>> loginUser(user) async {
     final UserModel userModel = UserModel(
       userid: user.userid,
       fullname: user.fullname,
@@ -54,5 +54,14 @@ class UserRepository implements BaseUserRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
-}
 
+  @override
+  Future<Either<Failure, int>> chooseType(int number) async {
+    try {
+      final result = await baseUserRemoteDateSource.chooseType(number);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+}

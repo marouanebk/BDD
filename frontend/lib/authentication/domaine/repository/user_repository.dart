@@ -4,11 +4,13 @@ import 'package:frontend/cores/error/failure.dart';
 
 
 abstract class BaseUserRepository {
-  Future<Either<Failure, bool>> loginUser(User user);
+  Future<Either<Failure, int>> loginUser(User user);
 
   Future<Either<Failure, bool>> createUser(User user);
 
   Future<Either<Failure, bool>> logout();
+
+  Future<Either<Failure , int>> chooseType(int number);
 
 
 }

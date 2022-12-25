@@ -24,6 +24,14 @@ class LogOutUserEvent extends UserBlocEvent {
   List<Object> get props => [];
 }
 
+class ChooseTypeEvent extends UserBlocEvent {
+  final int number;
+  const ChooseTypeEvent({required this.number});
+
+  @override
+  List<Object> get props => [number];
+}
+
 class LoginuserEvent extends UserBlocEvent {
   final User user;
 

@@ -37,12 +37,12 @@ async function register(params, callback) {
       ""
     );
   }
-  console.log("pararms.email" ,params.email);
-  _email = params.email ;
-  
-  const _user = await User.findOne({email :  _email });
+  console.log("pararms.email", params.email);
+  _email = params.email;
+
+  const _user = await User.findOne({ email: _email });
   console.log(_user);
-  console.log("after console log and before check ") ;
+  console.log("after console log and before check ");
   if (_user != null) {
     console.log(params.email);
     console.log("NOT NULL")
@@ -67,9 +67,43 @@ async function register(params, callback) {
     });
 }
 
+async function changeType({ userid, type }, callback) {
+  console.log("in changing type function");
+  const user = await User.findOne({ userid: userid });
+
+  console.log(user);
+  user
+  User.updateOne({ userid: userid }, { $set: { type: type } }, function (err, res) {
+    if (err) throw err;
+    console.log("1 document updated");
+  });
+  const user1 = await User.findOne({ userid: userid });
+  console.log(user1);
+  if (type == "Teacher")
+    return callback(
+      null,
+      {
+        message: 2,
+      },
+
+    );
+  else if (type == "Student")
+
+    return callback(
+      null,
+      {
+        message: 1,
+      },
+
+    );
+
+}
+
+
 
 module.exports = {
   login,
   register,
+  changeType,
 
 };

@@ -37,14 +37,15 @@ mongoose
  * Conditionally skip a middleware when a condition is met.
  */
 auth.authenticateToken.unless = unless;
-app.use(
-  auth.authenticateToken.unless({
-    path: [
-      { url: "/users/login", methods: ["POST"] },
-      { url: "/users/register", methods: ["POST"] },
-    ],
-  })
-);
+// app.use(
+//   auth.authenticateToken.unless({
+//     path: [
+//       { url: "/users/login", methods: ["POST"] },
+//       { url: "/users/register", methods: ["POST"] },
+//       { url: "/users/changetype" , methods : ["PUT"]}
+//     ],
+//   })
+// );
 
 app.use(express.json());
 

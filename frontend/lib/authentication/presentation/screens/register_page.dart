@@ -5,6 +5,7 @@ import 'package:frontend/authentication/domaine/entities/user_entitiy.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_bloc.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_event.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_state.dart';
+import 'package:frontend/authentication/presentation/screens/choise.dart';
 import 'package:frontend/authentication/presentation/screens/login_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
@@ -79,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         } else if (state is MessageUserBlocState) {
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                  builder: (context) => const BaseScreen()),
+                                  builder: (context) => const ChoicePage()),
                               (Route<dynamic> route) => false);
                         }
                       },

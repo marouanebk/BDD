@@ -34,6 +34,7 @@ exports.register = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   const { email, password } = req.body;
+  
 
   userServices.login({ email, password }, (error, results) => {
     if (error) {
@@ -47,6 +48,30 @@ exports.login = (req, res, next) => {
 
       res.status(200).send({
         message: "Success",
+        data: results,
+      });
+    }
+  });
+};
+
+exports.changeType = (req, res, next) => {
+  const { userid, type } = req.body;
+  console.log("in cahnge type controller backend");
+  
+
+  userServices.changeType({ userid, type }, (error, results) => {
+    if (error) {
+      console.log("error")
+      res.status(401).send({
+        type: "Error",
+        data: results,
+      });
+    }
+    else {
+      console.log("login");
+
+      res.status(200).send({
+        type: "Success",
         data: results,
       });
     }

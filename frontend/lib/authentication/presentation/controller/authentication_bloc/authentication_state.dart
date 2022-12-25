@@ -43,3 +43,7 @@ class UserDetailsState extends UserBlocState {
   List<Object> get props => [fullname , email];
 }
 
+class TeacherLoginState extends UserBlocState {}
+
+class StudentLoginState extends UserBlocState {}
+
