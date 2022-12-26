@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/MainScreen/presentation/screens/mainpage.dart';
 import 'package:frontend/chat/presentation/screens/all_chat_screen.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/notifications/presentation/screens/notifications.dart';
@@ -8,30 +7,30 @@ import 'package:frontend/profile/presentation/screens/profile_screen.dart';
 import 'package:frontend/to-dos/presentation/screens/todos.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-class BaseScreen extends StatefulWidget {
-  const BaseScreen({Key? key}) : super(key: key);
+class TeacherScreen extends StatefulWidget {
+  const TeacherScreen({super.key});
+
   @override
-  State<BaseScreen> createState() => _BaseScreenState();
+  State<TeacherScreen> createState() => _TeacherScreenState();
 }
 
-class _BaseScreenState extends State<BaseScreen> {
+class _TeacherScreenState extends State<TeacherScreen> {
   var controller = PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreens() {
     return [
-      const MainScreen(),
+      const ProfileScreen(int: 2),
       const AllChatScreen(),
       const ToDos(),
       const Notifications(),
-      const ProfileScreen(int: 1,),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        title: "home",
-        icon: const Icon(Icons.home_filled),
+        title: "Profile",
+        icon: const Icon(CupertinoIcons.profile_circled),
         activeColorPrimary: Color(AppColors.blue),
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -53,12 +52,6 @@ class _BaseScreenState extends State<BaseScreen> {
         activeColorPrimary: Color(AppColors.blue),
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
-      PersistentBottomNavBarItem(
-        title: "Profile",
-        icon: const Icon(CupertinoIcons.profile_circled),
-        activeColorPrimary: Color(AppColors.blue),
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
     ];
   }
 
@@ -68,6 +61,7 @@ class _BaseScreenState extends State<BaseScreen> {
       context,
       controller: controller,
       screens: _buildScreens(),
+      key: const Key('__RIKEY1__'),
       items: _navBarsItems(),
       confineInSafeArea: true,
       backgroundColor: Colors.white, // Default is Colors.white.

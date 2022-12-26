@@ -35,7 +35,10 @@ class MainScreen extends StatelessWidget {
                 const SizedBox(
                   height: 22,
                 ),
-                suggestedCourses(context),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: suggestedCourses(context),
+                ),
               ],
             ),
           ),
@@ -259,20 +262,17 @@ Widget courseType(number, text) {
 }
 
 Widget suggestedCourses(context) {
-  return Padding(
-    padding: const EdgeInsets.only(right: 20),
-    child: ListView.separated(
-      scrollDirection: Axis.vertical,
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 14,
-      ),
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        return suggestedCourseCard(context);
-      },
+  return ListView.separated(
+    scrollDirection: Axis.vertical,
+    separatorBuilder: (context, index) => const SizedBox(
+      height: 14,
     ),
+    physics: const NeverScrollableScrollPhysics(),
+    shrinkWrap: true,
+    itemCount: 5,
+    itemBuilder: (context, index) {
+      return suggestedCourseCard(context);
+    },
   );
 }
 
@@ -336,3 +336,6 @@ Widget suggestedCourseCard(context) {
     ),
   );
 }
+
+
+

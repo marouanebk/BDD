@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/MainScreen/presentation/screens/base_screen.dart';
 import 'package:frontend/authentication/domaine/entities/user_entitiy.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_bloc.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_event.dart';

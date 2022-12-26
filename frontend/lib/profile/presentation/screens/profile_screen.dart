@@ -1,9 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/coursedetail.dart';
-
+import 'package:frontend/MainScreen/presentation/screens/teacher/teacher_courses.dart';
 import 'package:frontend/MainScreen/presentation/screens/teacher_detail.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_bloc.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_event.dart';
@@ -13,10 +12,12 @@ import 'package:frontend/cores/const/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
+import 'package:frontend/profile/presentation/screens/edit_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final int;
+  const ProfileScreen({required this.int, super.key});
 
   @override
   State<ProfileScreen> createState() => ProfileScreenState();
@@ -135,6 +136,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             Icons.person,
             "Profile",
             "Edit the details of your profile ",
+            const EditProfileScreen(),
           ),
           const SizedBox(
             height: 10,
@@ -143,6 +145,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             Icons.menu_book_sharp,
             "My Courses",
             "See all saved and studied courses",
+            const TeacherCourses(),
           ),
           const SizedBox(
             height: 10,
@@ -174,70 +177,77 @@ class ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget profileScreenCard(icon, text1, text2) {
-    return Container(
-      height: 64,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5),
-        ),
-        border: Border.all(
-          color: const Color(0xFFD9D9D9),
+  Widget profileScreenCard(icon, text1, text2, Widget link) {
+    return GestureDetector(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          builder: (_) => link,
         ),
       ),
-      padding: const EdgeInsets.only(right: 10, left: 23),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Icon(
-              icon,
-              color: Color(AppColors.blue),
+      child: Container(
+        height: 64,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(5),
+          ),
+          border: Border.all(
+            color: const Color(0xFFD9D9D9),
+          ),
+        ),
+        padding: const EdgeInsets.only(right: 10, left: 23),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Icon(
+                icon,
+                color: Color(AppColors.blue),
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 24,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  text1,
-                  style: TextStyle(
-                    fontFamily: AppFonts.mainFont,
-                    fontWeight: FontWeight.w600,
-                    color: Color(AppColors.writting),
-                    fontSize: 16,
+            const SizedBox(
+              width: 24,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    text1,
+                    style: TextStyle(
+                      fontFamily: AppFonts.mainFont,
+                      fontWeight: FontWeight.w600,
+                      color: Color(AppColors.writting),
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 1,
-                ),
-                Text(
-                  text2,
-                  style: TextStyle(
-                    fontFamily: AppFonts.mainFont,
-                    fontWeight: FontWeight.w600,
-                    color: Color(AppColors.grey),
-                    fontSize: 14,
+                  const SizedBox(
+                    height: 1,
                   ),
-                ),
-              ],
+                  Text(
+                    text2,
+                    style: TextStyle(
+                      fontFamily: AppFonts.mainFont,
+                      fontWeight: FontWeight.w600,
+                      color: Color(AppColors.grey),
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-              child: Align(
-            alignment: Alignment.centerRight,
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_forward_ios),
-            ),
-          ))
-        ],
+            Expanded(
+                child: Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.arrow_forward_ios),
+              ),
+            ))
+          ],
+        ),
       ),
     );
   }
@@ -279,13 +289,14 @@ class ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           Expanded(
-              child: Align(
-            alignment: Alignment.centerRight,
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_forward_ios),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.arrow_forward_ios),
+              ),
             ),
-          ))
+          ),
         ],
       ),
     );
@@ -314,7 +325,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             Center(
               child: Icon(
                 icon,
-                color: Color(AppColors.blue),
+                color: const Color(0xFFFF6868),
               ),
             ),
             const SizedBox(
