@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
+import 'package:frontend/cores/services/service_locator.dart';
+import 'package:frontend/cores/utils/enums.dart';
+import 'package:frontend/to-dos/presentation/controller/todo_bloc/todo_bloc.dart';
+import 'package:frontend/to-dos/presentation/controller/todo_bloc/todo_event.dart';
+import 'package:frontend/to-dos/presentation/controller/todo_bloc/todo_state.dart';
 
 class ToDos extends StatefulWidget {
   const ToDos({super.key});
@@ -13,128 +20,167 @@ class ToDos extends StatefulWidget {
 class _ToDosState extends State<ToDos> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-         value: SystemUiOverlayStyle.light.copyWith(
-          statusBarColor: Colors.white,
-        ),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 20, left: 20, top: 70),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Center(
-                  child: Text(
-                    "To-Dos",
-                    style: TextStyle(
-                      fontFamily: AppFonts.mainFont,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF0F1828),
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
-                Text(
-                  "Undone - 2",
-                  style: TextStyle(
-                    fontFamily: AppFonts.mainFont,
-                    fontWeight: FontWeight.w600,
-                    color: Color(AppColors.blue),
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                unDone(),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Done - 6",
-                  style: TextStyle(
-                    fontFamily: AppFonts.mainFont,
-                    fontWeight: FontWeight.w600,
-                    color: Color(AppColors.blue),
-                    fontSize: 18,
-                  ),
-                ),
-                done(),
-                const SizedBox(
-                  height: 31,
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(
-                          AppColors.blue,
+    return BlocProvider(
+      create: (context) => sl<TodoBloc>()
+        ..add(GetDoneTodoEvent())
+        ..add(GetUnDoneTodoEvent()),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle.light.copyWith(
+              statusBarColor: Colors.white,
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20, left: 20, top: 70),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Center(
+                      child: Text(
+                        "To-Dos",
+                        style: TextStyle(
+                          fontFamily: AppFonts.mainFont,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF0F1828),
+                          fontSize: 20,
                         ),
                       ),
-                      child: IconButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              builder: (BuildContext context) {
-                                return addBottomSheet();
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    Text(
+                      "Undone - 2",
+                      style: TextStyle(
+                        fontFamily: AppFonts.mainFont,
+                        fontWeight: FontWeight.w600,
+                        color: Color(AppColors.blue),
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    unDone(context),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Done - 6",
+                      style: TextStyle(
+                        fontFamily: AppFonts.mainFont,
+                        fontWeight: FontWeight.w600,
+                        color: Color(AppColors.blue),
+                        fontSize: 18,
+                      ),
+                    ),
+                    done(context),
+                    const SizedBox(
+                      height: 31,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(
+                              AppColors.blue,
+                            ),
+                          ),
+                          child: IconButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (BuildContext context) {
+                                    return addBottomSheet();
+                                  },
+                                );
                               },
-                            );
-                          },
-                          icon: const Icon(Icons.add),
-                          color: Colors.white)),
+                              icon: const Icon(Icons.add),
+                              color: Colors.white)),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
-  Widget unDone() {
-    return ListView.separated(
-      scrollDirection: Axis.vertical,
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 14,
-      ),
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: 2,
-      itemBuilder: (context, index) {
-        return unDoneCard();
+  Widget unDone(context) {
+    return BlocBuilder<TodoBloc, TodoState>(
+      builder: (context, state) {
+        switch (state.getUnDoneTodoState) {
+          case RequestState.loading:
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.red,
+              ),
+            );
+
+          case RequestState.loaded:
+            return ListView.separated(
+              scrollDirection: Axis.vertical,
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 14,
+              ),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: state.getUnDoneTodo.length,
+              itemBuilder: (context, index) {
+                return unDoneCard(state.getUnDoneTodo[index]);
+              },
+            );
+
+          case RequestState.error:
+            return Text(state.getUnDoneTodomessage);
+        }
       },
     );
   }
 
-  Widget done() {
-    return ListView.separated(
-      scrollDirection: Axis.vertical,
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 14,
-      ),
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        return doneCard();
+  Widget done(context) {
+    return BlocBuilder<TodoBloc, TodoState>(
+      builder: (context, state) {
+        switch (state.getDoneTodoState) {
+          case RequestState.loading:
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.red,
+              ),
+            );
+          case RequestState.loaded:
+            return ListView.separated(
+              scrollDirection: Axis.vertical,
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 14,
+              ),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: state.getDoneTodo.length,
+              itemBuilder: (context, index) {
+                return doneCard(state.getDoneTodo[index]);
+              },
+            );
+          case RequestState.error:
+            return Text(state.getDoneTodomessage);
+        }
       },
     );
   }
 
-  Widget unDoneCard() {
+  Widget unDoneCard(item) {
     return Container(
       height: 60,
       width: double.infinity,
@@ -153,7 +199,7 @@ class _ToDosState extends State<ToDos> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Read two chapters of BDD Course",
+                item.todo,
                 style: TextStyle(
                   fontFamily: AppFonts.mainFont,
                   fontWeight: FontWeight.w500,
@@ -166,7 +212,6 @@ class _ToDosState extends State<ToDos> {
               ),
               Text(
                 "Due Today",
-                
                 style: TextStyle(
                   fontFamily: AppFonts.mainFont,
                   fontWeight: FontWeight.w500,
@@ -192,7 +237,7 @@ class _ToDosState extends State<ToDos> {
     );
   }
 
-  Widget doneCard() {
+  Widget doneCard(item) {
     return Container(
       height: 48,
       width: double.infinity,
@@ -207,7 +252,7 @@ class _ToDosState extends State<ToDos> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Read two chapters of BDD Course",
+            item.todo,
             style: TextStyle(
                 fontFamily: AppFonts.mainFont,
                 fontWeight: FontWeight.w500,

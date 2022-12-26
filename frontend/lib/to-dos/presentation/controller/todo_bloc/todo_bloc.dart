@@ -38,13 +38,13 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   FutureOr<void> _getUnDoneTodoEvent(
       GetUnDoneTodoEvent event, Emitter<TodoState> emit) async {
-    final result = await getDoneTodoUseCase();
+    final result = await getUnDoneTodoUseCase();
     result.fold(
         (l) => emit(state.copyWith(
-            getDoneTodoState: RequestState.error,
-            getDoneTodomessage: l.message)),
+            getUnDoneTodoState: RequestState.error,
+            getUnDoneTodomessage: l.message)),
         (r) => emit(state.copyWith(
-            getDoneTodo: r, getDoneTodoState: RequestState.loaded)));
+            getUnDoneTodo: r, getUnDoneTodoState: RequestState.loaded)));
   }
 
   FutureOr<void> _addTodoEvent(

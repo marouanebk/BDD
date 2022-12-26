@@ -51,6 +51,7 @@ app.use(express.json());
 
 // initialize routes
 app.use("/users", require("./routes/users.routes"));
+app.use("/", require("./controllers/todoController"))
 
 // middleware for error responses
 app.use(errors.errorHandler);

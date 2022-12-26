@@ -2,19 +2,19 @@ import 'package:equatable/equatable.dart';
 
 class ToDo extends Equatable {
   final String? userid;
-  final String description;
-  final String etat;
+  final String todo;
+  final String status;
 
   const ToDo({
     this.userid,
-    required this.description,
-    required this.etat,
+    required this.todo,
+    required this.status,
   });
 
   @override
   List<Object?> get props => [
         userid,
-        description,
-        etat,
+        todo,
+        status,
       ];
 }

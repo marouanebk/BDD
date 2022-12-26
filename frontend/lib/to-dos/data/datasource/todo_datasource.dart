@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:frontend/authentication/data/models/user_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/network/error_message_model.dart';
+import 'package:frontend/to-dos/data/model/todo_model.dart';
 import 'package:frontend/to-dos/domaine/entities/to_do_entity.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +18,7 @@ abstract class BaseTodoRemoteDateSource {
   Future<List<ToDo>> getUnDoneToDo();
 }
 
-class UserRemoteDataSource extends BaseTodoRemoteDateSource {
+class TodoRemoteDataSource extends BaseTodoRemoteDateSource {
   static var client = http.Client();
 
   @override
@@ -38,12 +37,43 @@ class UserRemoteDataSource extends BaseTodoRemoteDateSource {
   }
 
   @override
-  Future<List<ToDo>> getDoneToDo() {
-    throw UnimplementedError();
+  Future<List<ToDo>> getDoneToDo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userid = prefs.getString("userid");
+
+    final response = await Dio().get(
+      "http://10.0.2.2:4000/todos/done/$userid",
+    );
+    log("response");
+    if (response.statusCode == 200) {
+      return List<TodoModel>.from((response.data["todo"] as List).map(
+        (e) => TodoModel.fromJson(e),
+      ));
+    } else {
+      throw ServerException(
+          errorMessageModel: ErrorMessageModel(
+              statusCode: response.statusCode,
+              statusMessage: response.data['message']));
+    }
   }
 
   @override
-  Future<List<ToDo>> getUnDoneToDo() {
-    throw UnimplementedError();
+  Future<List<ToDo>> getUnDoneToDo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userid = prefs.getString("userid");
+
+    final response = await Dio().get(
+      "http://10.0.2.2:4000/todos/undone/$userid",
+    );
+    if (response.statusCode == 200) {
+      return List<TodoModel>.from((response.data["todo"] as List).map(
+        (e) => TodoModel.fromJson(e),
+      ));
+    } else {
+      throw ServerException(
+          errorMessageModel: ErrorMessageModel(
+              statusCode: response.statusCode,
+              statusMessage: response.data['message']));
+    }
   }
 }
