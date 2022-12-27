@@ -1,0 +1,25 @@
+{
+	"title":"course1",
+	"description":"first course of bdd",
+	"year":"1cs",
+	"user":"merouane",
+	"url":["qq","ww"],
+	"quizzContent":[{
+	"question1":"whats your name ?",
+	"answer1_1":"a",
+	"answer2_1":"a",
+	"answer3_1":"a",
+	"answer4_1":"a",
+	"correctAnswer1":"aa"	
+	},
+	{
+	"question2":"whats your age?",
+	"answer1_2":"b",
+	"answer2_2":"b",
+	"answer3_2":"b",
+	"answer4_2":"b",
+	"correctAnswer2":"b"	
+	}
+
+]	
+}

@@ -15,13 +15,14 @@ export const getCourse = async (req, res,next) => {
 
 
 export const addCourse = async (req, res,next) => {
-    const {title,description,user,year,url} = req.body
+    const {title,description,user,year,url,quizzContent} = req.body
     const newCourse = new courses({
         title,
         description,
         user,
         year,
-        url
+        url,
+        quizzContent
     })
 
     try {
@@ -34,14 +35,15 @@ export const addCourse = async (req, res,next) => {
 
 
 export const updateCourse = async (req, res,next) => {
-    const {title,description,year,url} = req.body
+    const {title,description,year,url,quizzContent} = req.body
     const courseId = req.params.id;
     let course;
    try{ course = await courses.findByIdAndUpdate(courseId, {
         title,
         description,
         year,
-        url
+        url,
+        quizzContent
     })}catch(err){
         return res.status(500).json({message: err.message})
 
