@@ -7,10 +7,14 @@ class TodoState extends Equatable {
   final RequestState getDoneTodoState;
   final String getDoneTodomessage;
   //
-    final List<ToDo> getUnDoneTodo;
+  final List<ToDo> getUnDoneTodo;
   final RequestState getUnDoneTodoState;
   final String getUnDoneTodomessage;
- 
+
+  // final ToDo addTodo;
+  final RequestState addTodoState;
+  final String addTodoMessage;
+
   const TodoState({
     this.getDoneTodo = const [],
     this.getDoneTodoState = RequestState.loading,
@@ -20,7 +24,8 @@ class TodoState extends Equatable {
     this.getUnDoneTodoState = RequestState.loading,
     this.getUnDoneTodomessage = "",
     //
-   
+    this.addTodoState = RequestState.loading,
+    this.addTodoMessage = "",
   });
 
   TodoState copyWith({
@@ -32,18 +37,20 @@ class TodoState extends Equatable {
     RequestState? getUnDoneTodoState,
     String? getUnDoneTodomessage,
     //
-   
+    RequestState? addTodoState,
+    String? addTodoMessage,
   }) {
     return TodoState(
-        getDoneTodo:getDoneTodo ?? this.getDoneTodo,
-        getDoneTodoState:getDoneTodoState ?? this.getDoneTodoState,
-        getDoneTodomessage:getDoneTodomessage ?? this.getDoneTodomessage,
-        //
-        getUnDoneTodo: getUnDoneTodo ?? this.getUnDoneTodo,
-        getUnDoneTodoState: getUnDoneTodoState ?? this.getUnDoneTodoState,
-        getUnDoneTodomessage:
-getUnDoneTodomessage ?? this.getUnDoneTodomessage,
-        //
+      getDoneTodo: getDoneTodo ?? this.getDoneTodo,
+      getDoneTodoState: getDoneTodoState ?? this.getDoneTodoState,
+      getDoneTodomessage: getDoneTodomessage ?? this.getDoneTodomessage,
+      //
+      getUnDoneTodo: getUnDoneTodo ?? this.getUnDoneTodo,
+      getUnDoneTodoState: getUnDoneTodoState ?? this.getUnDoneTodoState,
+      getUnDoneTodomessage: getUnDoneTodomessage ?? this.getUnDoneTodomessage,
+      //
+      addTodoState: addTodoState ?? this.addTodoState,
+      addTodoMessage: addTodoMessage ?? this.addTodoMessage,
     );
     //
   }
@@ -57,7 +64,9 @@ getUnDoneTodomessage ?? this.getUnDoneTodomessage,
         getUnDoneTodo,
         getUnDoneTodoState,
         getUnDoneTodomessage,
+        
+        addTodoState,
+        addTodoMessage,
         //
       ];
 }
-

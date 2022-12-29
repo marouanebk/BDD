@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,9 +8,12 @@ import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/utils/enums.dart';
+import 'package:frontend/cores/widgets/text_input_field.dart';
+import 'package:frontend/to-dos/domaine/entities/to_do_entity.dart';
 import 'package:frontend/to-dos/presentation/controller/todo_bloc/todo_bloc.dart';
 import 'package:frontend/to-dos/presentation/controller/todo_bloc/todo_event.dart';
 import 'package:frontend/to-dos/presentation/controller/todo_bloc/todo_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ToDos extends StatefulWidget {
   const ToDos({super.key});
@@ -18,6 +23,8 @@ class ToDos extends StatefulWidget {
 }
 
 class _ToDosState extends State<ToDos> {
+  final TextEditingController _todo = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -81,29 +88,56 @@ class _ToDosState extends State<ToDos> {
                     const SizedBox(
                       height: 31,
                     ),
+                    //add button
                     Align(
                       alignment: Alignment.centerRight,
                       child: Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(
-                              AppColors.blue,
-                            ),
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(
+                            AppColors.blue,
                           ),
-                          child: IconButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (BuildContext context) {
-                                    return addBottomSheet();
-                                  },
-                                );
-                              },
-                              icon: const Icon(Icons.add),
-                              color: Colors.white)),
+                        ),
+                        child: IconButton(
+                            onPressed: () {
+                              showModalBottomSheet<dynamic>(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom *
+                                        1,
+                                  ),
+                                  child: addBottomSheet(context),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.add),
+                            color: Colors.white),
+                      ),
+                    ),
+                    BlocListener<TodoBloc, TodoState>(
+                      listener: (context, state) {
+                        switch (state.addTodoState) {
+                          case RequestState.loading:
+                            log("loading adding state");
+                            break;
+                          case RequestState.loaded:
+                            log("loaded adding state");
+                            setState(() {});
+                            setState(() {});
+                            break;
+                          case RequestState.error:
+                            log("error adding state ");
+                            break;
+                        }
+                      },
+                      child: Container(),
                     ),
                     const SizedBox(
                       height: 30,
@@ -120,6 +154,8 @@ class _ToDosState extends State<ToDos> {
 
   Widget unDone(context) {
     return BlocBuilder<TodoBloc, TodoState>(
+      buildWhen: (previous, current) =>
+          previous.getUnDoneTodoState != current.getUnDoneTodoState,
       builder: (context, state) {
         switch (state.getUnDoneTodoState) {
           case RequestState.loading:
@@ -152,6 +188,8 @@ class _ToDosState extends State<ToDos> {
 
   Widget done(context) {
     return BlocBuilder<TodoBloc, TodoState>(
+      buildWhen: (previous, current) =>
+          previous.addTodoState != current.addTodoState,
       builder: (context, state) {
         switch (state.getDoneTodoState) {
           case RequestState.loading:
@@ -281,115 +319,146 @@ class _ToDosState extends State<ToDos> {
     );
   }
 
-  Widget addBottomSheet() {
-    return Container(
-      width: double.infinity,
-      height: 220,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        color: Colors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 20.0, left: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.5,
-                padding: const EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 3,
+  Widget addBottomSheet(context) {
+    return Builder(
+      builder: (context) {
+        return Container(
+            width: double.infinity,
+            height: 220,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              color: Colors.white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0, left: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      padding: const EdgeInsets.only(bottom: 12),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            width: 3,
+                            color: Color(AppColors.writting),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  //text
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "Your To-do",
+                    style: TextStyle(
+                      fontFamily: AppFonts.mainFont,
+                      fontWeight: FontWeight.w600,
                       color: Color(AppColors.writting),
+                      fontSize: 18,
                     ),
                   ),
-                ),
-              ),
-            ),
-            //text
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              "Your To-do",
-              style: TextStyle(
-                fontFamily: AppFonts.mainFont,
-                fontWeight: FontWeight.w600,
-                color: Color(AppColors.writting),
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(
-              height: 6.0,
-            ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
 
-            Container(
-              height: 50,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
-                border: Border.all(
-                  color: const Color(0xFFD9D9D9),
-                ),
+                  Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      border: Border.all(
+                        color: const Color(0xFFD9D9D9),
+                      ),
+                    ),
+                    child: TextFieldInput(
+                      hintText: "Your todo",
+                      textEditingController: _todo,
+                      textInputType: TextInputType.text,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          addTodo(context);
+                          setState(() {});
+                        },
+                        child: Container(
+                          height: 45,
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5)),
+                            color: Color(AppColors.blue),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "Add to-do",
+                              style: TextStyle(
+                                fontFamily: AppFonts.mainFont,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Spacer(),
+                      Container(
+                        height: 45,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Colors.red,
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Delete to-do",
+                            style: TextStyle(
+                              fontFamily: AppFonts.mainFont,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 45,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    color: Color(AppColors.blue),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Add to-do",
-                      style: TextStyle(
-                        fontFamily: AppFonts.mainFont,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                ),
-                // Spacer(),
-                Container(
-                  height: 45,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    color: Colors.red,
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Delete to-do",
-                      style: TextStyle(
-                        fontFamily: AppFonts.mainFont,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      ),
+            ));
+      }
     );
+  }
+
+  void addTodo(context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userid = prefs.getString("userid");
+
+    final todo = ToDo(
+      userid: userid,
+      todo: _todo.text,
+      status: "Undone",
+    );
+    BlocProvider.of<TodoBloc>(context).add(AddTodoEvent(todo: todo));
+    BlocProvider.of<TodoBloc>(context).add(GetDoneTodoEvent());
+    BlocProvider.of<TodoBloc>(context).add(GetUnDoneTodoEvent());
+
+    setState(() {});
   }
 }

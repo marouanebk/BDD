@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 abstract class BaseTodoRemoteDateSource {
-  Future<Unit> addToDo(ToDo todo);
+  Future<Unit> addToDo(TodoModel todo);
   Future<Unit> deleteToDO(ToDo todo);
   Future<Unit> editToDO(ToDo todo);
   Future<List<ToDo>> getDoneToDo();
@@ -22,8 +22,32 @@ class TodoRemoteDataSource extends BaseTodoRemoteDateSource {
   static var client = http.Client();
 
   @override
-  Future<Unit> addToDo(ToDo todo) {
-    throw UnimplementedError();
+  Future<Unit> addToDo(TodoModel todo) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userid = prefs.getString("userid");
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+    };
+    final response = await Dio().post(
+      "http://10.0.2.2:4000/add/todo",
+      data: todo.toJson(),
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 500;
+        },
+        headers: requestHeaders,
+      ),
+    );
+    log(response.statusCode.toString());
+    if (response.statusCode == 200) {
+      return Future.value(unit);
+    } else {
+      throw ServerException(
+          errorMessageModel: ErrorMessageModel(
+              statusCode: response.statusCode,
+              statusMessage: response.data['message']));
+    }
   }
 
   @override

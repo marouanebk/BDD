@@ -2,6 +2,7 @@ import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:frontend/to-dos/data/datasource/todo_datasource.dart';
+import 'package:frontend/to-dos/data/model/todo_model.dart';
 import 'package:frontend/to-dos/domaine/entities/to_do_entity.dart';
 import 'package:frontend/to-dos/domaine/repository/base_todo_repo.dart';
 
@@ -12,8 +13,13 @@ class TodoRepository implements BaseToDoRepository {
 
   @override
   Future<Either<Failure, Unit>> addToDo(ToDo todo) async {
+    final TodoModel todoModel = TodoModel(
+      userid: todo.userid,
+      todo: todo.todo,
+      status: todo.status,
+    );
     try {
-      final result = await baseTodoRemoteDateSource.addToDo(todo);
+      final result = await baseTodoRemoteDateSource.addToDo(todoModel);
       return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));

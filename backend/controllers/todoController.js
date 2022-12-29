@@ -8,7 +8,7 @@ router.get("/todos/done/:_userid", async (req, res) => {
     const { _userid } = req.params;
     console.log(_userid);
 
-    const allTodo = await Todo.find({userid : _userid , status : "Done"});
+    const allTodo = await Todo.find({ userid: _userid, status: "Done" });
     console.log(allTodo);
     return res.status(200).send({
         todo: allTodo
@@ -20,7 +20,7 @@ router.get("/todos/undone/:_userid", async (req, res) => {
     const { _userid } = req.params;
     console.log(_userid);
 
-    const allTodo = await Todo.find({userid : _userid , status : "Undone"});
+    const allTodo = await Todo.find({ userid: _userid, status: "Undone" });
     console.log(allTodo);
     return res.status(200).send({
         todo: allTodo
@@ -30,11 +30,12 @@ router.get("/todos/undone/:_userid", async (req, res) => {
 // routes
 router
     .post("/add/todo", (req, res) => {
-        console.log(req.body);
-        const { todo, userid  } = req.body;
-        console.log(todo);
         console.log("here in todo");
-        const newTodo = new Todo({ todo: todo, userid: userid ,});
+
+        console.log(req.body);
+        const { todo, userid } = req.body;
+        console.log(todo);
+        const newTodo = new Todo({ todo: todo, userid: userid, });
 
         // save the todo
         newTodo
@@ -76,7 +77,7 @@ router
         const { _userid } = req.params;
 
 
-        const todo = await Todo.findOne({ userid : _userid });
+        const todo = await Todo.findOne({ userid: _userid });
         Todo.updateOne({ userid: _userid }, { $set: { status: "Done" } }, function (err, res) {
             if (err) throw err;
         });
