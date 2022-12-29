@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/mainpage.dart';
 import 'package:frontend/chat/presentation/screens/chat_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
+import 'package:frontend/cores/services/service_locator.dart';
 
 class AllChatScreen extends StatefulWidget {
   const AllChatScreen({super.key});
@@ -14,44 +17,47 @@ class AllChatScreen extends StatefulWidget {
 class _AllChatScreenState extends State<AllChatScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 70, right: 10),
-          child: Column(
-            children: [
-              searchBar(),
-              const SizedBox(
-                height: 23,
-              ),
-              //main inbox text
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 3,
-                      color: Color(AppColors.blue),
+    return BlocProvider(
+      create: (context) => sl<CourseBloc>()..add(GetSuggestedCoursesEvent()),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, top: 70, right: 10),
+            child: Column(
+              children: [
+                searchBar(),
+                const SizedBox(
+                  height: 23,
+                ),
+                //main inbox text
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(bottom: 12),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 3,
+                        color: Color(AppColors.blue),
+                      ),
                     ),
                   ),
-                ),
-                child: Text(
-                  "Main inbox",
-                  style: TextStyle(
-                    fontFamily: AppFonts.mainFont,
-                    fontWeight: FontWeight.w600,
-                    color: Color(AppColors.blue),
-                    fontSize: 18,
+                  child: Text(
+                    "Main inbox",
+                    style: TextStyle(
+                      fontFamily: AppFonts.mainFont,
+                      fontWeight: FontWeight.w600,
+                      color: Color(AppColors.blue),
+                      fontSize: 18,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
-              ),
-              // all chat
-              chatHeads(),
-            ],
+                // all chat
+                chatHeads(),
+              ],
+            ),
           ),
         ),
       ),

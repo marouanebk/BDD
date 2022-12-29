@@ -1,49 +1,155 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/coursedetail.dart';
+import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
+import 'package:frontend/cores/services/service_locator.dart';
+import 'package:frontend/cores/utils/enums.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.white,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, top: 24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                searchBar(),
-                const SizedBox(
-                  height: 9,
+      body: BlocProvider(
+        create: (context) => sl<CourseBloc>()..add(GetSuggestedCoursesEvent()),
+        child: Builder(builder: (context) {
+          return SafeArea(
+              child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.white,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, top: 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    searchBar(),
+                    const SizedBox(
+                      height: 9,
+                    ),
+                    coursesEnrolled(),
+                    const SizedBox(
+                      height: 27,
+                    ),
+                    discoverCourses(context),
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    BlocBuilder<CourseBloc, CourseState>(
+                      builder: (context, state) {
+                        switch (state.getSuggestedCoursesState) {
+                          case RequestState.loading:
+                            return const Center(
+                              child: LoadingWidget(),
+                            );
+
+                          case RequestState.loaded:
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: suggestedCourses0(
+                                  context, state.getSuggestedCourses),
+                            );
+                          case RequestState.error:
+                            return Text(state.getSuggestedCoursesmessage);
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                coursesEnrolled(),
-                const SizedBox(
-                  height: 27,
-                ),
-                discoverCourses(),
-                const SizedBox(
-                  height: 22,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: suggestedCourses(context),
-                ),
-              ],
+              ),
             ),
-          ),
+          ));
+        }),
+      ),
+    );
+  }
+
+  Widget suggestedCourses0(context, items) {
+    return ListView.separated(
+      scrollDirection: Axis.vertical,
+      separatorBuilder: (context, index) => const SizedBox(
+        height: 14,
+      ),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return suggestedCourseCard0(context, items[index]);
+      },
+    );
+  }
+
+  Widget suggestedCourseCard0(context, item) {
+    return GestureDetector(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          builder: (_) => CourseDetailScreen(id: item.courseid),
         ),
-      )),
+      ),
+      child: Container(
+        width: double.infinity,
+        height: 87,
+        padding: const EdgeInsets.only(top: 15, left: 15),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          border: Border.all(
+            color: const Color(0xFFD9D9D9),
+          ),
+          color: Colors.white,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: const BoxDecoration(
+                color: Colors.orange,
+                shape: BoxShape.circle,
+              ),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            RichText(
+              text: TextSpan(
+                text: item.title,
+                style: TextStyle(
+                  fontFamily: AppFonts.mainFont,
+                  fontWeight: FontWeight.w600,
+                  color: Color(AppColors.writting),
+                  fontSize: 16,
+                ),
+                children: [
+                  TextSpan(
+                    text: " ${item.year} ",
+                    style: TextStyle(
+                      fontFamily: AppFonts.mainFont,
+                      fontWeight: FontWeight.w500,
+                      color: Color(AppColors.greyWritting),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -196,7 +302,7 @@ Widget courseCard() {
   );
 }
 
-Widget discoverCourses() {
+Widget discoverCourses(context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -280,7 +386,8 @@ Widget suggestedCourseCard(context) {
   return GestureDetector(
     onTap: () => Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
-        builder: (_) => const CourseDetailScreen(),
+        builder: (_) =>
+            const CourseDetailScreen(id: "63add118d4d4cf3df0092ed1"),
       ),
     ),
     child: Container(
@@ -336,6 +443,3 @@ Widget suggestedCourseCard(context) {
     ),
   );
 }
-
-
-

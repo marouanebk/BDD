@@ -1,97 +1,107 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/coursedetail.dart';
 import 'package:frontend/MainScreen/presentation/screens/mainpage.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
+import 'package:frontend/cores/services/service_locator.dart';
 
 class TeacherDetailScreen extends StatelessWidget {
   const TeacherDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Stack(
-          children: [
-            ClipPath(
-              clipper: CustomShape(),
-              child: Container(
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                color: Color(AppColors.blue),
+    return BlocProvider(
+      create: (context) => sl<CourseBloc>()..add(GetSuggestedCoursesEvent()),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            body: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Stack(
+                children: [
+                  ClipPath(
+                    clipper: CustomShape(),
+                    child: Container(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      color: Color(AppColors.blue),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      teacherHeader(context),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Center(child: messageButtonTeacher()),
+                      const SizedBox(
+                        height: 38,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Biography",
+                          style: TextStyle(
+                            fontFamily: AppFonts.mainFont,
+                            fontWeight: FontWeight.w600,
+                            color: Color(AppColors.greyWritting),
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 10, left: 20),
+                        child: Text(
+                          "Lorem ipsum dolor sit amet consectetur. Faucibus scelerisque condimentum sem pharetra neque egestas. Tellus mauris orci amet urna fermentum quisque habitasse. Mauris a bibendum nascetur elit sagittis aenean quam posuere. Quis dolor auctor adipiscing etiam etiam.",
+                          style: TextStyle(
+                            fontFamily: AppFonts.mainFont,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFFB4B4B4),
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          reviewCard("09", "Courses"),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          reviewCard("4.6/5", "AvgRate"),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          reviewCard("+9 yrs", "TeachingExp"),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: suggestedCourses(context),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                teacherHeader(context),
-                const SizedBox(
-                  height: 40,
-                ),
-                Center(child: messageButtonTeacher()),
-                const SizedBox(
-                  height: 38,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Biography",
-                    style: TextStyle(
-                      fontFamily: AppFonts.mainFont,
-                      fontWeight: FontWeight.w600,
-                      color: Color(AppColors.greyWritting),
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 10, left: 20),
-                  child: Text(
-                    "Lorem ipsum dolor sit amet consectetur. Faucibus scelerisque condimentum sem pharetra neque egestas. Tellus mauris orci amet urna fermentum quisque habitasse. Mauris a bibendum nascetur elit sagittis aenean quam posuere. Quis dolor auctor adipiscing etiam etiam.",
-                    style: TextStyle(
-                      fontFamily: AppFonts.mainFont,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFB4B4B4),
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 18,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    reviewCard("09", "Courses"),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    reviewCard("4.6/5", "AvgRate"),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    reviewCard("+9 yrs", "TeachingExp"),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 18,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: suggestedCourses(context),
-                ),
-              ],
-            ),
-          ],
-        ),
+          );
+        }
       ),
     );
   }

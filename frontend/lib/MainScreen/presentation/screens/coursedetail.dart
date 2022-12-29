@@ -1,93 +1,116 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/teacher_detail.dart';
+import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
+import 'package:frontend/cores/services/service_locator.dart';
+import 'package:frontend/cores/utils/enums.dart';
 
 class CourseDetailScreen extends StatelessWidget {
-  const CourseDetailScreen({super.key});
+  final String id;
+  const CourseDetailScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        alignment: AlignmentDirectional.bottomCenter,
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                courseHeader(context),
-                const SizedBox(
-                  height: 20,
-                ),
-                reviews(),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocProvider(
+      create: (context) => sl<CourseBloc>()..add(GetCourseDetailEvent(id)),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: BlocBuilder<CourseBloc, CourseState>(
+            builder: (context, state) {
+              switch (state.getCourseDetailState) {
+                case RequestState.loading:
+                  return const LoadingWidget();
+                case RequestState.loaded:
+                  return Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
                     children: [
-                      const Text(
-                        "Course intro:",
-                        style: TextStyle(
-                          fontFamily: AppFonts.mainFont,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF5A5A5A),
-                          fontSize: 18,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            courseHeader(context, state.getCourseDetail!.title,
+                                state.getCourseDetail!.year),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            reviews(),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Course intro:",
+                                    style: TextStyle(
+                                      fontFamily: AppFonts.mainFont,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF5A5A5A),
+                                      fontSize: 18,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Text(
+                                      state.getCourseDetail!.description,
+                                      style: const TextStyle(
+                                        fontFamily: AppFonts.mainFont,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFFB4B4B4),
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 23,
+                                  ),
+                                  const Text(
+                                    "Course Info:",
+                                    style: TextStyle(
+                                      fontFamily: AppFonts.mainFont,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF5A5A5A),
+                                      fontSize: 18,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  courseContent(),
+                                  const SizedBox(
+                                    height: 80,
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
                         ),
-                        textAlign: TextAlign.start,
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(right: 10),
-                        child: Text(
-                          "Lorem ipsum dolor sit amet consectetur. Faucibus scelerisque condimentum sem pharetra neque egestas. Tellus mauris orci amet urna fermentum quisque habitasse. Mauris a bibendum nascetur elit sagittis aenean quam posuere. Quis dolor auctor adipiscing etiam etiam.",
-                          style: TextStyle(
-                            fontFamily: AppFonts.mainFont,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFFB4B4B4),
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 23,
-                      ),
-                      const Text(
-                        "Course Info:",
-                        style: TextStyle(
-                          fontFamily: AppFonts.mainFont,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF5A5A5A),
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                      courseContent(),
-                      const SizedBox(
-                        height: 80,
-                      )
+                      startCourseButton(),
                     ],
-                  ),
-                )
-              ],
-            ),
+                  );
+                case RequestState.error:
+                  return Text(state.getCourseDetailmessage);
+              }
+            },
           ),
-          startCourseButton(),
-        ],
-      ),
+        );
+      }),
     );
   }
 }
 
-Widget courseHeader(context) {
+Widget courseHeader(context, name, year) {
   return Container(
     height: 202,
     width: double.infinity,
@@ -127,18 +150,18 @@ Widget courseHeader(context) {
             ),
           ],
         ),
-        const Text(
-          "BDD Course",
-          style: TextStyle(
+        Text(
+          name,
+          style: const TextStyle(
             fontFamily: AppFonts.mainFont,
             fontWeight: FontWeight.w600,
             color: Colors.white,
             fontSize: 32,
           ),
         ),
-        const Text(
-          "2nd year - IT",
-          style: TextStyle(
+        Text(
+          year,
+          style: const TextStyle(
             fontFamily: AppFonts.mainFont,
             fontWeight: FontWeight.w500,
             color: Colors.white,

@@ -7,7 +7,7 @@ class CourseDetails extends Equatable {
   final String description;
   final String year;
   final String title;
-  final String teacherName;
+  // final String teacherName;
 
   const CourseDetails({
     this.courseid,
@@ -15,7 +15,7 @@ class CourseDetails extends Equatable {
     required this.description,
     required this.year,
     required this.title,
-    required this.teacherName,
+    // required this.teacherName,
   });
 
   @override
@@ -25,6 +25,6 @@ class CourseDetails extends Equatable {
         description,
         year,
         title,
-        teacherName,
+        // teacherName,
       ];
 }

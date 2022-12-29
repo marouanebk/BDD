@@ -1,30 +1,30 @@
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 
 class CourseDetailModel extends CourseDetails {
-  const CourseDetailModel(
-      {String? courseid,
-      String? teacherid,
-      required String year,
-      required String title,
-      required String description,
-      required String teacherName})
-      : super(
+  const CourseDetailModel({
+    String? courseid,
+    String? teacherid,
+    required String year,
+    required String title,
+    required String description,
+    // required String teacherName,
+  }) : super(
           courseid: courseid,
           title: title,
           teacherid: teacherid,
           year: year,
           description: description,
-          teacherName: teacherName,
+          // teacherName: teacherName,
         );
 
   factory CourseDetailModel.fromJson(Map<String, dynamic> json) {
     return CourseDetailModel(
       courseid: json["_id"],
-      teacherid: json["userid"],
-      year: json["todo"],
+      teacherid: json["user"],
+      year: json["year"],
       title: json["title"],
       description: json["description"],
-      teacherName: json["teacherName"],
+      // teacherName: json["teacherName"],
     );
   }
 

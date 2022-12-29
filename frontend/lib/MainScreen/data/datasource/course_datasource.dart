@@ -9,24 +9,21 @@ import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/network/error_message_model.dart';
 import 'package:frontend/to-dos/data/model/todo_model.dart';
 
-
 abstract class BaseCourseRemoteDataSource {
   Future<List<Course>> getSuggestedCourses();
   Future<CourseDetailModel> getCourseDetail(String id);
 }
 
 class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
-
   @override
   Future<List<Course>> getSuggestedCourses() async {
-
-
     final response = await Dio().get(
-      "http://10.0.2.2:4000/todos/undone/",
+      "http://10.0.2.2:4000/courses/getCourse",
     );
+
     if (response.statusCode == 200) {
-      return List<CourseModel>.from((response.data["todo"] as List).map(
-        (e) => TodoModel.fromJson(e),
+      return List<CourseModel>.from((response.data["result"] as List).map(
+        (e) => CourseModel.fromJson(e),
       ));
     } else {
       throw ServerException(
@@ -38,13 +35,13 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
 
   @override
   Future<CourseDetailModel> getCourseDetail(String id) async {
-
-
+    log("in get details data source");
     final response = await Dio().get(
-      "http://10.0.2.2:4000/todos/undone/$id",
+      "http://10.0.2.2:4000/courses/getCourseByID/$id",
     );
+
     if (response.statusCode == 200) {
-      return response.data['result'];
+      return CourseDetailModel.fromJson(response.data['result']);
     } else {
       throw ServerException(
           errorMessageModel: ErrorMessageModel(
