@@ -3,8 +3,8 @@ import 'package:frontend/MainScreen/presentation/screens/teacher_detail.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 
-class CourseDetail extends StatelessWidget {
-  const CourseDetail({super.key});
+class CourseDetailScreen extends StatelessWidget {
+  const CourseDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

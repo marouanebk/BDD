@@ -280,7 +280,7 @@ Widget suggestedCourseCard(context) {
   return GestureDetector(
     onTap: () => Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
-        builder: (_) => const CourseDetail(),
+        builder: (_) => const CourseDetailScreen(),
       ),
     ),
     child: Container(

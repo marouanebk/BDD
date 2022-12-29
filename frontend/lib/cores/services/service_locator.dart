@@ -1,3 +1,9 @@
+import 'package:frontend/MainScreen/data/datasource/course_datasource.dart';
+import 'package:frontend/MainScreen/data/repository/course_repo_implem.dart';
+import 'package:frontend/MainScreen/domaine/repository/base_course_repo.dart';
+import 'package:frontend/MainScreen/domaine/usecases/get_course_detail.dart';
+import 'package:frontend/MainScreen/domaine/usecases/get_suggested_courses.dart';
+import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/authentication/data/datasource/user_datasource.dart';
 import 'package:frontend/authentication/data/repository/user_repository_implem.dart';
 import 'package:frontend/authentication/domaine/repository/user_repository.dart';
@@ -24,6 +30,7 @@ class ServiceLocator {
     // Bloc
     sl.registerFactory(() => UserBloc(sl(), sl(), sl(), sl()));
     sl.registerFactory(() => TodoBloc(sl(), sl(), sl(), sl(), sl()));
+    sl.registerFactory(() => CourseBloc(sl() , sl()));
 
     // sl.registerFactory(() => UserBloc(
     // createUserUseCase: sl(), loginUserCase: sl()));
@@ -40,11 +47,15 @@ class ServiceLocator {
     sl.registerLazySingleton(() => EditTodoUseCase(sl()));
     sl.registerLazySingleton(() => DeleteTodoUseCase(sl()));
 
+    //courses usecases
+    sl.registerLazySingleton(() => GetCoursedDetailUseCase(sl()));
+    sl.registerLazySingleton(() => GetSuggestedCoursesUseCase(sl()));
+
     // Repository
     sl.registerLazySingleton<BaseUserRepository>(() => UserRepository(sl()));
-
-    //todo repo
     sl.registerLazySingleton<BaseToDoRepository>(() => TodoRepository(sl()));
+    sl.registerLazySingleton<BaseCourseRepository>(
+        () => CourseRepository(sl()));
 
     // sl.registerLazySingleton<BaseUserRepository>(() => UserRepository(sl()));
 
@@ -56,5 +67,7 @@ class ServiceLocator {
     //authentication
     sl.registerLazySingleton<BaseUserRemoteDateSource>(
         () => UserRemoteDataSource());
+    sl.registerLazySingleton<BaseCourseRemoteDataSource>(
+        () => CourseRemoteDataSource());
   }
 }
