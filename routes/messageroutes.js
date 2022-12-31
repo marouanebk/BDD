@@ -1,4 +1,4 @@
-const { addmsg, getallmsg , uploadfiles} = require("../controllers/messagecontroller");
+const { addmsg, getallmsg , uploadfiles, getusers} = require("../controllers/messagecontroller");
 
 const router = require("express").Router();
 
@@ -6,7 +6,9 @@ const router = require("express").Router();
 
 router.post("/addmessage/", addmsg),
 router.post("/getallmessag/", getallmsg),
-router.post("/uploadfiles/", uploadfiles);
+router.post("/uploadfiles/", uploadfiles),
+router.get("/getusers/", getusers);
+
 
 
 

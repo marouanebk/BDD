@@ -4,7 +4,7 @@ const messageSchema = new mongoose.Schema({
 message: {
     text: {
         type:String,
-        required: true,
+        required: false,
     },
 },
     users: Array,
@@ -13,6 +13,11 @@ message: {
             ref:"User",
             required:false,
         },
+    reciver:{
+        type : mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:false,
+    },    
     type :{
         type : String,
     },  

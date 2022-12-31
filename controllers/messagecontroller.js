@@ -10,6 +10,7 @@ module.exports.addmsg = async(req,res,next)=>{
             message: {text: message},
             users: [from, to],
             sender: from,
+            reciver: to,
         });
         if (data) return res.json({ msg: "message added successfully"});
         return res.json({ msg: "failed to add message to DB"});
@@ -38,6 +39,31 @@ module.exports.getallmsg = async(req,res,next)=>{
         next(e);
     }
 };
+
+module.exports.getusers = async(req,res,next)=>{
+    try{
+        const {from} = req.body;
+        const to = await messagemodel.find({
+            users :{
+                $all: from,
+            },
+        }).sort({updatedAt: 1});
+        const projectusers = to.map(rec =>{
+            return {
+                if(fromSelf){
+                fromSelf: rec.sender.toString() === from;
+                 },
+                to :rec.reciver,
+            };
+        });
+        res.json(projectusers);
+        
+
+    } catch(e){
+        next(e);
+    }
+};
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'uploads/')
