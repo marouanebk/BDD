@@ -10,7 +10,7 @@ module.exports.addmsg = async(req,res,next)=>{
             message: {text: message},
             users: [from, to],
             sender: from,
-            reciver: to,
+            reciever: to,
         });
         if (data) return res.json({ msg: "message added successfully"});
         return res.json({ msg: "failed to add message to DB"});
@@ -53,7 +53,7 @@ module.exports.getusers = async(req,res,next)=>{
                 if(fromSelf){
                 fromSelf: rec.sender.toString() === from;
                  },
-                to :rec.reciver,
+                to :rec.reciever,
             };
         });
         res.json(projectusers);

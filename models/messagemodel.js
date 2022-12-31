@@ -13,7 +13,7 @@ message: {
             ref:"User",
             required:false,
         },
-    reciver:{
+    reciever:{
         type : mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:false,
