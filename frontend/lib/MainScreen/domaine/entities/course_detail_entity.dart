@@ -10,7 +10,7 @@ class CourseDetails extends Equatable {
 
   final String? courseid;
   final String? teacherName;
-  final List<CourseContent> courseContent;
+  final List<dynamic> courseContent;
   // final String teacherName;
 
   const CourseDetails({

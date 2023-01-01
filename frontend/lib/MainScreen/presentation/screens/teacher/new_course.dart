@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
+import 'package:frontend/MainScreen/presentation/component/add_course_success.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/widgets/text_input_field.dart';
+import 'package:frontend/profile/presentation/component/bio_success_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -51,17 +53,15 @@ class _NewCourseState extends State<NewCourse> {
     setState(() {
       uploadState = " Uploading PDF";
     });
-    log(uploadState);
     final snanpshot = await uploadTask!.whenComplete(() => {});
     final urlDownload = await snanpshot.ref.getDownloadURL();
-    log("download url $urlDownload");
+    // log("download url $urlDownload");
 
     setState(() {
       uploadState = " PDF Uploaded";
       canUpload = true;
       urlLink = urlDownload;
     });
-    log(uploadState);
   }
 
   Future uploadFile() async {
@@ -141,24 +141,24 @@ class _NewCourseState extends State<NewCourse> {
                       onTap: () async {
                         final prefs = await SharedPreferences.getInstance();
                         final userid = prefs.getString("userid");
-
-                        final courseContent = CourseContent(
-                            name: _couresName.text, type: "pdf", url: urlLink);
+                        List<CourseContent> courseContent = [
+                          CourseContent(
+                              name: _couresName.text, type: "pdf", url: urlLink)
+                        ];
+                        // final courseContent = CourseContent(
+                        //     name: _couresName.text, type: "pdf", url: urlLink);
                         final courseCred = CourseDetails(
-                            courseContent: [courseContent],
+                            courseContent: courseContent,
                             description: _couresDescription.text,
                             teacherId: userid!,
                             title: _couresName.text,
                             year: _couresYear.text);
-                        log(courseContent.toString());
 
                         log(courseCred.toString());
 
-                        // BlocProvider.of<UserBloc>(context).add(
-                        //   LoginuserEvent(
-                        //     user: userCred,
-                        //   ),
-                        // );
+                        BlocProvider.of<CourseBloc>(context).add(
+                          AddCourseEvent(courseCred),
+                        );
                       },
                       child: Container(
                         width: double.infinity,
@@ -185,6 +185,23 @@ class _NewCourseState extends State<NewCourse> {
                         ),
                       ),
                     ),
+                  ),
+
+                  BlocListener<CourseBloc, CourseState>(
+                    listener: (context, state) {
+                      switch (state.addCourseSuccess) {
+                        case false:
+                          break;
+                        case true:
+                          log("true");
+                          Navigator.of(context, rootNavigator: true).push(
+                            MaterialPageRoute(
+                              builder: (_) => const CourseAddSuccess(),
+                            ),
+                          );
+                      }
+                    },
+                    child: const SizedBox(),
                   ),
                 ],
               ),

@@ -1,11 +1,12 @@
 import 'package:frontend/MainScreen/data/datasource/course_datasource.dart';
+import 'package:frontend/MainScreen/data/model/course_detail_model.dart';
+import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 import 'package:frontend/MainScreen/domaine/entities/suggested_courses.dart';
 import 'package:frontend/MainScreen/domaine/repository/base_course_repo.dart';
 import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/error/failure.dart';
 import 'package:dartz/dartz.dart';
-
 
 class CourseRepository implements BaseCourseRepository {
   final BaseCourseRemoteDataSource baseCourseRemoteDataSource;
@@ -31,10 +32,36 @@ class CourseRepository implements BaseCourseRepository {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
-  
+
   @override
-  Future<Either<Failure, Unit>> addCourse(CourseDetails CourseDetails) {
-    // TODO: implement addCourse
+  Future<Either<Failure, Unit>> addCourse(CourseDetails courseDetails) async {
+    CourseDetailModel courseModel = CourseDetailModel(
+        teacherId: courseDetails.teacherId,
+        title: courseDetails.title,
+        year: courseDetails.year,
+        description: courseDetails.description,
+        courseContent: courseDetails.courseContent);
+    try {
+      final result = await baseCourseRemoteDataSource.addCourse(courseModel);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Course>>> getCourseByTeacher(String id) async {
+    try {
+      final result = await baseCourseRemoteDataSource.getCoursesByTeacher(id);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> addChapter(String id, CourseContent courseContent) {
+    // TODO: implement addChapter
     throw UnimplementedError();
   }
 }

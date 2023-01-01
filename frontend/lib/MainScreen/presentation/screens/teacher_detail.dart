@@ -1,108 +1,156 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/coursedetail.dart';
 import 'package:frontend/MainScreen/presentation/screens/mainpage.dart';
+import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_bloc.dart';
+import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_event.dart';
+import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_state.dart';
+import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
+import 'package:frontend/cores/utils/enums.dart';
 
-class TeacherDetailScreen extends StatelessWidget {
-  const TeacherDetailScreen({super.key});
+class TeacherDetailScreen extends StatefulWidget {
+  final id;
+  const TeacherDetailScreen({super.key, required this.id});
 
   @override
+  State<TeacherDetailScreen> createState() => _TeacherDetailScreenState();
+}
+
+class _TeacherDetailScreenState extends State<TeacherDetailScreen> {
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<CourseBloc>()..add(GetSuggestedCoursesEvent()),
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            body: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Stack(
-                children: [
-                  ClipPath(
-                    clipper: CustomShape(),
-                    child: Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      color: Color(AppColors.blue),
-                    ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              sl<CourseBloc>()..add(GetCoursesByTeacherEvent(widget.id)),
+        ),
+        BlocProvider(
+          create: (context) =>
+              sl<UserBloc>()..add(GetUserDetailsEvent(id: widget.id)),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Stack(
+              children: [
+                ClipPath(
+                  clipper: CustomShape(),
+                  child: Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    color: Color(AppColors.blue),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      teacherHeader(context),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Center(child: messageButtonTeacher()),
-                      const SizedBox(
-                        height: 38,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text(
-                          "Biography",
-                          style: TextStyle(
-                            fontFamily: AppFonts.mainFont,
-                            fontWeight: FontWeight.w600,
-                            color: Color(AppColors.greyWritting),
-                            fontSize: 18,
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(right: 10, left: 20),
-                        child: Text(
-                          "Lorem ipsum dolor sit amet consectetur. Faucibus scelerisque condimentum sem pharetra neque egestas. Tellus mauris orci amet urna fermentum quisque habitasse. Mauris a bibendum nascetur elit sagittis aenean quam posuere. Quis dolor auctor adipiscing etiam etiam.",
-                          style: TextStyle(
-                            fontFamily: AppFonts.mainFont,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFFB4B4B4),
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 18,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                BlocBuilder<UserBloc, UserBlocState>(
+                  builder: (context, state) {
+                    if (state is UserDetailState) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          reviewCard("09", "Courses"),
+                          teacherHeader(context, state.usermodel),
                           const SizedBox(
-                            width: 20,
+                            height: 40,
                           ),
-                          reviewCard("4.6/5", "AvgRate"),
+                          Center(child: messageButtonTeacher()),
                           const SizedBox(
-                            width: 20,
+                            height: 38,
                           ),
-                          reviewCard("+9 yrs", "TeachingExp"),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text(
+                              "Biography",
+                              style: TextStyle(
+                                fontFamily: AppFonts.mainFont,
+                                fontWeight: FontWeight.w600,
+                                color: Color(AppColors.greyWritting),
+                                fontSize: 18,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
                           const SizedBox(
-                            width: 20,
+                            height: 5,
+                          ),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 10, left: 20),
+                              child: (state.usermodel.biography == null)
+                                  ? const Text(
+                                      "user has no biography yet ",
+                                      style: TextStyle(
+                                        fontFamily: AppFonts.mainFont,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFFB4B4B4),
+                                        fontSize: 18,
+                                      ),
+                                    )
+                                  : Text(
+                                      state.usermodel.biography!,
+                                      style: const TextStyle(
+                                        fontFamily: AppFonts.mainFont,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFFB4B4B4),
+                                        fontSize: 18,
+                                      ),
+                                    )),
+                          const SizedBox(
+                            height: 18,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              reviewCard("09", "Courses"),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              reviewCard("4.6/5", "AvgRate"),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              reviewCard("+9 yrs", "TeachingExp"),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 18,
+                          ),
+                          BlocBuilder<CourseBloc, CourseState>(
+                            builder: (context, state) {
+                              if (state.getCoursesByTeacherState ==
+                                  RequestState.loaded) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  child: suggestedCourses(context , state.getCoursesByTeacher),
+                                );
+                              } else {
+                                return const LoadingWidget();
+                              }
+                            },
                           ),
                         ],
-                      ),
-                      const SizedBox(
-                        height: 18,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: suggestedCourses(context),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              ],
             ),
-          );
-        }
-      ),
+          ),
+        );
+      }),
     );
   }
 }
@@ -124,7 +172,7 @@ class CustomShape extends CustomClipper<Path> {
   }
 }
 
-Widget teacherHeader(context) {
+Widget teacherHeader(context, user) {
   return Padding(
     padding: const EdgeInsets.only(top: 50.0, left: 20, right: 20),
     child: Row(
@@ -161,9 +209,9 @@ Widget teacherHeader(context) {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              "Djamila merid",
-              style: TextStyle(
+            Text(
+              user.fullname,
+              style: const TextStyle(
                 fontFamily: AppFonts.mainFont,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,

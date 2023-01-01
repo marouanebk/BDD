@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/profile/presentation/screens/edit_profile.dart';
+import 'package:frontend/profile/presentation/screens/student_courses.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -147,7 +148,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             Icons.menu_book_sharp,
             "My Courses",
             "See all saved and studied courses",
-            const TeacherCourses(),
+            (numberP == 2) ? const TeacherCourses() : const StudentCourses(),
           ),
           const SizedBox(
             height: 10,
@@ -181,11 +182,13 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   Widget profileScreenCard(icon, text1, text2, Widget link) {
     return GestureDetector(
-      onTap: () => Navigator.of(context, rootNavigator: true).push(
-        MaterialPageRoute(
-          builder: (_) => link,
-        ),
-      ),
+      onTap: () {
+        Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(
+            builder: (_) => link,
+          ),
+        );
+      },
       child: Container(
         height: 64,
         width: double.infinity,

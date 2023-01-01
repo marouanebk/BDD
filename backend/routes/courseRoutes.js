@@ -6,11 +6,14 @@ const courseController = require("../controllers/courseController");
 
 
 courseRouter.get('/getCourse', courseController.getCourse);
+courseRouter.get('/getCourseByTeacherId/:id', courseController.getCourseByTeacherId);
+courseRouter.get('/getCourseByID/:id', courseController.getCourseByID);
+
 courseRouter.post('/addCourse', courseController.addCourse);
+
 courseRouter.put('/updateCourse/:id', courseController.updateCourse);
 courseRouter.put('/addChapter/:id', courseController.addChapter);
 
-courseRouter.get('/getCourseByID/:id', courseController.getCourseByID);
 courseRouter.delete('/deleteCourseByID/:id', courseController.deleteCourseByID);
 
 

@@ -24,3 +24,20 @@ class AddCourseEvent extends CourseEvent {
   @override
   List<Object> get props => [courseDetails];
 }
+
+class GetCoursesByTeacherEvent extends CourseEvent {
+  final String id;
+
+  const GetCoursesByTeacherEvent(this.id);
+  @override
+  List<Object> get props => [id];
+}
+
+class AddChapterEvent extends CourseEvent {
+  final CourseContent courseContent;
+  final String id;
+
+  const AddChapterEvent(this.courseContent, this.id);
+  @override
+  List<Object> get props => [courseContent, id];
+}

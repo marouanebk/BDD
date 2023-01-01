@@ -1,5 +1,6 @@
 import 'package:frontend/authentication/data/datasource/user_datasource.dart';
 import 'package:frontend/authentication/data/models/user_model.dart';
+import 'package:frontend/authentication/domaine/entities/user_entitiy.dart';
 import 'package:frontend/authentication/domaine/repository/user_repository.dart';
 import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/error/failure.dart';
@@ -72,6 +73,17 @@ class UserRepository implements BaseUserRepository {
       return Right(result);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> getUserDetails(String id) async {
+    try {
+      final result = await baseUserRemoteDateSource.getUserDetails(id);
+
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
 }

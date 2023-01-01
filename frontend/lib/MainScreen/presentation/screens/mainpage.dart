@@ -107,9 +107,8 @@ class _MainScreenState extends State<MainScreen> {
                                   case RequestState.loaded:
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 20),
-                                      child: suggestedCourses(
-                                        context,
-                                      ),
+                                      child: suggestedCourses0(
+                                          context, state.getSuggestedCourses),
                                     );
                                   case RequestState.error:
                                     return Text(
@@ -128,9 +127,8 @@ class _MainScreenState extends State<MainScreen> {
                                   case RequestState.loaded:
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 20),
-                                      child: suggestedCourses(
-                                        context,
-                                      ),
+                                      child: suggestedCourses0(
+                                          context, state.getSuggestedCourses),
                                     );
                                   case RequestState.error:
                                     return Text(
@@ -149,9 +147,8 @@ class _MainScreenState extends State<MainScreen> {
                                   case RequestState.loaded:
                                     return Padding(
                                       padding: const EdgeInsets.only(right: 20),
-                                      child: suggestedCourses(
-                                        context,
-                                      ),
+                                      child: suggestedCourses0(
+                                          context, state.getSuggestedCourses),
                                     );
                                   case RequestState.error:
                                     return Text(
@@ -478,7 +475,7 @@ Widget courseCard() {
   );
 }
 
-Widget suggestedCourses(context) {
+Widget suggestedCourses(context, items) {
   return ListView.separated(
     scrollDirection: Axis.vertical,
     separatorBuilder: (context, index) => const SizedBox(
@@ -486,19 +483,18 @@ Widget suggestedCourses(context) {
     ),
     physics: const NeverScrollableScrollPhysics(),
     shrinkWrap: true,
-    itemCount: 5,
+    itemCount: items.length,
     itemBuilder: (context, index) {
-      return suggestedCourseCard(context);
+      return suggestedCourseCard(context, items[index]);
     },
   );
 }
 
-Widget suggestedCourseCard(context) {
+Widget suggestedCourseCard(context, index) {
   return GestureDetector(
     onTap: () => Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
-        builder: (_) =>
-            const CourseDetailScreen(id: "63add118d4d4cf3df0092ed1"),
+        builder: (_) => CourseDetailScreen(id: index.courseid),
       ),
     ),
     child: Container(
@@ -532,7 +528,7 @@ Widget suggestedCourseCard(context) {
           ),
           RichText(
             text: TextSpan(
-              text: "BDD Course ",
+              text: index.title,
               style: TextStyle(
                 fontFamily: AppFonts.mainFont,
                 fontWeight: FontWeight.w600,
@@ -541,7 +537,7 @@ Widget suggestedCourseCard(context) {
               ),
               children: [
                 TextSpan(
-                  text: "2nd year - IT",
+                  text: " ${index.year}" ,
                   style: TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w500,

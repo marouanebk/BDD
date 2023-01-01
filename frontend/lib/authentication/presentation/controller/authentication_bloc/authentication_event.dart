@@ -48,3 +48,12 @@ class SetBiographyEvent extends UserBlocEvent {
   @override
   List<Object> get props => [bio];
 }
+class GetUserDetailsEvent extends UserBlocEvent {
+  final String id;
+  const GetUserDetailsEvent({required this.id});
+
+  @override
+  List<Object> get props => [id];
+}
+
+

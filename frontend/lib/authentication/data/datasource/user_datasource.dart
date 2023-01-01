@@ -14,6 +14,7 @@ abstract class BaseUserRemoteDateSource {
   Future<bool> logOutUser();
   Future<int> chooseType(int number);
   Future<Unit> setBiography(String bio);
+  Future<UserModel> getUserDetails(String id);
 }
 
 class UserRemoteDataSource extends BaseUserRemoteDateSource {
@@ -146,7 +147,6 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
 
   @override
   Future<Unit> setBiography(String bio) async {
-    log("in set biography data source ");
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
@@ -168,6 +168,38 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
 
     if (response.statusCode == 200) {
       return Future.value(unit);
+    } else {
+      throw ServerException(
+          errorMessageModel: ErrorMessageModel(
+              statusCode: response.statusCode,
+              statusMessage: response.data['message']));
+    }
+  }
+
+  @override
+  Future<UserModel> getUserDetails(String id) async {
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+    };
+    if (id == "userid") {
+      final prefs = await SharedPreferences.getInstance();
+      final userid = prefs.getString("userid");
+    }
+
+    final response = await Dio().get(
+      "http://10.0.2.2:4000/users/getUserDetails/$id",
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 500;
+        },
+        headers: requestHeaders,
+      ),
+    );
+    log(response.data['result'].toString());
+
+    if (response.statusCode == 200) {
+      return UserModel.fromJson(response.data['result']);
     } else {
       throw ServerException(
           errorMessageModel: ErrorMessageModel(

@@ -1,5 +1,5 @@
-
 import 'package:equatable/equatable.dart';
+import 'package:frontend/authentication/data/models/user_model.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_bloc.dart';
 
 abstract class UserBlocState extends Equatable {
@@ -39,9 +39,9 @@ class UserDetailsState extends UserBlocState {
   final String fullname;
   final String email;
 
-  const UserDetailsState({required this.fullname , required this.email});
+  const UserDetailsState({required this.fullname, required this.email});
   @override
-  List<Object> get props => [fullname , email];
+  List<Object> get props => [fullname, email];
 }
 
 class TeacherLoginState extends UserBlocState {}
@@ -50,3 +50,10 @@ class StudentLoginState extends UserBlocState {}
 
 class BioSuccessState extends UserBlocState {}
 
+class UserDetailState extends UserBlocState {
+  final UserModel usermodel;
+
+  const UserDetailState({required this.usermodel});
+  @override
+  List<Object> get props => [usermodel];
+}

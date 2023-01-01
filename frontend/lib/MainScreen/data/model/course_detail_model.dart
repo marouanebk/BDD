@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 
@@ -9,7 +12,7 @@ class CourseDetailModel extends CourseDetails {
     required String title,
     required String year,
     required String description,
-    required List<CourseContent> courseContent,
+    required List<dynamic> courseContent,
     // required String teacherName,
   }) : super(
             teacherId: teacherId,
@@ -40,7 +43,13 @@ class CourseDetailModel extends CourseDetails {
       "title": title,
       "year": year,
       "description": description,
-      "courseContent": courseContent,
+      "courseContent": {
+        "name": courseContent[0].name.toString(),
+        "type": courseContent[0].type.toString(),
+        "url": courseContent[0].url.toString(),
+        // "quizz": courseContent[0].quiz.toString(),
+      },
+      
       "user": teacherId,
     };
   }

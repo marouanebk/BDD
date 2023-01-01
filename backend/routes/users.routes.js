@@ -7,7 +7,10 @@ router.post("/register", usersController.register);
 router.post("/login", usersController.login);
 router.put("/changetype", usersController.changeType);
 router.put("/setBiography", usersController.setBiography);
+router.get("/getUserDetails/:id", usersController.getUserDetails);
 router.get("/user-Profile", usersController.userProfile);
+
+
 
 
 module.exports = router;

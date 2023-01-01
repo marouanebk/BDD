@@ -35,10 +35,12 @@ class CourseDetailScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             courseHeader(
-                                context,
-                                state.getCourseDetail!.title,
-                                state.getCourseDetail!.year,
-                                state.getCourseDetail!.teacherName),
+                              context,
+                              state.getCourseDetail!.title,
+                              state.getCourseDetail!.year,
+                              state.getCourseDetail!.teacherName,
+                              state.getCourseDetail!.teacherId,
+                            ),
                             const SizedBox(
                               height: 20,
                             ),
@@ -114,7 +116,7 @@ class CourseDetailScreen extends StatelessWidget {
   }
 }
 
-Widget courseHeader(context, name, year, teacherName) {
+Widget courseHeader(context, name, year, teacherName, teacherid) {
   return Container(
     height: 202,
     width: double.infinity,
@@ -178,7 +180,9 @@ Widget courseHeader(context, name, year, teacherName) {
         InkWell(
           onTap: () => Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute(
-              builder: (_) => const TeacherDetailScreen(),
+              builder: (_) => TeacherDetailScreen(
+                id: teacherid,
+              ),
             ),
           ),
           child: Container(

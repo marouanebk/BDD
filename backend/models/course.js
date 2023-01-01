@@ -26,10 +26,10 @@ const courseSchema = mongoose.Schema({
             type: String,
             required: false,
         },
-        url: [{
+        url: {
             type: String,
             required: false,
-        },],
+        },
 
         quizzContent: [{
             question1: {

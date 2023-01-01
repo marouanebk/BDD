@@ -4,7 +4,7 @@ class User extends Equatable {
   final String? userid;
   final String? fullname;
   final String email;
-  final String password;
+  final String? password;
   final String? biography;
 
   const User(
