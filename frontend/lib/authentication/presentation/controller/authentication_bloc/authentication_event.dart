@@ -40,3 +40,11 @@ class LoginuserEvent extends UserBlocEvent {
   @override
   List<Object> get props => [user];
 }
+
+class SetBiographyEvent extends UserBlocEvent {
+  final String bio;
+  const SetBiographyEvent({required this.bio});
+
+  @override
+  List<Object> get props => [bio];
+}

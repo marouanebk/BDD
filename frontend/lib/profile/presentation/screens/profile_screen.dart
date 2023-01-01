@@ -16,8 +16,8 @@ import 'package:frontend/profile/presentation/screens/edit_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final int;
-  const ProfileScreen({required this.int, super.key});
+  final numberP;
+  const ProfileScreen({required this.numberP, super.key});
 
   @override
   State<ProfileScreen> createState() => ProfileScreenState();
@@ -98,23 +98,23 @@ class ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(
                           height: 14,
                         ),
-                        profileScreenList(context),
+                        profileScreenList(context, widget.numberP),
                         BlocListener<UserBloc, UserBlocState>(
-                            listener: (context, state) {
-                              if (state is ErrorUserBlocState) {
-                              } else if (state is SignOuState) {
-                                // Navigator.of(context).pushReplacement(
-                                //   MaterialPageRoute(
-                                //     builder: (context) => const LoginPage(),
-                                //   ),
-                                // );
-                                Navigator.of(context, rootNavigator: true)
-                                    .pushReplacement(MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginPage()));
-                              }
-                            },
-                            child: Container()),
+                          listener: (context, state) {
+                            if (state is ErrorUserBlocState) {
+                            } else if (state is SignOuState) {
+                              // Navigator.of(context).pushReplacement(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const LoginPage(),
+                              //   ),
+                              // );
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushReplacement(MaterialPageRoute(
+                                      builder: (context) => const LoginPage()));
+                            }
+                          },
+                          child: Container(),
+                        ),
                       ],
                     ),
                   ),
@@ -127,7 +127,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget profileScreenList(context) {
+  Widget profileScreenList(context, numberP) {
     return Padding(
       padding: const EdgeInsets.only(right: 20, left: 20),
       child: Column(
@@ -136,7 +136,9 @@ class ProfileScreenState extends State<ProfileScreen> {
             Icons.person,
             "Profile",
             "Edit the details of your profile ",
-            const EditProfileScreen(),
+            EditProfileScreen(
+              numberE: numberP,
+            ),
           ),
           const SizedBox(
             height: 10,

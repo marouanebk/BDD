@@ -64,4 +64,14 @@ class UserRepository implements BaseUserRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> setBiography(String bio) async {
+    try {
+      final result = await baseUserRemoteDateSource.setBiography(bio);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

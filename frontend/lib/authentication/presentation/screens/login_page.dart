@@ -267,7 +267,7 @@ class _LoginPageState extends State<LoginPage> {
             border: Border.all(
               color: const Color(0xFFBEC5D1),
             ),
-            color: Color(AppColors.blue)),
+            color: Color(AppColors.blue),),
         child: Center(
           child: BlocBuilder<UserBloc, UserBlocState>(
             builder: (context, state) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
+import 'package:frontend/MainScreen/presentation/screens/pdf_preview.dart';
 import 'package:frontend/MainScreen/presentation/screens/teacher_detail.dart';
 import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/cores/const/colors.dart';
@@ -33,8 +34,11 @@ class CourseDetailScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            courseHeader(context, state.getCourseDetail!.title,
-                                state.getCourseDetail!.year),
+                            courseHeader(
+                                context,
+                                state.getCourseDetail!.title,
+                                state.getCourseDetail!.year,
+                                state.getCourseDetail!.teacherName),
                             const SizedBox(
                               height: 20,
                             ),
@@ -86,7 +90,7 @@ class CourseDetailScreen extends StatelessWidget {
                                     ),
                                     textAlign: TextAlign.start,
                                   ),
-                                  courseContent(),
+                                  courseContent(context),
                                   const SizedBox(
                                     height: 80,
                                   )
@@ -110,7 +114,7 @@ class CourseDetailScreen extends StatelessWidget {
   }
 }
 
-Widget courseHeader(context, name, year) {
+Widget courseHeader(context, name, year, teacherName) {
   return Container(
     height: 202,
     width: double.infinity,
@@ -197,9 +201,9 @@ Widget courseHeader(context, name, year) {
                 const SizedBox(
                   width: 10,
                 ),
-                const Text(
-                  "Djamila merid ",
-                  style: TextStyle(
+                Text(
+                  teacherName,
+                  style: const TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
@@ -228,7 +232,7 @@ Widget reviews() {
   );
 }
 
-Widget courseContent() {
+Widget courseContent(context) {
   return Padding(
     padding: const EdgeInsets.only(right: 20),
     child: ListView.separated(
@@ -240,64 +244,71 @@ Widget courseContent() {
       shrinkWrap: true,
       itemCount: 5,
       itemBuilder: (context, index) {
-        return courseContentCard();
+        return courseContentCard(context);
       },
     ),
   );
 }
 
-Widget courseContentCard() {
-  return Container(
-    height: 60,
-    width: double.infinity,
-    decoration: BoxDecoration(
-      borderRadius: const BorderRadius.all(Radius.circular(5)),
-      border: Border.all(
-        color: Color(AppColors.blue),
+Widget courseContentCard(context) {
+  return GestureDetector(
+    onTap: () => Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(
+        builder: (_) => const PdfPreviewPage(),
       ),
-      color: Colors.white,
     ),
-    padding: const EdgeInsets.only(left: 11, top: 11),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          color: const Color(0xFFE8EFF5),
-          child: Image.asset(
-            "assets/images/pdf.png",
-            // fit: BoxFit.cover,
+    child: Container(
+      height: 60,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        border: Border.all(
+          color: Color(AppColors.blue),
+        ),
+        color: Colors.white,
+      ),
+      padding: const EdgeInsets.only(left: 11, top: 11),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            color: const Color(0xFFE8EFF5),
+            child: Image.asset(
+              "assets/images/pdf.png",
+              // fit: BoxFit.cover,
+            ),
           ),
-        ),
-        const SizedBox(
-          width: 37,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Chapter 05 (last one)",
-              style: TextStyle(
-                fontFamily: AppFonts.mainFont,
-                fontWeight: FontWeight.w600,
-                color: Color(AppColors.writting),
-                fontSize: 16,
+          const SizedBox(
+            width: 37,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Chapter 05 (last one)",
+                style: TextStyle(
+                  fontFamily: AppFonts.mainFont,
+                  fontWeight: FontWeight.w600,
+                  color: Color(AppColors.writting),
+                  fontSize: 16,
+                ),
               ),
-            ),
-            Text(
-              "16 pages",
-              style: TextStyle(
-                fontFamily: AppFonts.mainFont,
-                fontWeight: FontWeight.w600,
-                color: Color(AppColors.grey),
-                fontSize: 16,
+              Text(
+                "16 pages",
+                style: TextStyle(
+                  fontFamily: AppFonts.mainFont,
+                  fontWeight: FontWeight.w600,
+                  color: Color(AppColors.grey),
+                  fontSize: 16,
+                ),
               ),
-            ),
-          ],
-        )
-      ],
+            ],
+          )
+        ],
+      ),
     ),
   );
 }

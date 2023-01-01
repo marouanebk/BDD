@@ -31,4 +31,10 @@ class CourseRepository implements BaseCourseRepository {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
+  
+  @override
+  Future<Either<Failure, Unit>> addCourse(CourseDetails CourseDetails) {
+    // TODO: implement addCourse
+    throw UnimplementedError();
+  }
 }

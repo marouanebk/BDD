@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/authentication/domaine/usecases/choose_type_usecase.dart';
 import 'package:frontend/authentication/domaine/usecases/login_usecase.dart';
 import 'package:frontend/authentication/domaine/usecases/logout_usecase.dart';
+import 'package:frontend/authentication/domaine/usecases/set_biography_usecase.dart';
 import 'package:frontend/authentication/domaine/usecases/signup_usecase.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_event.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_state.dart';
@@ -13,12 +16,14 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
   final CreateUserUseCase createUserUseCase;
   final LogOutUseCase logOutUseCase;
   final ChooseTypeUseCase chooseTypeUseCase;
+  final SetBiographyUseCase setBiographyUseCase;
 
   UserBloc(
     this.loginUserCase,
     this.createUserUseCase,
     this.logOutUseCase,
     this.chooseTypeUseCase,
+    this.setBiographyUseCase,
   ) : super(UserBlocStateInitial()) {
     on<UserBlocEvent>((event, emit) async {
       if (event is CreateUserEvent) {
@@ -40,6 +45,11 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
         emit(LodingUserBlocState());
         final failuerOrDoneMessage = await chooseTypeUseCase(event.number);
         emit(_chooseType(
+            result: failuerOrDoneMessage, message: "choosing Type success"));
+      } else if (event is SetBiographyEvent) {
+        emit(LodingUserBlocState());
+        final failuerOrDoneMessage = await setBiographyUseCase(event.bio);
+        emit(_setBio(
             result: failuerOrDoneMessage, message: "choosing Type success"));
       }
     });
@@ -70,6 +80,16 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
       } else {
         return StudentLoginState();
       }
+    });
+  }
+
+  UserBlocState _setBio(
+      {required Either<Failure, Unit> result, required String message}) {
+    return result.fold((l) {
+      return ErrorUserBlocState(message: _mapFailureToMessage(l));
+    }, (r) {
+      log("success bio funciton");
+      return BioSuccessState();
     });
   }
 

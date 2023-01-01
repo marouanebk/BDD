@@ -23,7 +23,9 @@ class _BaseScreenState extends State<BaseScreen> {
       const AllChatScreen(),
       const ToDos(),
       const Notifications(),
-      const ProfileScreen(int: 1,),
+      const ProfileScreen(
+        numberP: 1,
+      ),
     ];
   }
 

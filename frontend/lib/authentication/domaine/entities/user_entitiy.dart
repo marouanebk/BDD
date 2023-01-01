@@ -5,14 +5,15 @@ class User extends Equatable {
   final String? fullname;
   final String email;
   final String password;
+  final String? biography;
 
-  const User({
-    this.userid,
-    this.fullname,
-    required this.email,
-    required this.password,
-  });
+  const User(
+      {this.userid,
+      this.fullname,
+      required this.email,
+      required this.password,
+      this.biography});
 
   @override
-  List<Object?> get props => [userid, fullname, email, password];
+  List<Object?> get props => [userid, fullname, email, password, biography];
 }

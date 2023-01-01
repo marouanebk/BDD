@@ -1,6 +1,7 @@
 import 'package:frontend/MainScreen/data/datasource/course_datasource.dart';
 import 'package:frontend/MainScreen/data/repository/course_repo_implem.dart';
 import 'package:frontend/MainScreen/domaine/repository/base_course_repo.dart';
+import 'package:frontend/MainScreen/domaine/usecases/add_course_usecase.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_course_detail.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_suggested_courses.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:frontend/authentication/domaine/repository/user_repository.dart'
 import 'package:frontend/authentication/domaine/usecases/choose_type_usecase.dart';
 import 'package:frontend/authentication/domaine/usecases/login_usecase.dart';
 import 'package:frontend/authentication/domaine/usecases/logout_usecase.dart';
+import 'package:frontend/authentication/domaine/usecases/set_biography_usecase.dart';
 import 'package:frontend/authentication/domaine/usecases/signup_usecase.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_bloc.dart';
 import 'package:frontend/to-dos/data/datasource/todo_datasource.dart';
@@ -28,9 +30,9 @@ final sl = GetIt.instance;
 class ServiceLocator {
   Future<void> init() async {
     // Bloc
-    sl.registerFactory(() => UserBloc(sl(), sl(), sl(), sl()));
+    sl.registerFactory(() => UserBloc(sl(), sl(), sl(), sl(), sl()));
     sl.registerFactory(() => TodoBloc(sl(), sl(), sl(), sl(), sl()));
-    sl.registerFactory(() => CourseBloc(sl() , sl()));
+    sl.registerFactory(() => CourseBloc(sl(), sl(), sl()));
 
     // sl.registerFactory(() => UserBloc(
     // createUserUseCase: sl(), loginUserCase: sl()));
@@ -39,6 +41,7 @@ class ServiceLocator {
     sl.registerLazySingleton(() => CreateUserUseCase(sl()));
     sl.registerLazySingleton(() => LogOutUseCase(sl()));
     sl.registerLazySingleton(() => ChooseTypeUseCase(sl()));
+    sl.registerLazySingleton(() => SetBiographyUseCase(sl()));
 
     //todo usecases
     sl.registerLazySingleton(() => GetDoneTodoUseCase(sl()));
@@ -50,6 +53,7 @@ class ServiceLocator {
     //courses usecases
     sl.registerLazySingleton(() => GetCoursedDetailUseCase(sl()));
     sl.registerLazySingleton(() => GetSuggestedCoursesUseCase(sl()));
+    sl.registerLazySingleton(() => AddCourseUseCase(sl()));
 
     // Repository
     sl.registerLazySingleton<BaseUserRepository>(() => UserRepository(sl()));

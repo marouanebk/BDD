@@ -68,17 +68,13 @@ async function register(params, callback) {
 }
 
 async function changeType({ userid, type }, callback) {
-  console.log("in changing type function");
   const user = await User.findOne({ userid: userid });
 
-  console.log(user);
-  user
   User.updateOne({ userid: userid }, { $set: { type: type } }, function (err, res) {
     if (err) throw err;
     console.log("1 document updated");
   });
   const user1 = await User.findOne({ userid: userid });
-  console.log(user1);
   if (type == "Teacher")
     return callback(
       null,
@@ -88,7 +84,6 @@ async function changeType({ userid, type }, callback) {
 
     );
   else if (type == "Student")
-
     return callback(
       null,
       {
@@ -98,6 +93,26 @@ async function changeType({ userid, type }, callback) {
     );
 
 }
+async function setBiography({ userid, biography }, callback) {
+  const user = await User.findOne({ userid: userid });
+  
+
+  User.updateOne({ userid: userid }, { $set: { biography: biography } }, function (err, res) {
+    if (err) throw err;
+    console.log("1 document updated");
+  });
+  const user1 = await User.findOne({ userid: userid });
+  console.log(user1);
+  return callback(
+    null,
+    {
+      message: "success",
+    },
+
+  );
+
+
+}
 
 
 
@@ -105,5 +120,6 @@ module.exports = {
   login,
   register,
   changeType,
+  setBiography,
 
 };

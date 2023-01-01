@@ -19,7 +19,7 @@ class _TeacherScreenState extends State<TeacherScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      const ProfileScreen(int: 2),
+      const ProfileScreen(numberP: 2),
       const AllChatScreen(),
       const ToDos(),
       const Notifications(),

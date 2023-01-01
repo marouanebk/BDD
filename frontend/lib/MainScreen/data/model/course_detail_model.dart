@@ -1,38 +1,47 @@
+import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 
 class CourseDetailModel extends CourseDetails {
   const CourseDetailModel({
     String? courseid,
-    String? teacherid,
-    required String year,
+    String? teacherName,
+    required String teacherId,
     required String title,
+    required String year,
     required String description,
+    required List<CourseContent> courseContent,
     // required String teacherName,
   }) : super(
-          courseid: courseid,
-          title: title,
-          teacherid: teacherid,
-          year: year,
-          description: description,
-          // teacherName: teacherName,
-        );
+            teacherId: teacherId,
+            courseid: courseid,
+            title: title,
+            teacherName: teacherName,
+            year: year,
+            description: description,
+            courseContent: courseContent
+            // teacherName: teacherName,
+            );
 
   factory CourseDetailModel.fromJson(Map<String, dynamic> json) {
     return CourseDetailModel(
-      courseid: json["_id"],
-      teacherid: json["user"],
-      year: json["year"],
-      title: json["title"],
-      description: json["description"],
-      // teacherName: json["teacherName"],
-    );
+        courseid: json["course"]["_id"],
+        teacherName: json["fullname"],
+        year: json["course"]["year"],
+        title: json["course"]["title"],
+        description: json["course"]["description"],
+        courseContent: json["course"]["courseContent"],
+        teacherId: json["course"]["user"]
+        // teacherName: json["teacherName"],
+        );
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     "userid": userid,
-  //     "todo": todo,
-  //     "status": status,
-  //   };
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+      "title": title,
+      "year": year,
+      "description": description,
+      "courseContent": courseContent,
+      "user": teacherId,
+    };
+  }
 }

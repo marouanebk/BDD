@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/MainScreen/presentation/screens/coursedetail.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/profile/presentation/component/biography_page.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({super.key});
+  final numberE;
+  const EditProfileScreen({required this.numberE, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +71,7 @@ class EditProfileScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
+            if (numberE ==2)
             profileItemCard(
               context,
               Icons.list,

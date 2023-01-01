@@ -6,6 +6,7 @@ import 'package:frontend/chat/presentation/screens/chat_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
+import 'package:frontend/cores/widgets/text_input_field.dart';
 
 class AllChatScreen extends StatefulWidget {
   const AllChatScreen({super.key});
@@ -15,6 +16,7 @@ class AllChatScreen extends StatefulWidget {
 }
 
 class _AllChatScreenState extends State<AllChatScreen> {
+  TextEditingController _searchchat = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -27,7 +29,7 @@ class _AllChatScreenState extends State<AllChatScreen> {
             padding: const EdgeInsets.only(left: 20, top: 70, right: 10),
             child: Column(
               children: [
-                searchBar(),
+                searchBar(context),
                 const SizedBox(
                   height: 23,
                 ),
@@ -59,6 +61,28 @@ class _AllChatScreenState extends State<AllChatScreen> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget searchBar(context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: Container(
+        width: double.infinity,
+        height: 40,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          border: Border.all(
+            color: const Color(0xFFBEC5D1),
+          ),
+          color: Colors.white,
+        ),
+        child: TextFieldInput(
+          hintText: "seach here",
+          textEditingController: _searchchat,
+          textInputType: TextInputType.text,
         ),
       ),
     );

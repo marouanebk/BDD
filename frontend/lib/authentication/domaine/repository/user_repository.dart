@@ -12,5 +12,7 @@ abstract class BaseUserRepository {
 
   Future<Either<Failure , int>> chooseType(int number);
 
+  Future<Either<Failure , Unit>> setBiography(String bio);
+
 
 }

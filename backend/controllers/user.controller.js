@@ -34,7 +34,7 @@ exports.register = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  
+
 
   userServices.login({ email, password }, (error, results) => {
     if (error) {
@@ -57,7 +57,7 @@ exports.login = (req, res, next) => {
 exports.changeType = (req, res, next) => {
   const { userid, type } = req.body;
   console.log("in cahnge type controller backend");
-  
+
 
   userServices.changeType({ userid, type }, (error, results) => {
     if (error) {
@@ -68,7 +68,7 @@ exports.changeType = (req, res, next) => {
       });
     }
     else {
-      console.log("login");
+      console.log("change type");
 
       res.status(200).send({
         type: "Success",
@@ -77,6 +77,29 @@ exports.changeType = (req, res, next) => {
     }
   });
 };
+
+exports.setBiography = (req, res, next) => {
+  const { userid, biography } = req.body;
+
+
+  userServices.setBiography({ userid, biography }, (error, results) => {
+    if (error) {
+      console.log("error")
+      res.status(401).send({
+        type: "Error",
+        data: results,
+      });
+    }
+    else {
+
+      res.status(200).send({
+        type: "Success",
+        data: results,
+      });
+    }
+  });
+};
+
 
 exports.userProfile = (req, res, next) => {
   return res.status(401).json({ message: "Authorized User!!" });

@@ -9,14 +9,18 @@ class CourseState extends Equatable {
   final RequestState getCourseDetailState;
   final String getCourseDetailmessage;
 
+  final RequestState addCoruseState;
+  final String addCourseMessage;
+
   const CourseState({
     this.getSuggestedCourses = const [],
     this.getSuggestedCoursesState = RequestState.loading,
     this.getSuggestedCoursesmessage = "",
-
     this.getCourseDetail,
     this.getCourseDetailState = RequestState.loading,
     this.getCourseDetailmessage = "",
+    this.addCoruseState = RequestState.loading,
+    this.addCourseMessage = "",
   });
 
   CourseState copyWith({
@@ -27,6 +31,8 @@ class CourseState extends Equatable {
     CourseDetails? getCourseDetail,
     RequestState? getCourseDetailState,
     String? getCourseDetailmessage,
+    RequestState? addCoruseState,
+    String? addCourseMessage,
     //
   }) {
     return CourseState(
@@ -42,6 +48,8 @@ class CourseState extends Equatable {
       getCourseDetailmessage:
           getCourseDetailmessage ?? this.getCourseDetailmessage,
       //
+      addCoruseState: addCoruseState ?? this.addCoruseState,
+      addCourseMessage: addCourseMessage ?? this.addCourseMessage,
     );
     //
   }
@@ -55,6 +63,9 @@ class CourseState extends Equatable {
         getCourseDetail,
         getCourseDetailState,
         getCourseDetailmessage,
+
+        addCoruseState,
+        addCourseMessage,
 
         //
       ];

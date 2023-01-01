@@ -1,4 +1,6 @@
 const courses = require("../Models/course.js");
+const User = require("../models/user.model");
+
 
 
 exports.getCourse = async (req, res, next) => {
@@ -57,8 +59,8 @@ exports.updateCourse = async (req, res, next) => {
 
 
 exports.getCourseByID = async (req, res, next) => {
+
     const courseId = req.params.id;
-    console.log(courseId);
     let course;
     try { course = await courses.findById(courseId) } catch (err) {
         return res.status(500).json({ message: err.message })
@@ -67,7 +69,36 @@ exports.getCourseByID = async (req, res, next) => {
     if (!course) {
         return res.status(404).json({ message: 'Cannot find course' })
     }
-    return res.status(200).send({ result: course })
+    teacherid = course.user;
+    const _user = await User.findOne({ _id: teacherid });
+    fullname = _user.fullname;
+    return res.status(200).send({ result: { course, fullname } })
+}
+
+exports.addChapter = async (req, res, next) => {
+    const { newChapter } = req.body
+    const courseId = req.params.id;
+
+    let course;
+
+    if (courseContent === null) {
+        return res.status(404).json({ message: 'Cannot add chapter' });
+    } else {
+
+        try {
+            course = await courses.findByIdAndUpdate(courseId, {
+                $push: { courseContent: newChapter }
+            })
+        } catch (err) {
+            return res.status(500).json({ message: err.message })
+
+        }
+        if (!course) {
+            return res.status(404).json({ message: 'Cannot find course' })
+        }
+
+        return res.status(200).json(course)
+    }
 }
 
 

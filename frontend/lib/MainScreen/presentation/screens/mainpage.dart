@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
@@ -7,6 +9,7 @@ import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/utils/enums.dart';
+import 'package:frontend/cores/widgets/text_input_field.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class MainScreen extends StatefulWidget {
@@ -17,6 +20,16 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final controller = PageController(initialPage: 0);
+  TextEditingController _search = TextEditingController();
+  int pageindex = 0;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +48,9 @@ class _MainScreenState extends State<MainScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    searchBar(),
+                    searchBar(context),
                     const SizedBox(
                       height: 9,
                     ),
@@ -48,25 +62,107 @@ class _MainScreenState extends State<MainScreen> {
                     const SizedBox(
                       height: 22,
                     ),
-                    BlocBuilder<CourseBloc, CourseState>(
-                      builder: (context, state) {
-                        switch (state.getSuggestedCoursesState) {
-                          case RequestState.loading:
-                            return const Center(
-                              child: LoadingWidget(),
-                            );
+                    Flexible(
+                      child: SizedBox(
+                        height: 600,
+                        child: PageView(
+                          controller: controller,
+                          onPageChanged: (index) {
+                            log("page ${index + 1} ");
+                            pageindex = index;
+                            setState(() {
+                              index;
+                            });
+                          },
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            BlocBuilder<CourseBloc, CourseState>(
+                              builder: (context, state) {
+                                switch (state.getSuggestedCoursesState) {
+                                  case RequestState.loading:
+                                    return const Center(
+                                      child: LoadingWidget(),
+                                    );
 
-                          case RequestState.loaded:
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: suggestedCourses0(
-                                  context, state.getSuggestedCourses),
-                            );
-                          case RequestState.error:
-                            return Text(state.getSuggestedCoursesmessage);
-                        }
-                      },
-                    ),
+                                  case RequestState.loaded:
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: suggestedCourses0(
+                                          context, state.getSuggestedCourses),
+                                    );
+                                  case RequestState.error:
+                                    return Text(
+                                        state.getSuggestedCoursesmessage);
+                                }
+                              },
+                            ),
+                            BlocBuilder<CourseBloc, CourseState>(
+                              builder: (context, state) {
+                                switch (state.getSuggestedCoursesState) {
+                                  case RequestState.loading:
+                                    return const Center(
+                                      child: LoadingWidget(),
+                                    );
+
+                                  case RequestState.loaded:
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: suggestedCourses(
+                                        context,
+                                      ),
+                                    );
+                                  case RequestState.error:
+                                    return Text(
+                                        state.getSuggestedCoursesmessage);
+                                }
+                              },
+                            ),
+                            BlocBuilder<CourseBloc, CourseState>(
+                              builder: (context, state) {
+                                switch (state.getSuggestedCoursesState) {
+                                  case RequestState.loading:
+                                    return const Center(
+                                      child: LoadingWidget(),
+                                    );
+
+                                  case RequestState.loaded:
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: suggestedCourses(
+                                        context,
+                                      ),
+                                    );
+                                  case RequestState.error:
+                                    return Text(
+                                        state.getSuggestedCoursesmessage);
+                                }
+                              },
+                            ),
+                            BlocBuilder<CourseBloc, CourseState>(
+                              builder: (context, state) {
+                                switch (state.getSuggestedCoursesState) {
+                                  case RequestState.loading:
+                                    return const Center(
+                                      child: LoadingWidget(),
+                                    );
+
+                                  case RequestState.loaded:
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: suggestedCourses(
+                                        context,
+                                      ),
+                                    );
+                                  case RequestState.error:
+                                    return Text(
+                                        state.getSuggestedCoursesmessage);
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -152,23 +248,103 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-}
 
-Widget searchBar() {
-  return Padding(
-    padding: const EdgeInsets.only(right: 10),
-    child: Container(
-      width: double.infinity,
-      height: 40,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-        border: Border.all(
-          color: const Color(0xFFBEC5D1),
+  Widget discoverCourses(context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Discover the Latest Courses',
+          style: TextStyle(
+            fontFamily: AppFonts.mainFont,
+            fontWeight: FontWeight.w600,
+            color: Color(AppColors.writting),
+            fontSize: 18,
+          ),
         ),
-        color: Colors.orange,
+        const SizedBox(
+          height: 11,
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              courseType(0, "Made For You"),
+              const SizedBox(
+                width: 10,
+              ),
+              courseType(1, "Made For You"),
+              const SizedBox(
+                width: 10,
+              ),
+              courseType(2, "Made For You"),
+              const SizedBox(
+                width: 10,
+              ),
+              courseType(3, "Made For You"),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget courseType(number, text) {
+    return GestureDetector(
+      onTap: () {
+        controller.animateToPage(number,
+            duration: const Duration(seconds: 1), curve: Curves.ease);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(17)),
+          border: Border.all(
+            color: Color(AppColors.blue),
+          ),
+          color: number == pageindex
+              ? Color(AppColors.blue)
+              : const Color(0xFFFFFFFF),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontFamily: AppFonts.mainFont,
+            fontWeight: FontWeight.w500,
+            color: number == pageindex
+                ? const Color(0xFFFFFFFF)
+                : Color(AppColors.blue),
+            fontSize: 12,
+          ),
+        ),
       ),
-    ),
-  );
+    );
+  }
+
+  Widget searchBar(context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: Container(
+        width: double.infinity,
+        height: 40,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          border: Border.all(
+            color: const Color(0xFFBEC5D1),
+          ),
+          color: Colors.white,
+        ),
+        child: TextFieldInput(
+          hintText: "seach here",
+          textEditingController: _search,
+          textInputType: TextInputType.text,
+        ),
+      ),
+    );
+  }
 }
 
 Widget coursesEnrolled() {
@@ -302,71 +478,6 @@ Widget courseCard() {
   );
 }
 
-Widget discoverCourses(context) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        'Discover the Latest Courses',
-        style: TextStyle(
-          fontFamily: AppFonts.mainFont,
-          fontWeight: FontWeight.w600,
-          color: Color(AppColors.writting),
-          fontSize: 18,
-        ),
-      ),
-      const SizedBox(
-        height: 11,
-      ),
-      SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            courseType(1, "Made For You"),
-            const SizedBox(
-              width: 10,
-            ),
-            courseType(0, "Made For You"),
-            const SizedBox(
-              width: 10,
-            ),
-            courseType(0, "Made For You"),
-            const SizedBox(
-              width: 10,
-            ),
-            courseType(0, "Made For You"),
-            const SizedBox(
-              width: 10,
-            ),
-          ],
-        ),
-      ),
-    ],
-  );
-}
-
-Widget courseType(number, text) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-    decoration: BoxDecoration(
-      borderRadius: const BorderRadius.all(Radius.circular(17)),
-      border: Border.all(
-        color: Color(AppColors.blue),
-      ),
-      color: number == 0 ? const Color(0xFFFFFFFF) : Color(AppColors.blue),
-    ),
-    child: Text(
-      text,
-      style: TextStyle(
-        fontFamily: AppFonts.mainFont,
-        fontWeight: FontWeight.w500,
-        color: number == 0 ? Color(AppColors.blue) : const Color(0xFFFFFFFF),
-        fontSize: 12,
-      ),
-    ),
-  );
-}
-
 Widget suggestedCourses(context) {
   return ListView.separated(
     scrollDirection: Axis.vertical,
@@ -409,8 +520,11 @@ Widget suggestedCourseCard(context) {
             width: 50,
             height: 50,
             decoration: const BoxDecoration(
-              color: Colors.orange,
               shape: BoxShape.circle,
+            ),
+            child: Image.network(
+              "https://picsum.photos/250?image=9",
+              fit: BoxFit.cover,
             ),
           ),
           const SizedBox(

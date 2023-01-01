@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:frontend/authentication/data/models/user_model.dart';
 import 'package:frontend/cores/error/exceptions.dart';
@@ -10,6 +13,7 @@ abstract class BaseUserRemoteDateSource {
   Future<int> loginUser(UserModel userModel);
   Future<bool> logOutUser();
   Future<int> chooseType(int number);
+  Future<Unit> setBiography(String bio);
 }
 
 class UserRemoteDataSource extends BaseUserRemoteDateSource {
@@ -77,8 +81,11 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
           "userid", response.data["data"]['userid'].toString());
       final type = response.data["data"]["type"];
       if (type == "Teacher") {
+        await prefs.setInt('type', 2);
+
         return 2;
       }
+      await prefs.setInt("type", 1);
       return 1;
     } else {
       throw ServerException(
@@ -95,6 +102,7 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
     await prefs.remove("fullanme");
     await prefs.remove('email');
     await prefs.remove("userid");
+    await prefs.remove('type');
 
     return true;
   }
@@ -126,7 +134,40 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
 
     if (response.statusCode == 200) {
       // return response.data["data"]["message"];
+      await prefs.setInt("type", number);
       return number;
+    } else {
+      throw ServerException(
+          errorMessageModel: ErrorMessageModel(
+              statusCode: response.statusCode,
+              statusMessage: response.data['message']));
+    }
+  }
+
+  @override
+  Future<Unit> setBiography(String bio) async {
+    log("in set biography data source ");
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+    };
+    final prefs = await SharedPreferences.getInstance();
+    final userid = prefs.getString("userid");
+
+    final response = await Dio().put(
+      "http://10.0.2.2:4000/users/setBiography",
+      data: {"userid": userid, "biography": bio},
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 500;
+        },
+        headers: requestHeaders,
+      ),
+    );
+    log(response.statusCode.toString());
+
+    if (response.statusCode == 200) {
+      return Future.value(unit);
     } else {
       throw ServerException(
           errorMessageModel: ErrorMessageModel(
