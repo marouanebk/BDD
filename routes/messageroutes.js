@@ -1,13 +1,12 @@
-const { addmsg, getallmsg , uploadfiles, getusers} = require("../controllers/messagecontroller");
+const { addmsg, getallmsg , uploadfiles,  getconversations, addgrpmsg} = require("../controllers/messagecontroller");
 
 const router = require("express").Router();
 
 
 
 router.post("/addmessage/", addmsg),
-router.post("/getallmessag/", getallmsg),
+router.get("/getallmessag/:conversation_id", getallmsg),
 router.post("/uploadfiles/", uploadfiles),
-router.get("/getusers/", getusers);
 
 
 

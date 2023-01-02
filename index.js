@@ -1,6 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const msgroutes = require("./routes/messageroutes");
+const cnroutes = require("./routes/conversationroutes");
+const grproutes = require("./routes/grouperoutes");
+
 mongoose.set('strictQuery', true);
 var bodyParser = require('body-parser');
 const socket = require("socket.io");
@@ -13,6 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/api/message", msgroutes);
+app.use("/api/conversation", cnroutes);
+app.use("/api/groupe", grproutes);
 
 
 
@@ -57,3 +62,4 @@ io.on("connection", (socket) =>{
     });
 
 });
+

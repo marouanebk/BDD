@@ -7,18 +7,17 @@ message: {
         required: false,
     },
 },
-    users: Array,
+    convesation_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : "Conversation"
+    },
     sender :{
             type : mongoose.Schema.Types.ObjectId,
             ref:"User",
             required:false,
         },
-    reciever:{
-        type : mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:false,
-    },    
-    type :{
+    
+type :{
         type : String,
     },  
     
