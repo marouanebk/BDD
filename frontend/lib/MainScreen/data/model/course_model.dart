@@ -1,5 +1,4 @@
 import 'package:frontend/MainScreen/domaine/entities/suggested_courses.dart';
-import 'package:frontend/to-dos/domaine/entities/to_do_entity.dart';
 
 class CourseModel extends Course {
   const CourseModel({

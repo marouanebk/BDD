@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,6 @@ void main() async {
   isLoggedIn = prefs.getInt("is logged in");
   type = prefs.getInt("type");
   await Firebase.initializeApp();
-  log("initalized");
 
   runApp(const MyApp());
 }
@@ -37,7 +35,6 @@ class MyApp extends StatelessWidget {
       home: (isLoggedIn == 1)
           ? ((type == 1) ? const BaseScreen() : const TeacherScreen())
           : const LoginPage(),
-      // home: const BioSuccess(),
     );
   }
 }

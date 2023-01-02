@@ -6,9 +6,7 @@ import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/network/error_message_model.dart';
 import 'package:frontend/to-dos/data/model/todo_model.dart';
 import 'package:frontend/to-dos/domaine/entities/to_do_entity.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uuid/uuid.dart';
 
 abstract class BaseTodoRemoteDateSource {
   Future<Unit> addToDo(TodoModel todo);
@@ -19,12 +17,10 @@ abstract class BaseTodoRemoteDateSource {
 }
 
 class TodoRemoteDataSource extends BaseTodoRemoteDateSource {
-  static var client = http.Client();
-
   @override
   Future<Unit> addToDo(TodoModel todo) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final userid = prefs.getString("userid");
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // final userid = prefs.getString("userid");
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };

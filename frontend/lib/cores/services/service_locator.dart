@@ -17,6 +17,13 @@ import 'package:frontend/authentication/domaine/usecases/logout_usecase.dart';
 import 'package:frontend/authentication/domaine/usecases/set_biography_usecase.dart';
 import 'package:frontend/authentication/domaine/usecases/signup_usecase.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_bloc.dart';
+import 'package:frontend/chat/data/datasource/chat_datasource.dart';
+import 'package:frontend/chat/data/repository/chat_repo_implem.dart';
+import 'package:frontend/chat/domaine/repository/base_chat_repo.dart';
+import 'package:frontend/chat/domaine/usecases/add_conversation_usecase.dart';
+import 'package:frontend/chat/domaine/usecases/getAllCovnersationUseCase.dart';
+import 'package:frontend/chat/domaine/usecases/get_messages_usecase.dart';
+import 'package:frontend/chat/presentation/controller/bloc/chat_bloc.dart';
 import 'package:frontend/to-dos/data/datasource/todo_datasource.dart';
 import 'package:frontend/to-dos/data/repository/todo_repo_emplem.dart';
 import 'package:frontend/to-dos/domaine/repository/base_todo_repo.dart';
@@ -36,6 +43,7 @@ class ServiceLocator {
     sl.registerFactory(() => UserBloc(sl(), sl(), sl(), sl(), sl(), sl()));
     sl.registerFactory(() => TodoBloc(sl(), sl(), sl(), sl(), sl()));
     sl.registerFactory(() => CourseBloc(sl(), sl(), sl(), sl(), sl()));
+    sl.registerFactory(() => ChatBloc(sl(), sl(), sl()));
 
     // sl.registerFactory(() => UserBloc(
     // createUserUseCase: sl(), loginUserCase: sl()));
@@ -53,6 +61,13 @@ class ServiceLocator {
     sl.registerLazySingleton(() => EditTodoUseCase(sl()));
     sl.registerLazySingleton(() => DeleteTodoUseCase(sl()));
 
+    //chat
+    sl.registerLazySingleton(() => AddConversationUseCase(sl()));
+    sl.registerLazySingleton(() => GetAllConversationsUseCase(sl()));
+    sl.registerLazySingleton(() => GetConversationMessagesUseCase(sl()));
+
+    
+
     //courses usecases
     sl.registerLazySingleton(() => GetCoursedDetailUseCase(sl()));
     sl.registerLazySingleton(() => GetSuggestedCoursesUseCase(sl()));
@@ -60,14 +75,13 @@ class ServiceLocator {
     sl.registerLazySingleton(() => GetCoursesByTeacherUseCase(sl()));
     sl.registerLazySingleton(() => GetUserDetailsUseCase(sl()));
     sl.registerLazySingleton(() => AddChapterUseCase(sl()));
-    
-
 
     // Repository
     sl.registerLazySingleton<BaseUserRepository>(() => UserRepository(sl()));
     sl.registerLazySingleton<BaseToDoRepository>(() => TodoRepository(sl()));
     sl.registerLazySingleton<BaseCourseRepository>(
         () => CourseRepository(sl()));
+    sl.registerLazySingleton<BaseChatRepository>(() => ChatRepository(sl()));
 
     // sl.registerLazySingleton<BaseUserRepository>(() => UserRepository(sl()));
 
@@ -81,5 +95,7 @@ class ServiceLocator {
         () => UserRemoteDataSource());
     sl.registerLazySingleton<BaseCourseRemoteDataSource>(
         () => CourseRemoteDataSource());
+    sl.registerLazySingleton<BaseChatRemoteDataSource>(
+        () => ChatRemoteDataSource());
   }
 }

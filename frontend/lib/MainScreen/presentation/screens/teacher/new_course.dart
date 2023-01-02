@@ -13,7 +13,6 @@ import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/widgets/text_input_field.dart';
-import 'package:frontend/profile/presentation/component/bio_success_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -474,16 +473,16 @@ class _NewCourseState extends State<NewCourse> {
     );
   }
 
-  Widget buildProfress() => StreamBuilder<TaskSnapshot>(
-        stream: uploadTask?.snapshotEvents,
-        builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            final data = snapshot.data!;
-            double progress = data.bytesTransferred / data.totalBytes;
-            return const SizedBox();
-          } else {
-            return const SizedBox();
-          }
-        }),
-      );
+  // Widget buildProfress() => StreamBuilder<TaskSnapshot>(
+  //       stream: uploadTask?.snapshotEvents,
+  //       builder: ((context, snapshot) {
+  //         if (snapshot.hasData) {
+  //           final data = snapshot.data!;
+  //           double progress = data.bytesTransferred / data.totalBytes;
+  //           return const SizedBox();
+  //         } else {
+  //           return const SizedBox();
+  //         }
+  //       }),
+  //     );
 }

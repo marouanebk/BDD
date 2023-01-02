@@ -1,5 +1,4 @@
 import 'package:frontend/authentication/domaine/entities/user_entitiy.dart';
-import 'package:frontend/main.dart';
 
 class UserModel extends User {
   const UserModel(
@@ -7,7 +6,7 @@ class UserModel extends User {
       String? fullname,
       String? biography,
       required String email,
-       String? password})
+      String? password})
       : super(
             userid: userid,
             fullname: fullname,

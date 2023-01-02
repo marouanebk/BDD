@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
@@ -9,11 +8,12 @@ class CourseContent extends Equatable {
   final String? url;
   final List<String>? quizzContent;
 
-  const CourseContent(
-      {required this.name,
-      required this.type,
-      this.url,
-      this.quizzContent,});
+  const CourseContent({
+    required this.name,
+    required this.type,
+    this.url,
+    this.quizzContent,
+  });
 
   @override
   List<Object?> get props => [name, type, url, quizzContent];

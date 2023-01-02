@@ -61,7 +61,6 @@ class CourseRepository implements BaseCourseRepository {
 
   @override
   Future<Either<Failure, Unit>> addChapter(String id, CourseContent courseContent) {
-    // TODO: implement addChapter
     throw UnimplementedError();
   }
 }

@@ -1,26 +1,38 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
-import 'package:frontend/MainScreen/presentation/screens/mainpage.dart';
+import 'package:frontend/authentication/presentation/screens/register_page.dart';
+import 'package:frontend/chat/presentation/controller/bloc/chat_bloc.dart';
 import 'package:frontend/chat/presentation/screens/chat_page.dart';
+import 'package:frontend/chat/presentation/screens/chat_screen.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
+import 'package:frontend/cores/utils/enums.dart';
 import 'package:frontend/cores/widgets/text_input_field.dart';
 
 class AllChatScreen extends StatefulWidget {
-  const AllChatScreen({super.key});
+  final id;
+  const AllChatScreen({required this.id, super.key});
 
   @override
   State<AllChatScreen> createState() => _AllChatScreenState();
 }
 
 class _AllChatScreenState extends State<AllChatScreen> {
+  @override
+  void initState() {
+    super.initState();
+    log(widget.id);
+  }
+
   TextEditingController _searchchat = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<CourseBloc>()..add(GetSuggestedCoursesEvent()),
+      create: (context) => sl<ChatBloc>()..add(GetAllConversationsEvent()),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -57,7 +69,26 @@ class _AllChatScreenState extends State<AllChatScreen> {
                   ),
                 ),
                 // all chat
-                chatHeads(),
+                BlocBuilder<ChatBloc, ChatState>(
+                  builder: (context, state) {
+                    switch (state.getAllConversationsState) {
+                      case RequestState.loading:
+                        return const Center(
+                          child: LoadingWidget(),
+                        );
+
+                      case RequestState.loaded:
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child:
+                              chatHeads(state.getAllConversations, widget.id),
+                        );
+
+                      case RequestState.error:
+                        return Text(state.getAllConversationsmessage);
+                    }
+                  },
+                ),
               ],
             ),
           ),
@@ -89,7 +120,7 @@ class _AllChatScreenState extends State<AllChatScreen> {
   }
 }
 
-Widget chatHeads() {
+Widget chatHeads(items, userid) {
   return Padding(
     padding: const EdgeInsets.only(right: 10),
     child: ListView.separated(
@@ -99,19 +130,19 @@ Widget chatHeads() {
       ),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 10,
+      itemCount: items.length,
       itemBuilder: (context, index) {
-        return chatHeadCard(context);
+        return chatHeadCard(context, items[index], userid);
       },
     ),
   );
 }
 
-Widget chatHeadCard(context) {
+Widget chatHeadCard(context, item, userid) {
   return InkWell(
     onTap: () => Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
-        builder: (_) => const ChatPage(),
+        builder: (_) => ChatScreen(id: item.conversationId),
       ),
     ),
     child: SizedBox(
@@ -141,10 +172,10 @@ Widget chatHeadCard(context) {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  "some random message",
-                  style: TextStyle(
+                  (item.sender == userid) ? item.reciever : item.sender,
+                  style: const TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF0F1828),
@@ -152,10 +183,10 @@ Widget chatHeadCard(context) {
                   ),
                   // textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
-                Text(
+                const Text(
                   "Projet BDD",
                   style: TextStyle(
                     fontFamily: AppFonts.mainFont,

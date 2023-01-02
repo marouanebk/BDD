@@ -6,6 +6,7 @@ import 'package:frontend/notifications/presentation/screens/notifications.dart';
 import 'package:frontend/profile/presentation/screens/profile_screen.dart';
 import 'package:frontend/to-dos/presentation/screens/todos.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TeacherScreen extends StatefulWidget {
   const TeacherScreen({super.key});
@@ -15,12 +16,25 @@ class TeacherScreen extends StatefulWidget {
 }
 
 class _TeacherScreenState extends State<TeacherScreen> {
+  void getUseruid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString("userid")!;
+  }
+
+  String userid = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getUseruid();
+  }
+
   var controller = PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreens() {
     return [
       const ProfileScreen(numberP: 2),
-      const AllChatScreen(),
+      AllChatScreen(id: userid),
       const ToDos(),
       const Notifications(),
     ];

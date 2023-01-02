@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:frontend/authentication/data/models/user_model.dart';
-import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_bloc.dart';
 
 abstract class UserBlocState extends Equatable {
   const UserBlocState();

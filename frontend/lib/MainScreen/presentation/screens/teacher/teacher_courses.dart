@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
@@ -10,7 +8,6 @@ import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/utils/enums.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TeacherCourses extends StatefulWidget {
   const TeacherCourses({super.key});
@@ -45,7 +42,7 @@ class _TeacherCoursesState extends State<TeacherCourses> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          sl<CourseBloc>()..add(GetCoursesByTeacherEvent("userid")),
+          sl<CourseBloc>()..add(const GetCoursesByTeacherEvent("userid")),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(

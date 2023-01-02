@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:frontend/authentication/data/models/user_model.dart';
 import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/network/error_message_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class BaseUserRemoteDateSource {
@@ -18,8 +17,6 @@ abstract class BaseUserRemoteDateSource {
 }
 
 class UserRemoteDataSource extends BaseUserRemoteDateSource {
-  static var client = http.Client();
-
   @override
   Future<bool> createUser(UserModel userModel) async {
     Map<String, String> requestHeaders = {
@@ -183,7 +180,7 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
     };
     if (id == "userid") {
       final prefs = await SharedPreferences.getInstance();
-      final userid = prefs.getString("userid");
+      id = prefs.getString("userid")!;
     }
 
     final response = await Dio().get(

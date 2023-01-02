@@ -1,7 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 
 class CourseDetailModel extends CourseDetails {
@@ -49,7 +45,6 @@ class CourseDetailModel extends CourseDetails {
         "url": courseContent[0].url.toString(),
         // "quizz": courseContent[0].quiz.toString(),
       },
-      
       "user": teacherId,
     };
   }

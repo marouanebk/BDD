@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
@@ -132,7 +130,8 @@ class _TeacherDetailScreenState extends State<TeacherDetailScreen> {
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20, right: 20),
-                                  child: suggestedCourses(context , state.getCoursesByTeacher),
+                                  child: suggestedCourses(
+                                      context, state.getCoursesByTeacher),
                                 );
                               } else {
                                 return const LoadingWidget();
