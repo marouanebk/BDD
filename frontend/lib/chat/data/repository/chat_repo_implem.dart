@@ -1,4 +1,5 @@
 import 'package:frontend/chat/data/datasource/chat_datasource.dart';
+import 'package:frontend/chat/data/model/message_model.dart';
 import 'package:frontend/chat/domaine/entities/conversation_entity.dart';
 import 'package:frontend/chat/domaine/entities/message_entity.dart';
 import 'package:frontend/chat/domaine/repository/base_chat_repo.dart';
@@ -36,6 +37,16 @@ class ChatRepository implements BaseChatRepository {
   Future<Either<Failure, List<MessageEntity>>> getMessages(String id) async {
     try {
       final result = await baseChatRemoteDataSource.getMessages(id);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> sendMessage(MessageModel messageModel) async {
+    try {
+      final result = await baseChatRemoteDataSource.sendMessage(messageModel);
       return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));

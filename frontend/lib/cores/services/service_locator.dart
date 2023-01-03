@@ -23,6 +23,7 @@ import 'package:frontend/chat/domaine/repository/base_chat_repo.dart';
 import 'package:frontend/chat/domaine/usecases/add_conversation_usecase.dart';
 import 'package:frontend/chat/domaine/usecases/getAllCovnersationUseCase.dart';
 import 'package:frontend/chat/domaine/usecases/get_messages_usecase.dart';
+import 'package:frontend/chat/domaine/usecases/send_message_usecase.dart';
 import 'package:frontend/chat/presentation/controller/bloc/chat_bloc.dart';
 import 'package:frontend/to-dos/data/datasource/todo_datasource.dart';
 import 'package:frontend/to-dos/data/repository/todo_repo_emplem.dart';
@@ -43,7 +44,7 @@ class ServiceLocator {
     sl.registerFactory(() => UserBloc(sl(), sl(), sl(), sl(), sl(), sl()));
     sl.registerFactory(() => TodoBloc(sl(), sl(), sl(), sl(), sl()));
     sl.registerFactory(() => CourseBloc(sl(), sl(), sl(), sl(), sl()));
-    sl.registerFactory(() => ChatBloc(sl(), sl(), sl()));
+    sl.registerFactory(() => ChatBloc(sl(), sl(), sl(), sl()));
 
     // sl.registerFactory(() => UserBloc(
     // createUserUseCase: sl(), loginUserCase: sl()));
@@ -66,8 +67,6 @@ class ServiceLocator {
     sl.registerLazySingleton(() => GetAllConversationsUseCase(sl()));
     sl.registerLazySingleton(() => GetConversationMessagesUseCase(sl()));
 
-    
-
     //courses usecases
     sl.registerLazySingleton(() => GetCoursedDetailUseCase(sl()));
     sl.registerLazySingleton(() => GetSuggestedCoursesUseCase(sl()));
@@ -75,6 +74,7 @@ class ServiceLocator {
     sl.registerLazySingleton(() => GetCoursesByTeacherUseCase(sl()));
     sl.registerLazySingleton(() => GetUserDetailsUseCase(sl()));
     sl.registerLazySingleton(() => AddChapterUseCase(sl()));
+    sl.registerLazySingleton(() => SendMessageUsecase(sl()));
 
     // Repository
     sl.registerLazySingleton<BaseUserRepository>(() => UserRepository(sl()));

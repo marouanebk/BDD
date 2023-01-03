@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:frontend/chat/data/model/message_model.dart';
 import 'package:frontend/chat/domaine/entities/conversation_entity.dart';
 import 'package:frontend/chat/domaine/entities/message_entity.dart';
 
@@ -10,6 +11,7 @@ abstract class BaseChatRepository {
 
   // Future<Either<Failure, Unit>> addCourse(CourseDetails courseDetails);
   Future<Either<Failure, Unit>> addConversation(String toId);
+  Future<Either<Failure, Unit>> sendMessage(MessageModel messageModel);
   Future<Either<Failure, List<ConversationEntity>>> getAllConversations();
   Future<Either<Failure, List<MessageEntity>>> getMessages(String id);
 

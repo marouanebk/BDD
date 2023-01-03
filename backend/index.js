@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-require("dotenv").config();
+ require("dotenv").config();
 const mongoose = require("mongoose");
 const dbConfig = require("./config/db.config");
 var teacherRoutes = require('./routes/teacher');

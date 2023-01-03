@@ -142,7 +142,10 @@ Widget chatHeadCard(context, item, userid) {
   return InkWell(
     onTap: () => Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
-        builder: (_) => ChatScreen(id: item.conversationId),
+        builder: (_) => ChatScreen(
+          id: item.conversationId,
+          userid: userid,
+        ),
       ),
     ),
     child: SizedBox(
@@ -172,9 +175,10 @@ Widget chatHeadCard(context, item, userid) {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 Text(
-                  (item.sender == userid) ? item.reciever : item.sender,
+                  // (item.sender == userid) ? item.reciever : item.sender,
+                  "hello",
                   style: const TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w500,

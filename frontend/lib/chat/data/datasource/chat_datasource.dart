@@ -108,6 +108,7 @@ class ChatRemoteDataSource extends BaseChatRemoteDataSource {
         headers: requestHeaders,
       ),
     );
+    log(response.statusCode.toString());
     if (response.statusCode == 200) {
       return Future.value(unit);
     } else {

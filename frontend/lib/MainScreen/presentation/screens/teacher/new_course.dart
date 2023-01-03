@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 import 'package:frontend/MainScreen/presentation/component/add_course_success.dart';
@@ -35,6 +36,29 @@ class _NewCourseState extends State<NewCourse> {
   String uploadState = "Upload PDF";
   bool canUpload = false;
   String urlLink = "";
+  //quizzzz
+  int numberofQuiz = 1;
+
+  int row = 3;
+  int col = 4;
+
+  var _controller = List.generate(
+      10, (i) => List.generate(6, (j) => TextEditingController()));
+
+  List<int> _answers = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < 10; i++) _answers[i] = 0;
+
+    log(_controller[1][1].toString());
+  }
+
+  // List<TextEditingController><TextEditingController>_quizzController = [
+  //   for (int i = 1; i < 75; i++) TextEditingController()
+
+  // ][for (int j = 1; j < 5; j++) TextEditingController()];
 
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
@@ -81,7 +105,6 @@ class _NewCourseState extends State<NewCourse> {
     setState(() {
       uploadState = " PDF Uploaded";
     });
-    log(uploadState);
   }
 
   @override
@@ -140,24 +163,66 @@ class _NewCourseState extends State<NewCourse> {
                       onTap: () async {
                         final prefs = await SharedPreferences.getInstance();
                         final userid = prefs.getString("userid");
-                        List<CourseContent> courseContent = [
-                          CourseContent(
-                              name: _couresName.text, type: "pdf", url: urlLink)
-                        ];
-                        // final courseContent = CourseContent(
-                        //     name: _couresName.text, type: "pdf", url: urlLink);
-                        final courseCred = CourseDetails(
-                            courseContent: courseContent,
-                            description: _couresDescription.text,
-                            teacherId: userid!,
-                            title: _couresName.text,
-                            year: _couresYear.text);
+                        String type = "";
+                        if (index == 1) {
+                          type = "pdf";
+                        } else if (index == 2) {
+                          type = "quizz";
+                        }
+                        if (index == 2) {
+                          List<Quizz> quizzContent = [];
+                          for (int i = 0; i < numberofQuiz; i++) {
+                            List<String> answers = [
+                              _controller[i][1].text,
+                              _controller[i][2].text,
+                              _controller[i][3].text,
+                              _controller[i][4].text
+                            ];
+                            quizzContent.add(Quizz(
+                              question: _controller[i][0].text,
+                              answers: answers,
+                              rightAnswer: _answers[i].toString(),
+                            ));
+                          }
+                          List<CourseContent> course = [
+                            CourseContent(
+                                name: _couresName.text,
+                                type: type,
+                                quizzContent: quizzContent)
+                          ];
+                          // log(course.toString());
+                          final courseCred = CourseDetails(
+                              courseContent: course,
+                              description: _couresDescription.text,
+                              teacherId: userid!,
+                              title: _couresName.text,
+                              year: _couresYear.text);
+                          BlocProvider.of<CourseBloc>(context).add(
+                            AddCourseEvent(courseCred),
+                          );
+                        } else {
+                          List<CourseContent> course = [
+                            CourseContent(
+                                name: _couresName.text,
+                                type: type,
+                                url: urlLink)
+                          ];
 
-                        log(courseCred.toString());
-
-                        BlocProvider.of<CourseBloc>(context).add(
-                          AddCourseEvent(courseCred),
-                        );
+                          // final courseContent = CourseContent(
+                          //     name: _couresName.text, type: "pdf", url: urlLink);
+                          final courseCred = CourseDetails(
+                              courseContent: course,
+                              description: _couresDescription.text,
+                              teacherId: userid!,
+                              title: _couresName.text,
+                              year: _couresYear.text);
+                          BlocProvider.of<CourseBloc>(context).add(
+                            AddCourseEvent(courseCred),
+                          );
+                        }
+                        // BlocProvider.of<CourseBloc>(context).add(
+                        //   AddCourseEvent(courseCred),
+                        // );
                       },
                       child: Container(
                         width: double.infinity,
@@ -443,31 +508,408 @@ class _NewCourseState extends State<NewCourse> {
         const SizedBox(
           height: 12,
         ),
-        GestureDetector(
-          onTap: selectFile,
-          child: Container(
-            height: 45,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
+        if (index == 1)
+          GestureDetector(
+            onTap: selectFile,
+            child: Container(
+              height: 45,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(5),
+                ),
+                border: Border.all(
+                  color: const Color(0xFFD9D9D9),
+                ),
               ),
-              border: Border.all(
-                color: const Color(0xFFD9D9D9),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                uploadState,
-                style: TextStyle(
-                  fontFamily: AppFonts.mainFont,
-                  fontWeight: FontWeight.w600,
-                  color: Color(AppColors.blue),
-                  fontSize: 16,
+              child: Center(
+                child: Text(
+                  uploadState,
+                  style: TextStyle(
+                    fontFamily: AppFonts.mainFont,
+                    fontWeight: FontWeight.w600,
+                    color: Color(AppColors.blue),
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),
           ),
+        if (index == 2)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (var i = 0; i < numberofQuiz; i++) quiz(i),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    numberofQuiz += 1;
+                  });
+                },
+                child: Text(
+                  "Add Quiz Question",
+                  style: TextStyle(
+                    fontFamily: AppFonts.mainFont,
+                    fontWeight: FontWeight.w500,
+                    color: Color(AppColors.blue),
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (numberofQuiz != 1) {
+                    setState(() {
+                      numberofQuiz -= 1;
+                    });
+                  }
+                },
+                child: const Text(
+                  "remove quizz ",
+                  style: TextStyle(
+                    fontFamily: AppFonts.mainFont,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.red,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          )
+      ],
+    );
+  }
+
+  Widget quiz(index) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Quiz Question",
+          style: TextStyle(
+            fontFamily: AppFonts.mainFont,
+            fontWeight: FontWeight.w500,
+            color: Color(AppColors.writting),
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Container(
+          height: 45,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(5),
+            ),
+            border: Border.all(
+              color: const Color(0xFFD9D9D9),
+            ),
+          ),
+          child: TextFieldInput(
+            hintText: "Enter chapter name",
+            textEditingController: _controller[index][0],
+            textInputType: TextInputType.text,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          "Quiz Answers",
+          style: TextStyle(
+            fontFamily: AppFonts.mainFont,
+            fontWeight: FontWeight.w500,
+            color: Color(AppColors.writting),
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Container(
+          height: 45,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(5),
+            ),
+            border: Border.all(
+              color: const Color(0xFFD9D9D9),
+            ),
+          ),
+          child: TextFieldInput(
+            hintText: "Enter Quiz's Answer A",
+            textEditingController: _controller[index][1],
+            textInputType: TextInputType.text,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Container(
+          height: 45,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(5),
+            ),
+            border: Border.all(
+              color: const Color(0xFFD9D9D9),
+            ),
+          ),
+          child: TextFieldInput(
+            hintText: "Enter Quiz's Answer B",
+            textEditingController: _controller[index][2],
+            textInputType: TextInputType.text,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Container(
+          height: 45,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(5),
+            ),
+            border: Border.all(
+              color: const Color(0xFFD9D9D9),
+            ),
+          ),
+          child: TextFieldInput(
+            hintText: "Enter Quiz's Answer C",
+            textEditingController: _controller[index][3],
+            textInputType: TextInputType.text,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Container(
+          height: 45,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(5),
+            ),
+            border: Border.all(
+              color: const Color(0xFFD9D9D9),
+            ),
+          ),
+          child: TextFieldInput(
+            hintText: "Enter Quiz's Answer D",
+            textEditingController: _controller[index][4],
+            textInputType: TextInputType.text,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          "Quiz Right Answer",
+          style: TextStyle(
+            fontFamily: AppFonts.mainFont,
+            fontWeight: FontWeight.w500,
+            color: Color(AppColors.writting),
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _answers[index] = 1;
+                });
+              },
+              child: Container(
+                height: 28,
+                width: 60,
+                padding: const EdgeInsets.symmetric(horizontal: 7),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(33),
+                  ),
+                  border: Border.all(
+                    color: const Color(0xFFD9D9D9),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      "A",
+                      style: TextStyle(
+                        fontFamily: AppFonts.mainFont,
+                        fontWeight: FontWeight.w500,
+                        color: (_answers[index] == 1)
+                            ? Color(AppColors.blue)
+                            : Color(AppColors.writting),
+                        fontSize: 16,
+                      ),
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.check_circle,
+                      size: 20,
+                      color: (_answers[index] == 1)
+                          ? Color(AppColors.blue)
+                          : Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _answers[index] = 2;
+                });
+              },
+              child: Container(
+                height: 28,
+                width: 60,
+                padding: const EdgeInsets.symmetric(horizontal: 7),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(33),
+                  ),
+                  border: Border.all(
+                    color: const Color(0xFFD9D9D9),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      "B",
+                      style: TextStyle(
+                        fontFamily: AppFonts.mainFont,
+                        fontWeight: FontWeight.w500,
+                        color: (_answers[index] == 2)
+                            ? Color(AppColors.blue)
+                            : Color(AppColors.writting),
+                        fontSize: 16,
+                      ),
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.check_circle,
+                      size: 20,
+                      color: (_answers[index] == 2)
+                          ? Color(AppColors.blue)
+                          : Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _answers[index] = 3;
+                });
+              },
+              child: Container(
+                height: 28,
+                width: 60,
+                padding: const EdgeInsets.symmetric(horizontal: 7),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(33),
+                  ),
+                  border: Border.all(
+                    color: const Color(0xFFD9D9D9),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      "C",
+                      style: TextStyle(
+                        fontFamily: AppFonts.mainFont,
+                        fontWeight: FontWeight.w500,
+                        color: (_answers[index] == 3)
+                            ? Color(AppColors.blue)
+                            : Color(AppColors.writting),
+                        fontSize: 16,
+                      ),
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.check_circle,
+                      size: 20,
+                      color: (_answers[index] == 3)
+                          ? Color(AppColors.blue)
+                          : Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _answers[index] = 4;
+                });
+              },
+              child: Container(
+                height: 28,
+                width: 60,
+                padding: const EdgeInsets.symmetric(horizontal: 7),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(33),
+                  ),
+                  border: Border.all(
+                    color: const Color(0xFFD9D9D9),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      "D",
+                      style: TextStyle(
+                        fontFamily: AppFonts.mainFont,
+                        fontWeight: FontWeight.w500,
+                        color: (_answers[index] == 4)
+                            ? Color(AppColors.blue)
+                            : Color(AppColors.writting),
+                        fontSize: 16,
+                      ),
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.check_circle,
+                      size: 20,
+                      color: (_answers[index] == 4)
+                          ? Color(AppColors.blue)
+                          : Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+          ],
         ),
       ],
     );

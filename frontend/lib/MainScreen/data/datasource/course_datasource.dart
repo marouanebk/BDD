@@ -63,7 +63,6 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
-
     final response = await Dio().post(
       "http://10.0.2.2:4000/courses/addCourse",
       data: courseDetails.toJson(),

@@ -13,6 +13,10 @@ class ChatState extends Equatable {
   final RequestState getMessagesState;
   final String getMessagesmessage;
 
+  // final RequestState sendMessageState;
+  // final String sendMessagemessage;
+  final bool addMessageSucess;
+
   const ChatState({
     this.getAllConversations = const [],
     this.getAllConversationsState = RequestState.loading,
@@ -25,6 +29,7 @@ class ChatState extends Equatable {
     this.addConversationState = RequestState.loading,
     this.addCovnersationmessage = '',
     this.addCovnersationSuccess = false,
+    this.addMessageSucess = false,
   });
 
   ChatState copyWith({
@@ -37,6 +42,8 @@ class ChatState extends Equatable {
     List<MessageEntity>? getMessages,
     RequestState? getMessagesState,
     String? getMessagesmessage,
+    //bool
+    bool? addMessageSucess,
   }) {
     return ChatState(
       getAllConversations: getAllConversations ?? this.getAllConversations,
@@ -53,6 +60,7 @@ class ChatState extends Equatable {
       getMessages: getMessages ?? this.getMessages,
       getMessagesState: getMessagesState ?? this.getMessagesState,
       getMessagesmessage: getMessagesmessage ?? this.getMessagesmessage,
+      addMessageSucess: addMessageSucess ?? this.addMessageSucess,
     );
   }
 
@@ -69,5 +77,7 @@ class ChatState extends Equatable {
         getMessages,
         getMessagesState,
         getMessagesmessage,
+        //
+        addMessageSucess
       ];
 }

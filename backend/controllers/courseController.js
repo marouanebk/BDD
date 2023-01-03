@@ -49,7 +49,8 @@ exports.addCourse = async (req, res, next) => {
     try {
         await newCourse.save()
     } catch (err) {
-        return res.status(500).json({ message: err.message })
+        console.log("err" + err.message);
+        return res.status(499).json({ message: err.message })
     }
     return res.status(200).json(newCourse)
 }

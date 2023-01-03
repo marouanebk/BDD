@@ -5,7 +5,7 @@ class MessageModel extends MessageEntity {
   const MessageModel({
     required String conversationId,
     required String sender,
-    required DateTime? createdAt,
+    DateTime? createdAt,
     required String message,
 
     // required String teacherName,

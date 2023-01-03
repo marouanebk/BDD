@@ -24,3 +24,11 @@ class GetMessagesEvent extends ChatEvent {
   @override
   List<Object> get props => [id];
 }
+
+class SendMessageEvent extends ChatEvent {
+  final MessageModel messageModel;
+
+  const SendMessageEvent(this.messageModel);
+  @override
+  List<Object> get props => [messageModel];
+}

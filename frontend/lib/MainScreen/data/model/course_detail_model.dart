@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 
 class CourseDetailModel extends CourseDetails {
@@ -35,6 +39,13 @@ class CourseDetailModel extends CourseDetails {
   }
 
   Map<String, dynamic> toJson() {
+    // String jsonContent = "";
+    // if (courseContent[0].quizzContent != null)
+    //   String jsonContent = jsonEncode(courseContent[0].quizzContent);
+    // log(courseContent[0].quizzContent.question.toString());
+    List<Quizz> quizz = courseContent[0].quizzContent;
+    log(jsonEncode(quizz).toString());
+
     return {
       "title": title,
       "year": year,
@@ -43,7 +54,14 @@ class CourseDetailModel extends CourseDetails {
         "name": courseContent[0].name.toString(),
         "type": courseContent[0].type.toString(),
         "url": courseContent[0].url.toString(),
-        // "quizz": courseContent[0].quiz.toString(),
+        "quizzContent": jsonEncode(quizz),
+
+        // jsonEncode(courseContent[0].quizzContent)
+        // {
+        //   "question": courseContent[0].quizzContent.question.toString(),
+        //   "answers": courseContent[0].quizzContent.answers,
+        //   "rightAnswer": courseContent[0].quizzContent.rightAnswer
+        // },
       },
       "user": teacherId,
     };
