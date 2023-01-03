@@ -2,14 +2,12 @@ import express, { json } from 'express';
 import DbConnection from './config/db.js';
 import router from './routes/routes.js';
 import courseRouter from './routes/courseRoutes.js';
+import {counter} from './Controllers/counter.js';
+
 
 const app = express();
 
-
-
-
-
-
+counter();
 
 DbConnection()
 
