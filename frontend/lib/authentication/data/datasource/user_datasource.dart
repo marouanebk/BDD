@@ -178,6 +178,7 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
     };
+
     if (id == "userid") {
       final prefs = await SharedPreferences.getInstance();
       id = prefs.getString("userid")!;
@@ -193,7 +194,6 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
         headers: requestHeaders,
       ),
     );
-    log(response.data['result'].toString());
 
     if (response.statusCode == 200) {
       return UserModel.fromJson(response.data['result']);

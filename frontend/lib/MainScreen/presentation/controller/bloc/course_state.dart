@@ -10,7 +10,7 @@ class CourseState extends Equatable {
   final RequestState getCourseDetailState;
   final String getCourseDetailmessage;
 
-  final RequestState addCoruseState;
+  final RequestState addcourseState;
   final String addCourseMessage;
   final bool addCourseSuccess;
 
@@ -31,7 +31,7 @@ class CourseState extends Equatable {
     this.getCourseDetailState = RequestState.loading,
     this.getCourseDetailmessage = "",
     //
-    this.addCoruseState = RequestState.loading,
+    this.addcourseState = RequestState.loading,
     this.addCourseMessage = "",
     this.addCourseSuccess = false,
     //
@@ -53,7 +53,7 @@ class CourseState extends Equatable {
     CourseDetails? getCourseDetail,
     RequestState? getCourseDetailState,
     String? getCourseDetailmessage,
-    RequestState? addCoruseState,
+    RequestState? addcourseState,
     String? addCourseMessage,
     bool? addCourseSuccess,
     RequestState? addChapterState,
@@ -79,7 +79,7 @@ class CourseState extends Equatable {
       getCourseDetailmessage:
           getCourseDetailmessage ?? this.getCourseDetailmessage,
       //
-      addCoruseState: addCoruseState ?? this.addCoruseState,
+      addcourseState: addcourseState ?? this.addcourseState,
       addCourseMessage: addCourseMessage ?? this.addCourseMessage,
       addCourseSuccess: addCourseSuccess ?? this.addCourseSuccess,
       //
@@ -108,7 +108,7 @@ class CourseState extends Equatable {
         getCourseDetailState,
         getCourseDetailmessage,
 
-        addCoruseState,
+        addcourseState,
         addCourseMessage,
         addCourseSuccess,
         //

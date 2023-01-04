@@ -116,6 +116,29 @@ exports.getUserDetails = async (req, res, next) => {
   return res.status(200).send({ result: user })
 };
 
+exports.setProfilePicture = async (req, res, next) => {
+  id = req.params.id;
+  link = req.body.link;
+  console.log(id);
+  console.log(link);
+  let user
+  try {
+    User.updateOne({ userid: id }, { $set: { profile_picture: link } }, function (err, res) {
+      if (err) throw err;
+      console.log("1 document updated");
+    });
+    return res.status(200).json({ result: "success" })
+
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ message: err.message })
+  }
+  if (!user) {
+    return res.status(404).json({ message: 'Cannot find user' })
+  }
+  return res.status(200).send({ result: "success" })
+};
+
 
 exports.userProfile = (req, res, next) => {
   return res.status(401).json({ message: "Authorized User!!" });

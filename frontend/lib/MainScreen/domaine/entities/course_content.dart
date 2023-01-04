@@ -22,10 +22,12 @@ class CourseContent extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'name': name,
-      'type': type,
-      'url': url,
-      'quizzContent': quizzContent,
+      'name': name.toString(),
+      'type': type.toString(),
+      "url": (type == "pdf") ? url.toString() : null,
+      'quizzContent': (type == "quizz")
+          ? jsonEncode(quizzContent!.map((e) => e.toJson()).toList())
+          : "",
     };
   }
 }

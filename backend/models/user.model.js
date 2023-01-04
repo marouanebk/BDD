@@ -19,9 +19,15 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-  }, type: {
+  },
+  type: {
     type: String,
     default: "Student",
+  },
+  profile_picture: {
+    type: String,
+    required: false,
+    default: null,
   },
   biography: {
     type: String,

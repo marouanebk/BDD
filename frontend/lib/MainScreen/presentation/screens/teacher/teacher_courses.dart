@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/coursedetail.dart';
+import 'package:frontend/MainScreen/presentation/screens/teacher/add_chapter.dart';
 import 'package:frontend/MainScreen/presentation/screens/teacher/new_course.dart';
 import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/cores/const/colors.dart';
@@ -217,7 +218,13 @@ class _TeacherCoursesState extends State<TeacherCourses> {
                     height: 25,
                     width: 25,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).push(
+                          MaterialPageRoute(
+                            builder: (_) => AddChapter(id: index.courseid),
+                          ),
+                        );
+                      },
                       icon: const Icon(
                         Icons.edit,
                         color: Colors.blue,

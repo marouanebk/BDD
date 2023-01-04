@@ -60,7 +60,14 @@ class CourseRepository implements BaseCourseRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> addChapter(String id, CourseContent courseContent) {
-    throw UnimplementedError();
+  Future<Either<Failure, Unit>> addChapter(
+      String id, CourseContent courseContent) async {
+    try {
+      final result =
+          await baseCourseRemoteDataSource.addChapter(id, courseContent);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
   }
 }

@@ -117,7 +117,9 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
       'Content-Type': 'application/json',
     };
 
-    final response = await Dio().post(
+    log("in data source ");
+    log(courseContent.toMap().toString());
+    final response = await Dio().put(
       "http://10.0.2.2:4000/courses/addChapter/$id",
       data: courseContent.toMap(),
       options: Options(
@@ -128,7 +130,7 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
         headers: requestHeaders,
       ),
     );
-    log(response.statusCode.toString());
+    log(response.toString());
     if (response.statusCode == 200) {
       return Future.value(unit);
     } else {

@@ -20,11 +20,11 @@ const courseSchema = mongoose.Schema({
     courseContent: [{
         name: {
             type: String,
-            required: false,
+            required: true,
         },
         type: {
             type: String,
-            required: false,
+            required: true,
         },
         url: {
             type: String,
@@ -32,8 +32,8 @@ const courseSchema = mongoose.Schema({
         },
 
         quizzContent: {}
-      
-        
+
+
 
         // {
         //     question: {

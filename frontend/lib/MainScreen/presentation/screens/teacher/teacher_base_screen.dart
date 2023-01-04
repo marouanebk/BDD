@@ -33,7 +33,10 @@ class _TeacherScreenState extends State<TeacherScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      const ProfileScreen(numberP: 2),
+      ProfileScreen(
+        numberP: 2,
+        userid: userid,
+      ),
       AllChatScreen(id: userid),
       const ToDos(),
       const Notifications(),

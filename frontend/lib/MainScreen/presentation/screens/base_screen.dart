@@ -37,8 +37,9 @@ class _BaseScreenState extends State<BaseScreen> {
       AllChatScreen(id: userid),
       const ToDos(),
       const Notifications(),
-      const ProfileScreen(
+      ProfileScreen(
         numberP: 1,
+        userid: userid,
       ),
     ];
   }

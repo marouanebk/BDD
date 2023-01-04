@@ -99,20 +99,18 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
 
   FutureOr<void> _addCourseEvent(
       AddCourseEvent event, Emitter<CourseState> emit) async {
-    log("in add event  courses event ");
-
     final result = await addCourseUseCase(event.courseDetails);
     result.fold(
       (l) => emit(
         state.copyWith(
-          addCoruseState: RequestState.error,
+          addcourseState: RequestState.error,
           addCourseMessage: l.message,
         ),
       ),
       (r) => emit(
         state.copyWith(
           addCourseSuccess: true,
-          addCoruseState: RequestState.loaded,
+          addcourseState: RequestState.loaded,
         ),
       ),
     );
@@ -120,7 +118,7 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
 
   FutureOr<void> _addChapterEvent(
       AddChapterEvent event, Emitter<CourseState> emit) async {
-    log("in add event  courses event ");
+    log("in add chapter event ");
 
     final result = await addChapterUseCase(event.id, event.courseContent);
     result.fold(

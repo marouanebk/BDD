@@ -5,7 +5,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 import 'package:frontend/MainScreen/presentation/component/add_course_success.dart';
@@ -18,17 +17,15 @@ import 'package:frontend/cores/widgets/text_input_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
-class NewCourse extends StatefulWidget {
-  const NewCourse({super.key});
+class AddChapter extends StatefulWidget {
+  final String id;
+  const AddChapter({required this.id, super.key});
 
   @override
-  State<NewCourse> createState() => _NewCourseState();
+  State<AddChapter> createState() => _AddChapterState();
 }
 
-class _NewCourseState extends State<NewCourse> {
-  final TextEditingController _couresName = TextEditingController();
-  final TextEditingController _couresYear = TextEditingController();
-  final TextEditingController _couresDescription = TextEditingController();
+class _AddChapterState extends State<AddChapter> {
   final TextEditingController _couresChapterName = TextEditingController();
 
   int index = 1;
@@ -55,11 +52,6 @@ class _NewCourseState extends State<NewCourse> {
 
     log(_controller[1][1].toString());
   }
-
-  // List<TextEditingController><TextEditingController>_quizzController = [
-  //   for (int i = 1; i < 75; i++) TextEditingController()
-
-  // ][for (int j = 1; j < 5; j++) TextEditingController()];
 
   Future selectFile() async {
     final result = await FilePicker.platform
@@ -133,7 +125,7 @@ class _NewCourseState extends State<NewCourse> {
                             },
                             icon: const Icon(Icons.arrow_back)),
                         const Text(
-                          "New Course",
+                          "New Chapter",
                           style: TextStyle(
                             fontFamily: AppFonts.mainFont,
                             fontWeight: FontWeight.w600,
@@ -150,10 +142,7 @@ class _NewCourseState extends State<NewCourse> {
                         ),
                       ],
                     ),
-                    courseInfo(),
-                    const SizedBox(
-                      height: 18,
-                    ),
+
                     //course content
                     courseContent(),
                     const SizedBox(
@@ -163,15 +152,13 @@ class _NewCourseState extends State<NewCourse> {
                     if (state.addcourseState == RequestState.error)
                       Text(
                         state.addCourseMessage,
-                        style: TextStyle(color: Colors.red),
+                        style: const TextStyle(color: Colors.red),
                       ),
 
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: GestureDetector(
                         onTap: () async {
-                          final prefs = await SharedPreferences.getInstance();
-                          final userid = prefs.getString("userid");
                           String type = "";
                           if (index == 1) {
                             type = "pdf";
@@ -193,41 +180,43 @@ class _NewCourseState extends State<NewCourse> {
                                 rightAnswer: _answers[i].toString(),
                               ));
                             }
-                            List<CourseContent> course = [
-                              CourseContent(
-                                  name: _couresChapterName.text,
-                                  type: type,
-                                  quizzContent: quizzContent)
-                            ];
-                            // log(course.toString());
-                            final courseCred = CourseDetails(
-                                courseContent: course,
-                                description: _couresDescription.text,
-                                teacherId: userid!,
-                                title: _couresName.text,
-                                year: _couresYear.text);
+                            CourseContent course = CourseContent(
+                                name: _couresChapterName.text,
+                                type: type,
+                                quizzContent: quizzContent);
+
                             BlocProvider.of<CourseBloc>(context).add(
-                              AddCourseEvent(courseCred),
+                              AddChapterEvent(course, widget.id),
                             );
+
+                            // log(course.toString());
+
+                            // BlocProvider.of<CourseBloc>(context).add(
+                            //   AddCourseEvent(courseCred),
+                            // );
                           } else {
-                            List<CourseContent> course = [
-                              CourseContent(
-                                  name: _couresChapterName.text,
-                                  type: type,
-                                  url: urlLink)
-                            ];
+                            CourseContent course = CourseContent(
+                                name: _couresChapterName.text,
+                                type: type,
+                                url: urlLink);
+                            log(course.toString());
+                            log(widget.id);
+
+                            BlocProvider.of<CourseBloc>(context).add(
+                              AddChapterEvent(course, widget.id),
+                            );
 
                             // final courseContent = CourseContent(
                             //     name: _couresName.text, type: "pdf", url: urlLink);
-                            final courseCred = CourseDetails(
-                                courseContent: course,
-                                description: _couresDescription.text,
-                                teacherId: userid!,
-                                title: _couresName.text,
-                                year: _couresYear.text);
-                            BlocProvider.of<CourseBloc>(context).add(
-                              AddCourseEvent(courseCred),
-                            );
+                            // final courseCred = CourseDetails(
+                            //     courseContent: course,
+                            //     description: _couresDescription.text,
+                            //     teacherId: userid!,
+                            //     title: _couresName.text,
+                            //     year: _couresYear.text);
+                            // BlocProvider.of<CourseBloc>(context).add(
+                            //   AddCourseEvent(courseCred),
+                            // );
                           }
                           // BlocProvider.of<CourseBloc>(context).add(
                           //   AddCourseEvent(courseCred),
@@ -283,107 +272,6 @@ class _NewCourseState extends State<NewCourse> {
           );
         },
       ),
-    );
-  }
-
-  Widget courseInfo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Course Name",
-          style: TextStyle(
-            fontFamily: AppFonts.mainFont,
-            fontWeight: FontWeight.w500,
-            color: Color(AppColors.writting),
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Container(
-          height: 45,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(5),
-            ),
-            border: Border.all(
-              color: const Color(0xFFD9D9D9),
-            ),
-          ),
-          child: TextFieldInput(
-            hintText: "Enter course name",
-            textEditingController: _couresName,
-            textInputType: TextInputType.text,
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(
-          "Course Student Domaine",
-          style: TextStyle(
-            fontFamily: AppFonts.mainFont,
-            fontWeight: FontWeight.w500,
-            color: Color(AppColors.writting),
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Container(
-          height: 45,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(5),
-            ),
-            border: Border.all(
-              color: const Color(0xFFD9D9D9),
-            ),
-          ),
-          child: TextFieldInput(
-            hintText: "Enter your biography",
-            textEditingController: _couresYear,
-            textInputType: TextInputType.text,
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(
-          "Course Into",
-          style: TextStyle(
-            fontFamily: AppFonts.mainFont,
-            fontWeight: FontWeight.w500,
-            color: Color(AppColors.writting),
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Container(
-          height: 140,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(5),
-            ),
-            border: Border.all(
-              color: const Color(0xFFD9D9D9),
-            ),
-          ),
-          child: TextFieldInput(
-            hintText: "Enter course into",
-            textEditingController: _couresDescription,
-            textInputType: TextInputType.text,
-          ),
-        ),
-      ],
     );
   }
 

@@ -44,6 +44,13 @@ exports.addCourse = async (req, res, next) => {
     courseContent.quizzContent = array;
     console.log(courseContent);
 
+    if (courseContent.quizzContent == null) {
+        courseContent.quizzContent = undefined
+    }
+    if (courseContent.url == null) {
+        courseContent.url == undefined
+    }
+
     const newCourse = new courses({
         title,
         description,
@@ -104,13 +111,29 @@ exports.getCourseByID = async (req, res, next) => {
 }
 
 exports.addChapter = async (req, res, next) => {
-    const { newChapter } = req.body
+    const newChapter = req.body;
     const courseId = req.params.id;
+
+    console.log(newChapter);
+
+    if (newChapter.quizzContent != "") {
+        var array = JSON.parse(newChapter.quizzContent);
+        console.log(array);
+        newChapter.quizzContent = array;
+        console.log(newChapter);
+    }
+
+    if (newChapter.quizzContent == "") {
+        newChapter.quizzContent = undefined
+    }
+    if (newChapter.url == null) {
+        newChapter.url == undefined
+    }
 
     let course;
 
-    if (courseContent === null) {
-        return res.status(404).json({ message: 'Cannot add chapter' });
+    if (newChapter === null) {
+        // return res.status(404).json({ message: 'Cannot add chapter' });
     } else {
 
         try {
