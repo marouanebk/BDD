@@ -31,9 +31,9 @@ class CourseContent extends Equatable {
 }
 
 class Quizz extends Equatable {
-  final String question;
-  final List<String> answers;
-  final String rightAnswer;
+  final String? question;
+  final List<String>? answers;
+  final String? rightAnswer;
 
   const Quizz({
     required this.question,
@@ -42,7 +42,7 @@ class Quizz extends Equatable {
   });
 
   @override
-  List<Object?> get props => [question, answers, rightAnswer, rightAnswer];
+  List<Object?> get props => [question, answers, rightAnswer];
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{

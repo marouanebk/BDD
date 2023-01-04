@@ -32,19 +32,23 @@ const courseSchema = mongoose.Schema({
         },
 
         quizzContent: {}
+      
+        
 
-        // question: {
-        //     type: String,
-        //     required: false,
-        // },
-        // answers: [{
-        //     type: String,
-        //     required: false,
-        // }],
-        // rightAnswer: {
-        //     type: String,
-        //     required: false,
-        // },
+        // {
+        //     question: {
+        //         type: String,
+        //         required: false,
+        //     },
+        //     answers: {
+        //         type: String,
+        //         required: false,
+        //     },
+        //     rightAnswer: {
+        //         type: String,
+        //         required: false,
+        //     },
+        // }
 
 
 

@@ -43,8 +43,19 @@ class CourseDetailModel extends CourseDetails {
     // if (courseContent[0].quizzContent != null)
     //   String jsonContent = jsonEncode(courseContent[0].quizzContent);
     // log(courseContent[0].quizzContent.question.toString());
-    List<Quizz> quizz = courseContent[0].quizzContent;
-    log(jsonEncode(quizz).toString());
+    var quizz = courseContent[0].quizzContent as List<Quizz>;
+    log("");
+    print(quizz);
+    var tempo = jsonEncode(
+        courseContent[0].quizzContent.map((e) => e.toJson()).toList());
+
+    // var tempo = jsonEncode(
+    //     courseContent[0].quizzContent.map((e) => e.toJson()).toList());
+    
+
+    // for (var i in courseContent[0].quizzContent) {
+    //   log(jsonEncode(i));
+    // }
 
     return {
       "title": title,
@@ -54,7 +65,11 @@ class CourseDetailModel extends CourseDetails {
         "name": courseContent[0].name.toString(),
         "type": courseContent[0].type.toString(),
         "url": courseContent[0].url.toString(),
-        "quizzContent": jsonEncode(quizz),
+        "quizzContent": tempo
+        // jsonEncode(courseContent[0].quizzContent as List<Quizz>)
+        // {
+        //   for (var i in courseContent[0].quizzContent) jsonEncode(i) as Quizz,
+        // }
 
         // jsonEncode(courseContent[0].quizzContent)
         // {

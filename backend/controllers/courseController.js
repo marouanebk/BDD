@@ -37,7 +37,13 @@ exports.addCourse = async (req, res, next) => {
     console.log(req.body);
     console.log("in adding course funciton in backend");
 
+
     const { title, description, user, year, courseContent } = req.body
+    var array = JSON.parse(courseContent.quizzContent);
+    console.log(array);
+    courseContent.quizzContent = array;
+    console.log(courseContent);
+
     const newCourse = new courses({
         title,
         description,
