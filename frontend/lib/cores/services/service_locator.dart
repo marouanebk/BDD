@@ -6,6 +6,8 @@ import 'package:frontend/MainScreen/domaine/usecases/add_course_usecase.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_course_detail.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_courses_by_teacher.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_suggested_courses.dart';
+import 'package:frontend/MainScreen/domaine/usecases/search_courses_usecase.dart';
+import 'package:frontend/MainScreen/domaine/usecases/search_users_usecase.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/authentication/data/datasource/user_datasource.dart';
 import 'package:frontend/authentication/data/repository/user_repository_implem.dart';
@@ -43,7 +45,7 @@ class ServiceLocator {
     // Bloc
     sl.registerFactory(() => UserBloc(sl(), sl(), sl(), sl(), sl(), sl()));
     sl.registerFactory(() => TodoBloc(sl(), sl(), sl(), sl(), sl()));
-    sl.registerFactory(() => CourseBloc(sl(), sl(), sl(), sl(), sl()));
+    sl.registerFactory(() => CourseBloc(sl(), sl(), sl(), sl(), sl() ,sl(),sl()));
     sl.registerFactory(() => ChatBloc(sl(), sl(), sl(), sl()));
 
     // sl.registerFactory(() => UserBloc(
@@ -66,6 +68,7 @@ class ServiceLocator {
     sl.registerLazySingleton(() => AddConversationUseCase(sl()));
     sl.registerLazySingleton(() => GetAllConversationsUseCase(sl()));
     sl.registerLazySingleton(() => GetConversationMessagesUseCase(sl()));
+    sl.registerLazySingleton(() => SendMessageUsecase(sl()));
 
     //courses usecases
     sl.registerLazySingleton(() => GetCoursedDetailUseCase(sl()));
@@ -74,7 +77,8 @@ class ServiceLocator {
     sl.registerLazySingleton(() => GetCoursesByTeacherUseCase(sl()));
     sl.registerLazySingleton(() => GetUserDetailsUseCase(sl()));
     sl.registerLazySingleton(() => AddChapterUseCase(sl()));
-    sl.registerLazySingleton(() => SendMessageUsecase(sl()));
+    sl.registerLazySingleton(() => SearchUsersUsecase(sl()));
+    sl.registerLazySingleton(() => SearchCoursesUseCase(sl()));
 
     // Repository
     sl.registerLazySingleton<BaseUserRepository>(() => UserRepository(sl()));

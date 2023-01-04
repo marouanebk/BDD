@@ -6,6 +6,7 @@ import 'package:frontend/MainScreen/data/model/course_detail_model.dart';
 import 'package:frontend/MainScreen/data/model/course_model.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/suggested_courses.dart';
+import 'package:frontend/authentication/data/models/user_model.dart';
 import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/network/error_message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +18,9 @@ abstract class BaseCourseRemoteDataSource {
   Future<CourseDetailModel> getCourseDetail(String id);
   Future<Unit> addCourse(CourseDetailModel courseDetails);
   Future<Unit> addChapter(String id, CourseContent courseContent);
+
+  Future<List<UserModel>> searchUsers(String key);
+  Future<List<CourseModel>> searchCourses(String key);
 }
 
 class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
@@ -133,6 +137,42 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
     log(response.toString());
     if (response.statusCode == 200) {
       return Future.value(unit);
+    } else {
+      throw ServerException(
+          errorMessageModel: ErrorMessageModel(
+              statusCode: response.statusCode,
+              statusMessage: response.data['message']));
+    }
+  }
+
+  @override
+  Future<List<UserModel>> searchUsers(String key) async {
+    final response = await Dio().get(
+      "http://10.0.2.2:4000/courses/search/$key",
+    );
+
+    if (response.statusCode == 200) {
+      return List<UserModel>.from((response.data["users"] as List).map(
+        (e) => UserModel.fromJson(e),
+      ));
+    } else {
+      throw ServerException(
+          errorMessageModel: ErrorMessageModel(
+              statusCode: response.statusCode,
+              statusMessage: response.data['message']));
+    }
+  }
+
+  @override
+  Future<List<CourseModel>> searchCourses(String key) async {
+    final response = await Dio().get(
+      "http://10.0.2.2:4000/courses/search/$key",
+    );
+
+    if (response.statusCode == 200) {
+      return List<CourseModel>.from((response.data["cours"] as List).map(
+        (e) => CourseModel.fromJson(e),
+      ));
     } else {
       throw ServerException(
           errorMessageModel: ErrorMessageModel(

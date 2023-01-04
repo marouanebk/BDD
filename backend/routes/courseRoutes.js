@@ -8,6 +8,7 @@ const courseController = require("../controllers/courseController");
 courseRouter.get('/getCourse', courseController.getCourse);
 courseRouter.get('/getCourseByTeacherId/:id', courseController.getCourseByTeacherId);
 courseRouter.get('/getCourseByID/:id', courseController.getCourseByID);
+courseRouter.get('/search/:key', courseController.search);
 
 courseRouter.post('/addCourse', courseController.addCourse);
 

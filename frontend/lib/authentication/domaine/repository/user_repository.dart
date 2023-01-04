@@ -17,5 +17,10 @@ abstract class BaseUserRepository {
 
   Future<Either<Failure , Unit>> setBiography(String bio);
 
+    // Future<Either<Failure, List<UserModel>>> searchUsers(String id);
+
+
+
+
 
 }

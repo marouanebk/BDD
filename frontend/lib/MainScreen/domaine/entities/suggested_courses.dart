@@ -6,12 +6,14 @@ class Course extends Equatable {
   final String? teacherid;
   final String year;
   final String title;
+  final String? picture;
 
   const Course({
     this.courseid,
     this.teacherid,
     required this.year,
     required this.title,
+    this.picture,
   });
 
   @override
@@ -20,5 +22,6 @@ class Course extends Equatable {
         teacherid,
         year,
         title,
+        picture,
       ];
 }

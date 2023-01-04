@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/coursedetail.dart';
+import 'package:frontend/MainScreen/presentation/screens/search/search_screen.dart';
 import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
@@ -322,23 +323,34 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget searchBar(context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Container(
-        width: double.infinity,
-        height: 40,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-          border: Border.all(
-            color: const Color(0xFFBEC5D1),
-          ),
-          color: Colors.white,
+    return GestureDetector(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          builder: (_) => const SearchScreen(),
         ),
-        child: TextFieldInput(
-          hintText: "seach here",
-          textEditingController: _search,
-          textInputType: TextInputType.text,
-        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
+              border: Border.all(
+                color: const Color(0xFFBEC5D1),
+              ),
+              color: Colors.white,
+            ),
+            child: const Center(
+              child: Text(
+                'search here',
+                style: TextStyle(
+                  fontFamily: AppFonts.mainFont,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
+              ),
+            )),
       ),
     );
   }
@@ -537,7 +549,7 @@ Widget suggestedCourseCard(context, index) {
               ),
               children: [
                 TextSpan(
-                  text: " ${index.year}" ,
+                  text: " ${index.year}",
                   style: TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w500,

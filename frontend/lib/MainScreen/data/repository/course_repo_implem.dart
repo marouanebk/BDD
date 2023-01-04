@@ -1,9 +1,11 @@
 import 'package:frontend/MainScreen/data/datasource/course_datasource.dart';
 import 'package:frontend/MainScreen/data/model/course_detail_model.dart';
+import 'package:frontend/MainScreen/data/model/course_model.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 import 'package:frontend/MainScreen/domaine/entities/suggested_courses.dart';
 import 'package:frontend/MainScreen/domaine/repository/base_course_repo.dart';
+import 'package:frontend/authentication/data/models/user_model.dart';
 import 'package:frontend/cores/error/exceptions.dart';
 import 'package:frontend/cores/error/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -65,6 +67,26 @@ class CourseRepository implements BaseCourseRepository {
     try {
       final result =
           await baseCourseRemoteDataSource.addChapter(id, courseContent);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<UserModel>>> searchUsers(String key) async {
+    try {
+      final result = await baseCourseRemoteDataSource.searchUsers(key);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CourseModel>>> searchCourses(String key) async {
+    try {
+      final result = await baseCourseRemoteDataSource.searchCourses(key);
       return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));

@@ -21,6 +21,14 @@ class CourseState extends Equatable {
   final List<Course> getCoursesByTeacher;
   final RequestState getCoursesByTeacherState;
   final String getCoursesByTeachermessage;
+  //
+  final List<CourseModel> searchCourses;
+  final RequestState searchCoursesState;
+  final String searchCoursesmessage;
+  //
+  final List<UserModel> searchUsers;
+  final RequestState searchUsersState;
+  final String searchUsersmessage;
 
   const CourseState({
     this.getSuggestedCourses = const [],
@@ -43,6 +51,14 @@ class CourseState extends Equatable {
     this.getCoursesByTeacher = const [],
     this.getCoursesByTeacherState = RequestState.loading,
     this.getCoursesByTeachermessage = "",
+    //
+    this.searchCourses = const [],
+    this.searchCoursesState = RequestState.loading,
+    this.searchCoursesmessage = "",
+    //
+    this.searchUsers = const [],
+    this.searchUsersState = RequestState.loading,
+    this.searchUsersmessage = "",
   });
 
   CourseState copyWith({
@@ -63,6 +79,14 @@ class CourseState extends Equatable {
     List<Course>? getCoursesByTeacher,
     RequestState? getCoursesByTeacherState,
     String? getCoursesByTeachermessage,
+    //
+    List<CourseModel>? searchCourses,
+    RequestState? searchCoursesState,
+    String? searchCoursesmessage,
+    //
+    List<UserModel>? searchUsers,
+    RequestState? searchUsersState,
+    String? searchUsersmessage,
 
     //
   }) {
@@ -94,6 +118,14 @@ class CourseState extends Equatable {
       addChapterState: addChapterState ?? this.addChapterState,
       addChapterMessage: addChapterMessage ?? this.addChapterMessage,
       addChapterSuccess: addChapterSuccess ?? this.addChapterSuccess,
+      //
+      searchCourses: searchCourses ?? this.searchCourses,
+      searchCoursesState: searchCoursesState ?? this.searchCoursesState,
+      searchCoursesmessage: searchCoursesmessage ?? this.searchCoursesmessage,
+      //
+      searchUsers: searchUsers ?? this.searchUsers,
+      searchUsersState: searchUsersState ?? this.searchUsersState,
+      searchUsersmessage: searchUsersmessage ?? this.searchUsersmessage,
     );
     //
   }
@@ -120,5 +152,12 @@ class CourseState extends Equatable {
         addChapterMessage,
         addChapterSuccess,
         //
+        searchCourses,
+        searchCoursesState,
+        searchCoursesmessage,
+        //
+        searchUsers,
+        searchUsersState,
+        searchUsersmessage,
       ];
 }

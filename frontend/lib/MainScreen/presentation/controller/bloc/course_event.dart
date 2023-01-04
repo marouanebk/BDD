@@ -41,3 +41,19 @@ class AddChapterEvent extends CourseEvent {
   @override
   List<Object> get props => [courseContent, id];
 }
+
+class SearchUsersEvent extends CourseEvent {
+  final String key;
+
+  const SearchUsersEvent(this.key);
+  @override
+  List<Object> get props => [key];
+}
+
+class SearchCoursesEvent extends CourseEvent {
+  final String key;
+
+  const SearchCoursesEvent(this.key);
+  @override
+  List<Object> get props => [key];
+}

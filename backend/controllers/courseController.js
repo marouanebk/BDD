@@ -6,7 +6,24 @@ const User = require("../models/user.model");
 exports.getCourse = async (req, res, next) => {
     let course
     try {
-        course = await courses.find();
+        course = await courses.find()
+
+        // .then(async cours => {
+        //     let teachProfile = {};
+        //     for (var i = 0; i < cours.length; i++) {
+        //         let resulti = await User.find({ userid: cours[i].user }).profile_picture;
+        //         teachProfile[i] =
+        //             cours[i]
+
+
+        //     }
+        //     let resulta = []
+        //     for (var key in teachProfile) {
+        //         resulta.push(teachProfile[key])
+        //     }
+        //     return res.status(200).send({ result: resulta })
+
+        // });
     } catch (err) {
         return res.status(500).json({ message: err.message })
     }
@@ -166,4 +183,24 @@ exports.deleteCourseByID = async (req, res, next) => {
         return res.status(404).json({ message: 'Cannot find course' })
     }
     return res.status(200).json({ message: 'Course deleted' })
-} 
+}
+
+exports.search = async (req, resp) => {
+    let cours = await courses.find(
+        {
+            "$or": [
+                { title: { $regex: req.params.key } },
+            ]
+        }
+    )
+    let users = await User.find(
+        {
+            fullname: { $regex: req.params.key },
+            type: "Teacher"
+        },
+    )
+    // resp.status(200).send({ "cours": cours, "people": users })
+    resp.status(200).send({ cours, users })
+
+
+}

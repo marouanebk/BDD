@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/pdf_preview.dart';
 import 'package:frontend/MainScreen/presentation/screens/teacher_detail.dart';
@@ -92,7 +95,8 @@ class CourseDetailScreen extends StatelessWidget {
                                     ),
                                     textAlign: TextAlign.start,
                                   ),
-                                  courseContent(context),
+                                  courseContent(
+                                      context, state.getCourseDetail!),
                                   const SizedBox(
                                     height: 80,
                                   )
@@ -236,7 +240,7 @@ Widget reviews() {
   );
 }
 
-Widget courseContent(context) {
+Widget courseContent(context, items) {
   return Padding(
     padding: const EdgeInsets.only(right: 20),
     child: ListView.separated(
@@ -246,15 +250,15 @@ Widget courseContent(context) {
       ),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 5,
+      itemCount: items.courseContent.length,
       itemBuilder: (context, index) {
-        return courseContentCard(context);
+        return courseContentCard(context, items.courseContent[index]);
       },
     ),
   );
 }
 
-Widget courseContentCard(context) {
+Widget courseContentCard(context, item) {
   return GestureDetector(
     onTap: () => Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
@@ -292,7 +296,7 @@ Widget courseContentCard(context) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Chapter 05 (last one)",
+                "item",
                 style: TextStyle(
                   fontFamily: AppFonts.mainFont,
                   fontWeight: FontWeight.w600,
