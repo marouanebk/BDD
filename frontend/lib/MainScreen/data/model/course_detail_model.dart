@@ -26,13 +26,17 @@ class CourseDetailModel extends CourseDetails {
             );
 
   factory CourseDetailModel.fromJson(Map<String, dynamic> json) {
+    var temp =
+        List<CourseContent>.from((json["course"]["courseContent"] as List).map(
+      (e) => CourseContent.fromJson(e),
+    ));
     return CourseDetailModel(
         courseid: json["course"]["_id"],
         teacherName: json["fullname"],
         year: json["course"]["year"],
         title: json["course"]["title"],
         description: json["course"]["description"],
-        courseContent: json["course"]["courseContent"],
+        courseContent: temp,
         teacherId: json["course"]["user"]
         // teacherName: json["teacherName"],
         );

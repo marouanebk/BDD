@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/MainScreen/presentation/screens/pdf_preview.dart';
+import 'package:frontend/MainScreen/presentation/screens/quizz.dart/quizz_page.dart';
 import 'package:frontend/MainScreen/presentation/screens/teacher_detail.dart';
 import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/cores/const/colors.dart';
@@ -260,11 +262,33 @@ Widget courseContent(context, items) {
 
 Widget courseContentCard(context, item) {
   return GestureDetector(
-    onTap: () => Navigator.of(context, rootNavigator: true).push(
-      MaterialPageRoute(
-        builder: (_) => const PdfPreviewPage(),
-      ),
-    ),
+    // onTap: () => Navigator.of(context, rootNavigator: true).push(
+    //   MaterialPageRoute(
+    //     builder: (_) => const PdfPreviewPage(),
+    //   ),
+    // ),
+
+    // onTap: () {
+    //   log(item.quizzContent);
+    // },
+
+    onTap: () {
+      if (item.type == "pdf") {
+        Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(
+            builder: (_) => const PdfPreviewPage(),
+          ),
+        );
+      } else if (item.type == "quizz") {
+        Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(
+            builder: (_) => QuizzPage(
+              items: item.quizzContent,
+            ),
+          ),
+        );
+      }
+    },
     child: Container(
       height: 60,
       width: double.infinity,
@@ -284,10 +308,15 @@ Widget courseContentCard(context, item) {
             width: 40,
             height: 40,
             color: const Color(0xFFE8EFF5),
-            child: Image.asset(
-              "assets/images/pdf.png",
-              // fit: BoxFit.cover,
-            ),
+            child: (item.type == "pdf")
+                ? Image.asset(
+                    "assets/images/pdf.png",
+                    // fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    "assets/images/quizz.png",
+                    // fit: BoxFit.cover,
+                  ),
           ),
           const SizedBox(
             width: 37,
@@ -296,7 +325,7 @@ Widget courseContentCard(context, item) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "item",
+                item.name,
                 style: TextStyle(
                   fontFamily: AppFonts.mainFont,
                   fontWeight: FontWeight.w600,

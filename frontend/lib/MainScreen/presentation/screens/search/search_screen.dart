@@ -16,8 +16,8 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final controller = PageController(initialPage: 0);
   TextEditingController _search = TextEditingController();
+  final controller = PageController(initialPage: 0);
   int pageindex = 0;
 
   @override

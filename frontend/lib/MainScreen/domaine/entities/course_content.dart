@@ -30,6 +30,26 @@ class CourseContent extends Equatable {
           : "",
     };
   }
+
+  factory CourseContent.fromJson(Map<String, dynamic> json) {
+    // var temp = List<Quizz>.from((json["quizzContent"] as List).map(
+    //   (e) => Quizz.fromJson(e),
+    // ));
+    // log(List<Quizz>.from((json["quizzContent"] as List).map(
+    //   (e) => Quizz.fromJson(e),
+    // )).toString());
+    return CourseContent(
+      name: json["name"],
+      type: json["type"],
+      url: json["url"],
+      quizzContent: (json["type"] == "quizz")
+          ? List<Quizz>.from((json["quizzContent"] as List).map(
+              (e) => Quizz.fromJson(e),
+            ))
+          : [],
+      // teacherName: json["teacherName"],
+    );
+  }
 }
 
 class Quizz extends Equatable {
@@ -38,9 +58,9 @@ class Quizz extends Equatable {
   final String? rightAnswer;
 
   const Quizz({
-    required this.question,
-    required this.answers,
-    required this.rightAnswer,
+    this.question,
+    this.answers,
+    this.rightAnswer,
   });
 
   @override
@@ -52,5 +72,20 @@ class Quizz extends Equatable {
       'answers': answers,
       'rightAnswer': rightAnswer,
     };
+  }
+
+// (jsonDecode(input) as List<dynamic>).cast<String>();
+  factory Quizz.fromJson(Map<String, dynamic> json) {
+    // log(json["answers"]);
+    return Quizz(
+      question: json["question"],
+      // answers: json["answers"] as List<String>,
+
+      answers: List<String>.from((json["answers"] as List).map(
+        (e) => (e),
+      )),
+      rightAnswer: json["rightAnswer"],
+      // teacherName: json["teacherName"],
+    );
   }
 }
