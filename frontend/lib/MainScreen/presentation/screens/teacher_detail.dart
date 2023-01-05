@@ -13,7 +13,7 @@ import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/utils/enums.dart';
 
 class TeacherDetailScreen extends StatefulWidget {
-  final id;
+  final String id;
   const TeacherDetailScreen({super.key, required this.id});
 
   @override

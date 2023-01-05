@@ -1,4 +1,3 @@
-import 'package:frontend/chat/domaine/entities/conversation_entity.dart';
 import 'package:frontend/chat/domaine/entities/message_entity.dart';
 
 class MessageModel extends MessageEntity {

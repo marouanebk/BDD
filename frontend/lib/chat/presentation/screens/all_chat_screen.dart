@@ -2,10 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/chat/presentation/controller/bloc/chat_bloc.dart';
-import 'package:frontend/chat/presentation/screens/chat_page.dart';
 import 'package:frontend/chat/presentation/screens/chat_screen.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
@@ -14,7 +12,7 @@ import 'package:frontend/cores/utils/enums.dart';
 import 'package:frontend/cores/widgets/text_input_field.dart';
 
 class AllChatScreen extends StatefulWidget {
-  final id;
+  final String id;
   const AllChatScreen({required this.id, super.key});
 
   @override
@@ -179,7 +177,7 @@ Widget chatHeadCard(context, item, userid) {
                 Text(
                   // (item.sender == userid) ? item.reciever : item.sender,
                   "hello",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF0F1828),
@@ -187,10 +185,10 @@ Widget chatHeadCard(context, item, userid) {
                   ),
                   // textAlign: TextAlign.center,
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 2,
                 ),
-                const Text(
+                Text(
                   "Projet BDD",
                   style: TextStyle(
                     fontFamily: AppFonts.mainFont,

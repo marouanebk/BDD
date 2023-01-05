@@ -10,7 +10,6 @@ import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/utils/enums.dart';
-import 'package:frontend/cores/widgets/text_input_field.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class MainScreen extends StatefulWidget {
@@ -22,7 +21,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final controller = PageController(initialPage: 0);
-  TextEditingController _search = TextEditingController();
   int pageindex = 0;
 
   @override

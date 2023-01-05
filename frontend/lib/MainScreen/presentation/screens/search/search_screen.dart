@@ -16,7 +16,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  TextEditingController _search = TextEditingController();
   final controller = PageController(initialPage: 0);
   int pageindex = 0;
 
@@ -145,7 +144,8 @@ class _SearchScreenState extends State<SearchScreen> {
               onSubmitted: (text) {
                 BlocProvider.of<CourseBloc>(context)
                     .add(SearchCoursesEvent(text));
-                BlocProvider.of<CourseBloc>(context).add(SearchUsersEvent(text));
+                BlocProvider.of<CourseBloc>(context)
+                    .add(SearchUsersEvent(text));
               },
             ),
           ),

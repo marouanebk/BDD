@@ -5,14 +5,13 @@ import 'package:frontend/authentication/presentation/screens/register_page.dart'
 import 'package:frontend/chat/data/model/message_model.dart';
 import 'package:frontend/chat/domaine/entities/message_entity.dart';
 import 'package:frontend/chat/presentation/controller/bloc/chat_bloc.dart';
-import 'package:frontend/chat/presentation/screens/message_class.dart';
 import 'package:frontend/cores/network/api_constants.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/utils/enums.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 class ChatScreen extends StatefulWidget {
-  final id;
+  final String id;
   final String userid;
   const ChatScreen({required this.userid, required this.id, super.key});
 

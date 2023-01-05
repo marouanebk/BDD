@@ -6,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/domaine/entities/course_content.dart';
-import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 import 'package:frontend/MainScreen/presentation/component/add_course_success.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
 import 'package:frontend/cores/const/colors.dart';
@@ -14,7 +13,6 @@ import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/utils/enums.dart';
 import 'package:frontend/cores/widgets/text_input_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class AddChapter extends StatefulWidget {

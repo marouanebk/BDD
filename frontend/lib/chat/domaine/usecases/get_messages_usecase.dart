@@ -1,4 +1,3 @@
-import 'package:frontend/chat/domaine/entities/conversation_entity.dart';
 import 'package:frontend/chat/domaine/entities/message_entity.dart';
 import 'package:frontend/chat/domaine/repository/base_chat_repo.dart';
 import 'package:frontend/cores/error/failure.dart';
