@@ -5,6 +5,10 @@ const mongoose = require("mongoose");
 const dbConfig = require("./config/db.config");
 var teacherRoutes = require('./routes/teacher');
 var studentRoutes = require('./routes/student');
+const msgroutes = require("./routes/messageroutes");
+const cnroutes = require("./routes/conversationroutes");
+const grproutes = require("./routes/grouperoutes");
+const socket = require("socket.io");
 mongoose.set('strictQuery', true);
 
 const auth = require("./middlewares/auth.js");
@@ -42,12 +46,46 @@ app.use("/", require("./controllers/todoController"))
 app.use("/courses", require("./routes/courseRoutes"))
 app.use('/student', studentRoutes);
 app.use('/teacher', teacherRoutes);
+app.use("/api/message", msgroutes);
+app.use("/api/conversation", cnroutes);
+app.use("/api/groupe", grproutes);
+
 
 // middleware for error responses
 app.use(errors.errorHandler);
 
 // listen for requests
 let port = 4000;
-app.listen(port, function () {
+const server = app.listen(port, function () {
   console.log("server running on port ", port);
+});
+
+
+const io = socket(server, {
+  cors:{
+      origin: "http://localhost:5000",
+      credentials: true,   
+  },
+});
+
+global.onlineUsers = new Map();
+
+io.on("connection", (socket) =>{
+  global.chatSocket = socket;
+  socket.on("add-user",(userId) =>{
+      onlineUsers.set(userId, socket.id);
+  });
+  socket.on("send-msg",(data)=>{
+      const sendUserSocket = onlineUsers.get(data.to);
+      if(sendUserSocket) {
+          socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+      }
+  });
+  socket.on("send-file",(data)=>{
+      const sendUserSocket = onlineUsers.get(data.to);
+      if(sendUserSocket) {
+          socket.to(sendUserSocket).emit("file-recieve", data.type);
+      }
+  });
+
 });
