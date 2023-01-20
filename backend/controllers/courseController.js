@@ -57,9 +57,12 @@ exports.addCourse = async (req, res, next) => {
 
     const { title, description, user, year, courseContent } = req.body
     var array = JSON.parse(courseContent.quizzContent);
-    console.log(array);
     courseContent.quizzContent = array;
-    console.log(courseContent);
+
+    let userM;
+    userM = await User.findById({ _id: user }) ;
+    console.log("userM            "+userM);
+
 
     if (courseContent.quizzContent == null) {
         courseContent.quizzContent = undefined
@@ -71,7 +74,7 @@ exports.addCourse = async (req, res, next) => {
     const newCourse = new courses({
         title,
         description,
-        user,
+        userM,
         year,
         courseContent
     })

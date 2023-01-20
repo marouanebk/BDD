@@ -150,7 +150,7 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
     final response = await Dio().get(
       "http://10.0.2.2:4000/courses/search/$key",
     );
-
+    log(response.toString());
     if (response.statusCode == 200) {
       return List<UserModel>.from((response.data["users"] as List).map(
         (e) => UserModel.fromJson(e),

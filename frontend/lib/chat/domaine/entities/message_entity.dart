@@ -6,12 +6,13 @@ class MessageEntity extends Equatable {
   final String sender;
   final DateTime? createdAt;
   final String message;
-
+  final String? to;
   const MessageEntity({
     required this.conversationId,
     required this.sender,
     this.createdAt,
     required this.message,
+    this.to,
   });
 
   @override
@@ -20,5 +21,6 @@ class MessageEntity extends Equatable {
         sender,
         createdAt,
         message,
+        to,
       ];
 }

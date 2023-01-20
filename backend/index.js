@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
- require("dotenv").config();
+require("dotenv").config();
 const mongoose = require("mongoose");
 const dbConfig = require("./config/db.config");
 var teacherRoutes = require('./routes/teacher');
@@ -62,30 +62,39 @@ const server = app.listen(port, function () {
 
 
 const io = socket(server, {
-  cors:{
-      origin: "http://localhost:5000",
-      credentials: true,   
+  cors: {
+    origin: "http://localhost:4000",
+    credentials: true,
   },
 });
 
 global.onlineUsers = new Map();
 
-io.on("connection", (socket) =>{
+io.on("connection", (socket) => {
   global.chatSocket = socket;
-  socket.on("add-user",(userId) =>{
-      onlineUsers.set(userId, socket.id);
+  socket.on("add-user", (userId) => {
+    console.log("add user backend", userId);
+    onlineUsers.set(userId, socket.id);
   });
-  socket.on("send-msg",(data)=>{
-      const sendUserSocket = onlineUsers.get(data.to);
-      if(sendUserSocket) {
-          socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-      }
+  socket.on("send-msg", (data) => {
+    console.log("in sending message ");
+    console.log(chatSocket);
+    console.log("data" + data);
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      console.log("trueeee");
+      let data2 = { from: data.from, conversation: data.conversation, message: data.message };
+      console.log("data2" + data2);
+      socket.to(sendUserSocket).emit("msg-recieve", data2);
+    } else {
+      console.log("faaaalse");
+    }
   });
-  socket.on("send-file",(data)=>{
-      const sendUserSocket = onlineUsers.get(data.to);
-      if(sendUserSocket) {
-          socket.to(sendUserSocket).emit("file-recieve", data.type);
-      }
+  socket.on("send-file", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("file-recieve", data.type);
+    }
   });
 
 });

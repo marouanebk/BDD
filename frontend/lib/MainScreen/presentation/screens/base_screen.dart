@@ -19,6 +19,7 @@ class _BaseScreenState extends State<BaseScreen> {
   void getUseruid() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userid = prefs.getString("userid")!;
+    setState(() {});
   }
 
   String userid = "";
@@ -27,6 +28,7 @@ class _BaseScreenState extends State<BaseScreen> {
   void initState() {
     super.initState();
     getUseruid();
+    setState(() {});
   }
 
   var controller = PersistentTabController(initialIndex: 0);

@@ -17,6 +17,7 @@ const courseSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    // user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
     courseContent: [{
         name: {
             type: String,
@@ -32,33 +33,9 @@ const courseSchema = mongoose.Schema({
         },
 
         quizzContent: {}
-
-
-
-        // {
-        //     question: {
-        //         type: String,
-        //         required: false,
-        //     },
-        //     answers: {
-        //         type: String,
-        //         required: false,
-        //     },
-        //     rightAnswer: {
-        //         type: String,
-        //         required: false,
-        //     },
-        // }
-
-
-
-
     },
 
-
     ],
-
-
 },
 
 

@@ -141,7 +141,7 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              onSubmitted: (text) {
+              onChanged: (text) {
                 BlocProvider.of<CourseBloc>(context)
                     .add(SearchCoursesEvent(text));
                 BlocProvider.of<CourseBloc>(context)

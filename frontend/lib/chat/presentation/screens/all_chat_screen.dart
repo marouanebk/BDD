@@ -20,10 +20,15 @@ class AllChatScreen extends StatefulWidget {
 }
 
 class _AllChatScreenState extends State<AllChatScreen> {
+  // IO.Socket? socket;
   @override
   void initState() {
     super.initState();
     log(widget.id);
+    // IO.Socket socket = IO.io("http://localhost:4000");
+    // socket.connect();
+    // socket.onconnect((data) => log("connected"));
+    // log(socket.connected.toString());
   }
 
   TextEditingController _searchchat = TextEditingController();
@@ -138,14 +143,18 @@ Widget chatHeads(items, userid) {
 
 Widget chatHeadCard(context, item, userid) {
   return InkWell(
-    onTap: () => Navigator.of(context, rootNavigator: true).push(
-      MaterialPageRoute(
-        builder: (_) => ChatScreen(
-          id: item.conversationId,
-          userid: userid,
+    onTap: () {
+      log("sender ${item.sender} reciver : ${item.reciever} userid : $userid");
+      Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(
+          builder: (_) => ChatScreen(
+            id: item.conversationId,
+            userid: userid,
+            receiver: (item.sender == userid) ? item.reciever : item.sender,
+          ),
         ),
-      ),
-    ),
+      );
+    },
     child: SizedBox(
       width: double.infinity,
       height: 56,
@@ -173,22 +182,24 @@ Widget chatHeadCard(context, item, userid) {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  // (item.sender == userid) ? item.reciever : item.sender,
-                  "hello",
-                  style: TextStyle(
-                    fontFamily: AppFonts.mainFont,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF0F1828),
-                    fontSize: 16,
+              children: [
+                Expanded(
+                  child: Text(
+                    (item.sender == userid) ? item.reciever : item.sender,
+                    // "hello",
+                    style: const TextStyle(
+                      fontFamily: AppFonts.mainFont,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF0F1828),
+                      fontSize: 16,
+                    ),
+                    // textAlign: TextAlign.center,
                   ),
-                  // textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
-                Text(
+                const Text(
                   "Projet BDD",
                   style: TextStyle(
                     fontFamily: AppFonts.mainFont,

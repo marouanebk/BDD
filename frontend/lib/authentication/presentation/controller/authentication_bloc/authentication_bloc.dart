@@ -115,7 +115,7 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
   UserBlocState _login(
       {required Either<Failure, int> result, required String message}) {
     return result.fold((l) {
-      return ErrorUserBlocState(message: _mapFailureToMessage(l));
+      return ErrorUserBlocState(message: l.message);
     }, (r) {
       if (r == 1) {
         return StudentLoginState();

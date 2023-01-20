@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
@@ -270,9 +272,10 @@ Widget courseContentCard(context, item) {
 
     onTap: () {
       if (item.type == "pdf") {
+        log(item.url);
         Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
-            builder: (_) => const PdfPreviewPage(),
+            builder: (_) =>  PdfPreviewPage(pdfUrl: item.url,),
           ),
         );
       } else if (item.type == "quizz") {

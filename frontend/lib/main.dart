@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,20 +7,44 @@ import 'package:frontend/MainScreen/presentation/screens/teacher/teacher_base_sc
 import 'package:frontend/authentication/presentation/screens/login_page.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 int? isLoggedIn;
 int? type;
+// IO.Socket? socket;
 
 void main() async {
   await ServiceLocator().init();
+
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isLoggedIn = prefs.getInt("is logged in");
   type = prefs.getInt("type");
   await Firebase.initializeApp();
 
+  ///
+  ///
+  // IO.Socket socket = IO.io('http://localhost:4000', <String, dynamic>{
+  //   "transports": ["websocket"],
+  //   "autoConnect": false,
+  // });
+  // socket.onConnect((_) {
+  //   log('connect');
+  //   socket.emit('msg', 'test');
+  // });
+  // socket.on('connection', (data) => print("data"));
+  // socket.onDisconnect((_) => print('disconnect'));
+  // socket.on('fromServer', (_) => print(_));
+
   runApp(const MyApp());
 }
+
+// void connect() {
+//   socket = IO.io('http://localhost:4000', <String, dynamic>{
+//     "transports": ["websocket"],
+//     "autoConnect": false,
+//   });
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

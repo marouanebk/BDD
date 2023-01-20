@@ -1,0 +1,192 @@
+Date : 2023-01-07 18:57:45
+Directory : d:\dev\1CS Projects\BDD\frontend\lib
+Total : 96 files,  10096 codes, 679 comments, 823 blanks, all 11598 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         96 |     10,096 |        679 |        823 |     11,598 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                      | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                         |         96 |     10,096 |        679 |        823 |     11,598 |
+| . (Files)                                                                                                                 |          3 |         70 |        206 |         45 |        321 |
+| MainScreen                                                                                                                |         30 |      5,010 |        268 |        309 |      5,587 |
+| MainScreen\data                                                                                                           |          4 |        327 |         37 |         46 |        410 |
+| MainScreen\data\datasource                                                                                                |          1 |        159 |          6 |         19 |        184 |
+| MainScreen\data\model                                                                                                     |          2 |         82 |         31 |         17 |        130 |
+| MainScreen\data\repository                                                                                                |          1 |         86 |          0 |         10 |         96 |
+| MainScreen\domaine                                                                                                        |         11 |        213 |         17 |         56 |        286 |
+| MainScreen\domaine\entities                                                                                               |          3 |        118 |         17 |         23 |        158 |
+| MainScreen\domaine\repository                                                                                             |          1 |         17 |          0 |          5 |         22 |
+| MainScreen\domaine\usecases                                                                                               |          7 |         78 |          0 |         28 |        106 |
+| MainScreen\presentation                                                                                                   |         15 |      4,470 |        214 |        207 |      4,891 |
+| MainScreen\presentation\component                                                                                         |          1 |         77 |          1 |          3 |         81 |
+| MainScreen\presentation\controller                                                                                        |          3 |        340 |         25 |         45 |        410 |
+| MainScreen\presentation\controller\bloc                                                                                   |          3 |        340 |         25 |         45 |        410 |
+| MainScreen\presentation\screens                                                                                           |         11 |      4,053 |        188 |        159 |      4,400 |
+| MainScreen\presentation\screens (Files)                                                                                   |          5 |      1,326 |         27 |         54 |      1,407 |
+| MainScreen\presentation\screens\quizz.dart                                                                                |          1 |        446 |         45 |         10 |        501 |
+| MainScreen\presentation\screens\search                                                                                    |          1 |        313 |         17 |         15 |        345 |
+| MainScreen\presentation\screens\teacher                                                                                   |          4 |      1,968 |         99 |         80 |      2,147 |
+| authentication                                                                                                            |         17 |      1,509 |         10 |        169 |      1,688 |
+| authentication\data                                                                                                       |          3 |        292 |          1 |         42 |        335 |
+| authentication\data\datasource                                                                                            |          1 |        183 |          1 |         24 |        208 |
+| authentication\data\models                                                                                                |          1 |         34 |          0 |          4 |         38 |
+| authentication\data\repository                                                                                            |          1 |         75 |          0 |         14 |         89 |
+| authentication\domaine                                                                                                    |          8 |         94 |          1 |         44 |        139 |
+| authentication\domaine\entities                                                                                           |          1 |         19 |          0 |          4 |         23 |
+| authentication\domaine\repository                                                                                         |          1 |         12 |          1 |         14 |         27 |
+| authentication\domaine\usecases                                                                                           |          6 |         63 |          0 |         26 |         89 |
+| authentication\presentation                                                                                               |          6 |      1,123 |          8 |         83 |      1,214 |
+| authentication\presentation\controller                                                                                    |          3 |        221 |          0 |         48 |        269 |
+| authentication\presentation\controller\authentication_bloc                                                                |          3 |        221 |          0 |         48 |        269 |
+| authentication\presentation\screens                                                                                       |          3 |        902 |          8 |         35 |        945 |
+| chat                                                                                                                      |         17 |        822 |         83 |        114 |      1,019 |
+| chat\data                                                                                                                 |          4 |        198 |         24 |         36 |        258 |
+| chat\data\datasource                                                                                                      |          1 |        105 |          4 |         14 |        123 |
+| chat\data\model                                                                                                           |          2 |         44 |         20 |         15 |         79 |
+| chat\data\repository                                                                                                      |          1 |         49 |          0 |          7 |         56 |
+| chat\domaine                                                                                                              |          7 |         91 |          6 |         29 |        126 |
+| chat\domaine\entities                                                                                                     |          2 |         37 |          2 |          8 |         47 |
+| chat\domaine\repository                                                                                                   |          1 |         11 |          4 |          5 |         20 |
+| chat\domaine\usecases                                                                                                     |          4 |         43 |          0 |         16 |         59 |
+| chat\presentation                                                                                                         |          6 |        533 |         53 |         49 |        635 |
+| chat\presentation\controller                                                                                              |          3 |        191 |         13 |         26 |        230 |
+| chat\presentation\controller\bloc                                                                                         |          3 |        191 |         13 |         26 |        230 |
+| chat\presentation\screens                                                                                                 |          3 |        342 |         40 |         23 |        405 |
+| cores                                                                                                                     |          9 |        198 |         14 |         41 |        253 |
+| cores\const                                                                                                               |          2 |         10 |          0 |          1 |         11 |
+| cores\error                                                                                                               |          2 |         22 |          1 |         15 |         38 |
+| cores\network                                                                                                             |          2 |         33 |          0 |         10 |         43 |
+| cores\services                                                                                                            |          1 |         83 |         12 |         11 |        106 |
+| cores\utils                                                                                                               |          1 |          5 |          0 |          0 |          5 |
+| cores\widgets                                                                                                             |          1 |         45 |          1 |          4 |         50 |
+| notifications                                                                                                             |          1 |         69 |          0 |          6 |         75 |
+| notifications\presentation                                                                                                |          1 |         69 |          0 |          6 |         75 |
+| notifications\presentation\screens                                                                                        |          1 |         69 |          0 |          6 |         75 |
+| profile                                                                                                                   |          5 |        800 |         32 |         33 |        865 |
+| profile\presentation                                                                                                      |          5 |        800 |         32 |         33 |        865 |
+| profile\presentation\component                                                                                            |          2 |        215 |          6 |          9 |        230 |
+| profile\presentation\screens                                                                                              |          3 |        585 |         26 |         24 |        635 |
+| to-dos                                                                                                                    |         14 |      1,618 |         66 |        106 |      1,790 |
+| to-dos\data                                                                                                               |          3 |        172 |          2 |         22 |        196 |
+| to-dos\data\datasource                                                                                                    |          1 |         87 |          2 |         10 |         99 |
+| to-dos\data\model                                                                                                         |          1 |         24 |          0 |          4 |         28 |
+| to-dos\data\repository                                                                                                    |          1 |         61 |          0 |          8 |         69 |
+| to-dos\domaine                                                                                                            |          7 |         80 |          1 |         27 |        108 |
+| to-dos\domaine\entities                                                                                                   |          1 |         15 |          1 |          4 |         20 |
+| to-dos\domaine\repository                                                                                                 |          1 |         10 |          0 |          3 |         13 |
+| to-dos\domaine\usecases                                                                                                   |          5 |         55 |          0 |         20 |         75 |
+| to-dos\presentation                                                                                                       |          4 |      1,366 |         63 |         57 |      1,486 |
+| to-dos\presentation\controller                                                                                            |          3 |        146 |         11 |         23 |        180 |
+| to-dos\presentation\controller\todo_bloc                                                                                  |          3 |        146 |         11 |         23 |        180 |
+| to-dos\presentation\screens                                                                                               |          1 |      1,220 |         52 |         34 |      1,306 |
++---------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                  | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\data\datasource\course_datasource.dart                                    | Dart     |        159 |          6 |         19 |        184 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\data\model\course_detail_model.dart                                       | Dart     |         58 |         24 |         13 |         95 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\data\model\course_model.dart                                              | Dart     |         24 |          7 |          4 |         35 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\data\repository\course_repo_implem.dart                                   | Dart     |         86 |          0 |         10 |         96 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\entities\course_content.dart                                      | Dart     |         66 |         12 |         14 |         92 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\entities\course_detail_entity.dart                                | Dart     |         29 |          4 |          5 |         38 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\entities\suggested_courses.dart                                   | Dart     |         23 |          1 |          4 |         28 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\repository\base_course_repo.dart                                  | Dart     |         17 |          0 |          5 |         22 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\add_chapter_usecase.dart                                 | Dart     |         12 |          0 |          4 |         16 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\add_course_usecase.dart                                  | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\get_course_detail.dart                                   | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\get_courses_by_teacher.dart                              | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\get_suggested_courses.dart                               | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\search_courses_usecase.dart                              | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\search_users_usecase.dart                                | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\component\add_course_success.dart                            | Dart     |         77 |          1 |          3 |         81 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\controller\bloc\course_bloc.dart                             | Dart     |        173 |          0 |         13 |        186 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\controller\bloc\course_event.dart                            | Dart     |         44 |          0 |         16 |         60 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\controller\bloc\course_state.dart                            | Dart     |        123 |         25 |         16 |        164 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\base_screen.dart                                     | Dart     |        104 |         15 |          9 |        128 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\coursedetail.dart                                    | Dart     |        395 |         10 |         12 |        417 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\mainpage.dart                                        | Dart     |        545 |          1 |         20 |        566 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\pdf_preview.dart                                     | Dart     |         20 |          0 |          4 |         24 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\quizz.dart\quizz_page.dart                           | Dart     |        446 |         45 |         10 |        501 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\search\search_screen.dart                            | Dart     |        313 |         17 |         15 |        345 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\teacher\add_chapter.dart                             | Dart     |        761 |         35 |         31 |        827 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\teacher\new_course.dart                              | Dart     |        885 |         26 |         29 |        940 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\teacher\teacher_base_screen.dart                     | Dart     |         97 |         15 |         10 |        122 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\teacher\teacher_courses.dart                         | Dart     |        225 |         23 |         10 |        258 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\teacher_detail.dart                                  | Dart     |        262 |          1 |          9 |        272 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\data\datasource\user_datasource.dart                                  | Dart     |        183 |          1 |         24 |        208 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\data\models\user_model.dart                                           | Dart     |         34 |          0 |          4 |         38 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\data\repository\user_repository_implem.dart                           | Dart     |         75 |          0 |         14 |         89 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\domaine\entities\user_entitiy.dart                                    | Dart     |         19 |          0 |          4 |         23 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\domaine\repository\user_repository.dart                               | Dart     |         12 |          1 |         14 |         27 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\domaine\usecases\choose_type_usecase.dart                             | Dart     |         10 |          0 |          4 |         14 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\domaine\usecases\get_user_detaills_usecase.dart                       | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\domaine\usecases\login_usecase.dart                                   | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\domaine\usecases\logout_usecase.dart                                  | Dart     |         10 |          0 |          5 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\domaine\usecases\set_biography_usecase.dart                           | Dart     |         10 |          0 |          4 |         14 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\domaine\usecases\signup_usecase.dart                                  | Dart     |         11 |          0 |          5 |         16 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\presentation\controller\authentication_bloc\authentication_bloc.dart  | Dart     |        139 |          0 |         11 |        150 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\presentation\controller\authentication_bloc\authentication_event.dart | Dart     |         42 |          0 |         18 |         60 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\presentation\controller\authentication_bloc\authentication_state.dart | Dart     |         40 |          0 |         19 |         59 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\presentation\screens\choise.dart                                      | Dart     |        215 |          0 |          5 |        220 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\presentation\screens\login_page.dart                                  | Dart     |        359 |          7 |         14 |        380 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\presentation\screens\register_page.dart                               | Dart     |        328 |          1 |         16 |        345 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\data\datasource\chat_datasource.dart                                            | Dart     |        105 |          4 |         14 |        123 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\data\model\conversation_model.dart                                              | Dart     |         19 |         17 |          8 |         44 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\data\model\message_model.dart                                                   | Dart     |         25 |          3 |          7 |         35 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\data\repository\chat_repo_implem.dart                                           | Dart     |         49 |          0 |          7 |         56 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\domaine\entities\conversation_entity.dart                                       | Dart     |         17 |          1 |          4 |         22 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\domaine\entities\message_entity.dart                                            | Dart     |         20 |          1 |          4 |         25 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\domaine\repository\base_chat_repo.dart                                          | Dart     |         11 |          4 |          5 |         20 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\domaine\usecases\add_conversation_usecase.dart                                  | Dart     |         10 |          0 |          4 |         14 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\domaine\usecases\getAllCovnersationUseCase.dart                                 | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\domaine\usecases\get_messages_usecase.dart                                      | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\domaine\usecases\send_message_usecase.dart                                      | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\controller\bloc\chat_bloc.dart                                     | Dart     |         99 |          4 |          8 |        111 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\controller\bloc\chat_event.dart                                    | Dart     |         25 |          0 |         10 |         35 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\controller\bloc\chat_state.dart                                    | Dart     |         67 |          9 |          8 |         84 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\screens\all_chat_screen.dart                                       | Dart     |        210 |          6 |         11 |        227 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\screens\chat_screen.dart                                           | Dart     |        122 |         34 |         11 |        167 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\screens\message_class.dart                                         | Dart     |         10 |          0 |          1 |         11 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\const\colors.dart                                                              | Dart     |          7 |          0 |          1 |          8 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\const\const.dart                                                               | Dart     |          3 |          0 |          0 |          3 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\error\exceptions.dart                                                          | Dart     |          9 |          1 |          8 |         18 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\error\failure.dart                                                             | Dart     |         13 |          0 |          7 |         20 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\network\api_constants.dart                                                     | Dart     |         16 |          0 |          6 |         22 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\network\error_message_model.dart                                               | Dart     |         17 |          0 |          4 |         21 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\services\service_locator.dart                                                  | Dart     |         83 |         12 |         11 |        106 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\utils\enums.dart                                                               | Dart     |          5 |          0 |          0 |          5 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\widgets\text_input_field.dart                                                  | Dart     |         45 |          1 |          4 |         50 |
+| d:\dev\1CS Projects\BDD\frontend\lib\main.dart                                                                            | Dart     |         34 |          0 |          7 |         41 |
+| d:\dev\1CS Projects\BDD\frontend\lib\notifications\presentation\screens\notifications.dart                                | Dart     |         69 |          0 |          6 |         75 |
+| d:\dev\1CS Projects\BDD\frontend\lib\oldmain.dart                                                                         | Dart     |         36 |          1 |          7 |         44 |
+| d:\dev\1CS Projects\BDD\frontend\lib\profile\presentation\component\bio_success_page.dart                                 | Dart     |         77 |          1 |          3 |         81 |
+| d:\dev\1CS Projects\BDD\frontend\lib\profile\presentation\component\biography_page.dart                                   | Dart     |        138 |          5 |          6 |        149 |
+| d:\dev\1CS Projects\BDD\frontend\lib\profile\presentation\screens\edit_profile.dart                                       | Dart     |        137 |          0 |          4 |        141 |
+| d:\dev\1CS Projects\BDD\frontend\lib\profile\presentation\screens\profile_screen.dart                                     | Dart     |        434 |         26 |         17 |        477 |
+| d:\dev\1CS Projects\BDD\frontend\lib\profile\presentation\screens\student_courses.dart                                    | Dart     |         14 |          0 |          3 |         17 |
+| d:\dev\1CS Projects\BDD\frontend\lib\tempfile.dart                                                                        | Dart     |          0 |        205 |         31 |        236 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\data\datasource\todo_datasource.dart                                          | Dart     |         87 |          2 |         10 |         99 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\data\model\todo_model.dart                                                    | Dart     |         24 |          0 |          4 |         28 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\data\repository\todo_repo_emplem.dart                                         | Dart     |         61 |          0 |          8 |         69 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\domaine\entities\to_do_entity.dart                                            | Dart     |         15 |          1 |          4 |         20 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\domaine\repository\base_todo_repo.dart                                        | Dart     |         10 |          0 |          3 |         13 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\domaine\usecases\add_todo_usecase.dart                                        | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\domaine\usecases\delete_todo_usecase.dart                                     | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\domaine\usecases\edit_todo_usecase.dart                                       | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\domaine\usecases\get_done_todo_usecase.dart                                   | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\domaine\usecases\get_undone_todo_usecase.dart                                 | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\presentation\controller\todo_bloc\todo_bloc.dart                              | Dart     |         74 |          0 |          7 |         81 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\presentation\controller\todo_bloc\todo_event.dart                             | Dart     |         17 |          0 |          9 |         26 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\presentation\controller\todo_bloc\todo_state.dart                             | Dart     |         55 |         11 |          7 |         73 |
+| d:\dev\1CS Projects\BDD\frontend\lib\to-dos\presentation\screens\todos.dart                                               | Dart     |      1,220 |         52 |         34 |      1,306 |
+| Total                                                                                                                     |          |     10,096 |        679 |        823 |     11,598 |
++---------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

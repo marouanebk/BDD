@@ -4,10 +4,7 @@ const Todo = require("../models/Todo");
 // routes will be here....
 //get user done todo list
 router.get("/todos/done/:_userid", async (req, res) => {
-    console.log(req.params);
     const { _userid } = req.params;
-    console.log(_userid);
-
     const allTodo = await Todo.find({ userid: _userid, status: "Done" });
     console.log(allTodo);
     return res.status(200).send({
@@ -16,10 +13,7 @@ router.get("/todos/done/:_userid", async (req, res) => {
 })
 //get user done 
 router.get("/todos/undone/:_userid", async (req, res) => {
-    console.log(req.params);
     const { _userid } = req.params;
-    console.log(_userid);
-
     const allTodo = await Todo.find({ userid: _userid, status: "Undone" });
     console.log(allTodo);
     return res.status(200).send({
@@ -30,11 +24,7 @@ router.get("/todos/undone/:_userid", async (req, res) => {
 // routes
 router
     .post("/add/todo", (req, res) => {
-        console.log("here in todo");
-
-        console.log(req.body);
         const { todo, userid } = req.body;
-        console.log(todo);
         const newTodo = new Todo({ todo: todo, userid: userid, });
 
         // save the todo
@@ -48,9 +38,9 @@ router
             .catch((err) => console.log(err));
     })
 
-    .get("/delete/todo/:_id", (req, res) => {
+    .delete("/todos/delete/todo/:_id", (req, res) => {
         const { _id } = req.params;
-        Todo.deleteOne({ _id })
+        Todo.deleteOne({ _id: _id })
             .then(() => {
                 return res.status(200).send({
                     message: "Todo deleted successfully"
@@ -73,22 +63,13 @@ router
             editedTodo: todo1
         })
 
-    }).put("/edit/status/:_userid", async (req, res) => {
-        const { _userid } = req.params;
-
-
-        const todo = await Todo.findOne({ userid: _userid });
-        Todo.updateOne({ userid: _userid }, { $set: { status: "Done" } }, function (err, res) {
+    }).put("/todos/edit/status/:_id", async (req, res) => {
+        const { _id } = req.params;
+        Todo.updateOne({ _id: _id }, { $set: { status: "Done" } }, function (err, res) {
             if (err) throw err;
         });
-        console.log("new todo");
-        const todo1 = await Todo.findOne({ userid: _userid });
-        console.log(todo1);
-
-
-
         return res.status(200).send({
-            editedTodo: todo1
+            message: "success"
         })
 
     })

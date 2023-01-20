@@ -6,16 +6,18 @@ class MessageModel extends MessageEntity {
     required String sender,
     DateTime? createdAt,
     required String message,
+    String? to,
 
     // required String teacherName,
   }) : super(
-            conversationId: conversationId,
-            sender: sender,
-            createdAt: createdAt,
-            message: message
+          conversationId: conversationId,
+          sender: sender,
+          createdAt: createdAt,
+          message: message,
+          to: to,
 
-            // teacherName: teacherName,
-            );
+          // teacherName: teacherName,
+        );
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
@@ -29,6 +31,11 @@ class MessageModel extends MessageEntity {
   }
 
   Map<String, dynamic> toJson() {
-    return {"from": sender, "conversation": conversationId, "message": message};
+    return {
+      "from": sender,
+      "conversation": conversationId,
+      "message": message,
+      "to": to
+    };
   }
 }

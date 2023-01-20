@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:frontend/chat/data/model/conversation_model.dart';
@@ -76,7 +74,6 @@ class ChatRemoteDataSource extends BaseChatRemoteDataSource {
     final response = await Dio().get(
       ApiConstance.getMessage(courseId),
     );
-
     if (response.statusCode == 200) {
       return List<MessageModel>.from((response.data['result'] as List).map(
         (e) => MessageModel.fromJson(e),
@@ -108,7 +105,6 @@ class ChatRemoteDataSource extends BaseChatRemoteDataSource {
         headers: requestHeaders,
       ),
     );
-    log(response.statusCode.toString());
     if (response.statusCode == 200) {
       return Future.value(unit);
     } else {

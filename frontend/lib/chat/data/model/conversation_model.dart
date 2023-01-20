@@ -18,7 +18,7 @@ class ConversationModel extends ConversationEntity {
   factory ConversationModel.fromJson(Map<String, dynamic> json) {
     return ConversationModel(
       conversationId: json["_id"],
-      sender: json["users"][1].toString(),
+      sender: json["users"][0].toString(),
       reciever: json["users"][1].toString(),
 
       // teacherName: json["teacherName"],

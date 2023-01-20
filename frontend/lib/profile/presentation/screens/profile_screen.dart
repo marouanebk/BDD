@@ -12,6 +12,7 @@ import 'package:frontend/authentication/presentation/controller/authentication_b
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_event.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_state.dart';
 import 'package:frontend/authentication/presentation/screens/login_page.dart';
+import 'package:frontend/authentication/presentation/screens/register_page.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/cores/const/const.dart';
@@ -97,138 +98,168 @@ class ProfileScreenState extends State<ProfileScreen> {
     return BlocProvider(
       create: (context) =>
           sl<UserBloc>()..add(const GetUserDetailsEvent(id: "userid")),
-      child: BlocBuilder<UserBloc, UserBlocState>(
-        builder: (context, state) {
-          if (state is UserDetailState) {
-            return Scaffold(
-              backgroundColor: Colors.white,
-              body: AnnotatedRegion<SystemUiOverlayStyle>(
-                value: SystemUiOverlayStyle.light.copyWith(
-                  statusBarColor: Color(AppColors.blue),
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Stack(
-                    children: [
-                      ClipPath(
-                        clipper: CustomShape(),
-                        child: Container(
-                          height: 220,
-                          width: MediaQuery.of(context).size.width,
-                          color: Color(AppColors.blue),
-                        ),
+      child: Builder(
+        builder: (context) {
+          return BlocListener<UserBloc, UserBlocState>(
+            listener: (context, state) {
+              if (state is ErrorUserBlocState) {
+                log('error');
+              } else if (state is SignOuState) {
+                log('logging out');
+
+                // Navigator.of(context).pushReplacement(
+                //   MaterialPageRoute(
+                //     builder: (context) => const LoginPage(),
+                //   ),
+                // );
+                ///////////
+                Navigator.of(context, rootNavigator: true).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
+              }
+            },
+            child: BlocBuilder<UserBloc, UserBlocState>(
+              builder: (context, state) {
+                if (state is UserDetailState) {
+                  return Scaffold(
+                    backgroundColor: Colors.white,
+                    body: AnnotatedRegion<SystemUiOverlayStyle>(
+                      value: SystemUiOverlayStyle.light.copyWith(
+                        statusBarColor: Color(AppColors.blue),
                       ),
-                      Center(
-                        child: Column(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Stack(
                           children: [
-                            const SizedBox(
-                              height: 60,
-                            ),
-                            Stack(
-                              children: [
-                                Container(
-                                  height: 128,
-                                  width: 128,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: (state.usermodel.profilePicture !=
-                                              null)
-                                          ? NetworkImage(
-                                              state.usermodel.profilePicture!,
-                                            )
-                                          : const NetworkImage(
-                                              "https://picsum.photos/250?image=9",
-                                            ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: -10,
-                                  left: 80,
-                                  child: IconButton(
-                                    onPressed: selectFile,
-                                    // onPressed: SelectImage,
-                                    icon: const Icon(
-                                      Icons.add_a_photo,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            // BlocBuilder<UserBloc, UserBlocState>(
-                            //   builder: (context, state) {
-                            //     if (state is UserDetailState) {
-                            //       return Text(
-                            //         state.usermodel.fullname!,
-                            //         style: TextStyle(
-                            //           fontFamily: AppFonts.mainFont,
-                            //           fontWeight: FontWeight.w600,
-                            //           color: Color(AppColors.writting),
-                            //           fontSize: 24,
-                            //         ),
-                            //       );
-                            //     } else {
-                            //       return Container();
-                            //     }
-                            //   },
-                            // ),
-                            Text(
-                              state.usermodel.fullname!,
-                              style: TextStyle(
-                                fontFamily: AppFonts.mainFont,
-                                fontWeight: FontWeight.w600,
-                                color: Color(AppColors.writting),
-                                fontSize: 24,
+                            ClipPath(
+                              clipper: CustomShape(),
+                              child: Container(
+                                height: 220,
+                                width: MediaQuery.of(context).size.width,
+                                color: Color(AppColors.blue),
                               ),
                             ),
-                            const SizedBox(
-                              height: 26,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                reviewCard("09", "Courses started"),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                reviewCard("30%", "Completed"),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 14,
-                            ),
-                            profileScreenList(context, widget.numberP),
-                            BlocListener<UserBloc, UserBlocState>(
-                              listener: (context, state) {
-                                if (state is ErrorUserBlocState) {
-                                } else if (state is SignOuState) {
-                                  // Navigator.of(context).pushReplacement(
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => const LoginPage(),
-                                  //   ),
-                                  // );
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pushReplacement(MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LoginPage()));
-                                }
-                              },
-                              child: Container(),
+                            Center(
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 60,
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        height: 128,
+                                        width: 128,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: (state.usermodel
+                                                        .profilePicture !=
+                                                    null)
+                                                ? NetworkImage(
+                                                    state.usermodel
+                                                        .profilePicture!,
+                                                  )
+                                                : const NetworkImage(
+                                                    "https://picsum.photos/250?image=9",
+                                                  ),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: -10,
+                                        left: 80,
+                                        child: IconButton(
+                                          onPressed: selectFile,
+                                          // onPressed: SelectImage,
+                                          icon: const Icon(
+                                            Icons.add_a_photo,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  // BlocBuilder<UserBloc, UserBlocState>(
+                                  //   builder: (context, state) {
+                                  //     if (state is UserDetailState) {
+                                  //       return Text(
+                                  //         state.usermodel.fullname!,
+                                  //         style: TextStyle(
+                                  //           fontFamily: AppFonts.mainFont,
+                                  //           fontWeight: FontWeight.w600,
+                                  //           color: Color(AppColors.writting),
+                                  //           fontSize: 24,
+                                  //         ),
+                                  //       );
+                                  //     } else {
+                                  //       return Container();
+                                  //     }
+                                  //   },
+                                  // ),
+                                  Text(
+                                    state.usermodel.fullname!,
+                                    style: TextStyle(
+                                      fontFamily: AppFonts.mainFont,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(AppColors.writting),
+                                      fontSize: 24,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 26,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      reviewCard("09", "Courses started"),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      reviewCard("30%", "Completed"),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  profileScreenList(context, widget.numberP),
+                                  // BlocListener<UserBloc, UserBlocState>(
+                                  //   listener: (context, state) {
+                                  //     if (state is ErrorUserBlocState) {
+                                  //       log('error');
+                                  //     } else if (state is SignOuState) {
+                                  //       log('logging out');
+                                  //       log("in logging out state");
+
+                                  //       // Navigator.of(context).pushReplacement(
+                                  //       //   MaterialPageRoute(
+                                  //       //     builder: (context) => const LoginPage(),
+                                  //       //   ),
+                                  //       // );
+                                  //       ///////////
+                                  //       // Navigator.of(context, rootNavigator: true)
+                                  //       //     .pushReplacement(MaterialPageRoute(
+                                  //       //         builder: (context) =>
+                                  //       //             const LoginPage()));
+
+                                  //     }
+                                  //   },
+                                  //   child: Container(),
+                                  // ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          } else {
-            return Container();
-          }
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          );
         },
       ),
     );
@@ -469,6 +500,7 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   void logout(context) {
     log("in log out in profile screen");
+    log("loggin out");
     BlocProvider.of<UserBloc>(context).add(
       const LogOutUserEvent(),
     );

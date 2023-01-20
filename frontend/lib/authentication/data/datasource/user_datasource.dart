@@ -67,6 +67,7 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
         headers: requestHeaders,
       ),
     );
+    log(response.data['message'].toString());
 
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();

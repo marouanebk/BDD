@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
@@ -7,6 +9,7 @@ import 'package:frontend/authentication/presentation/controller/authentication_b
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_event.dart';
 import 'package:frontend/authentication/presentation/controller/authentication_bloc/authentication_state.dart';
 import 'package:frontend/authentication/presentation/screens/register_page.dart';
+import 'package:frontend/chat/presentation/controller/bloc/chat_bloc.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
@@ -33,6 +36,7 @@ class _TeacherDetailScreenState extends State<TeacherDetailScreen> {
           create: (context) =>
               sl<UserBloc>()..add(GetUserDetailsEvent(id: widget.id)),
         ),
+        BlocProvider(create: (context) => sl<ChatBloc>()),
       ],
       child: Builder(builder: (context) {
         return Scaffold(
@@ -58,7 +62,7 @@ class _TeacherDetailScreenState extends State<TeacherDetailScreen> {
                           const SizedBox(
                             height: 40,
                           ),
-                          Center(child: messageButtonTeacher()),
+                          Center(child: messageButtonTeacher(state.usermodel)),
                           const SizedBox(
                             height: 38,
                           ),
@@ -229,27 +233,39 @@ Widget teacherHeader(context, user) {
   );
 }
 
-Widget messageButtonTeacher() {
-  return Container(
-    height: 28,
-    width: 104,
-    // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-    decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(17)),
-        border: Border.all(
-          color: Color(AppColors.blue),
+Widget messageButtonTeacher(user) {
+  return BlocProvider(
+    create: (context) => sl<ChatBloc>(),
+    child: Builder(builder: (context) {
+      return GestureDetector(
+        onTap: () {
+          log("messagins");
+          BlocProvider.of<ChatBloc>(context)
+              .add(AddConversationEvent(user.userid));
+        },
+        child: Container(
+          height: 28,
+          width: 104,
+          // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(17)),
+              border: Border.all(
+                color: Color(AppColors.blue),
+              ),
+              color: const Color(0xFFFFFFFF)),
+          child: Center(
+            child: Text(
+              "Message",
+              style: TextStyle(
+                fontFamily: AppFonts.mainFont,
+                fontWeight: FontWeight.w500,
+                color: Color(AppColors.blue),
+                fontSize: 14,
+              ),
+            ),
+          ),
         ),
-        color: const Color(0xFFFFFFFF)),
-    child: Center(
-      child: Text(
-        "Message",
-        style: TextStyle(
-          fontFamily: AppFonts.mainFont,
-          fontWeight: FontWeight.w500,
-          color: Color(AppColors.blue),
-          fontSize: 14,
-        ),
-      ),
-    ),
+      );
+    }),
   );
 }

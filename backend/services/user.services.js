@@ -17,12 +17,12 @@ async function login({ email, password }, callback) {
       return callback(null, { ...user.toJSON(), token });
     } else {
       return callback({
-        message: "Invalid Username/Password!",
+        message: "Invalid Email/Password!",
       });
     }
   } else {
     return callback({
-      message: "Invalid Username/Password!",
+      message: "Invalid Email/Password!",
     });
   }
 }
