@@ -60,8 +60,8 @@ exports.addCourse = async (req, res, next) => {
     courseContent.quizzContent = array;
 
     let userM;
-    userM = await User.findById({ _id: user }) ;
-    console.log("userM            "+userM);
+    userM = await User.findById({ _id: user });
+    console.log("userM            " + userM);
 
 
     if (courseContent.quizzContent == null) {
@@ -206,4 +206,46 @@ exports.search = async (req, resp) => {
     resp.status(200).send({ cours, users })
 
 
+}
+
+exports.enrollCourse = async (req, res) => {
+    let { userid, courseid } = req.body;
+    console.log(userid , courseid);
+
+    try {
+        let user = await User.findOneAndUpdate({ userid: userid }, {
+            $push: { courses: courseid }
+
+        })
+
+        let user2 = await User.findOne({userid : userid})
+
+        res.status(200).send({result : user2 });
+
+    }
+    catch (e) {
+        console.log(e);
+        res.status(201).send({err : e })
+    }
+}
+
+exports.getEnrolledCourses = async (req,res) => {
+    let {userid} = req.body;
+    try {
+        let user = await User.findOne({userid: userid})
+        let coursesArray = user.courses;
+        console.log("courses for this user are ");
+        // console.log(coursesArray);
+        let founded = courses.find({
+            '_id': { $in: [
+                coursesArray
+            ]}
+        }, function(err, docs){
+             console.log(docs);
+        });
+        console.log(founded);
+
+    } catch (e) {
+        console.log(e);
+    }
 }

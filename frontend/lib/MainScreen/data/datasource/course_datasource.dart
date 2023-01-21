@@ -21,6 +21,8 @@ abstract class BaseCourseRemoteDataSource {
 
   Future<List<UserModel>> searchUsers(String key);
   Future<List<CourseModel>> searchCourses(String key);
+  Future<List<CourseModel>> getEnrolledCourses(String id);
+  Future<Unit> enrollCourse(String id);
 }
 
 class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
@@ -179,5 +181,29 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
               statusCode: response.statusCode,
               statusMessage: response.data['message']));
     }
+  }
+
+  @override
+  Future<List<CourseModel>> getEnrolledCourses(String id) async {
+    final response = await Dio().get(
+      "http://10.0.2.2:4000/courses/search/$id",
+    );
+
+    if (response.statusCode == 200) {
+      return List<CourseModel>.from((response.data["cours"] as List).map(
+        (e) => CourseModel.fromJson(e),
+      ));
+    } else {
+      throw ServerException(
+          errorMessageModel: ErrorMessageModel(
+              statusCode: response.statusCode,
+              statusMessage: response.data['message']));
+    }
+  }
+
+  @override
+  Future<Unit> enrollCourse(String id) {
+    // TODO: implement enrollCourse
+    throw UnimplementedError();
   }
 }

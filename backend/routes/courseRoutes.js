@@ -15,6 +15,11 @@ courseRouter.post('/addCourse', courseController.addCourse);
 courseRouter.put('/updateCourse/:id', courseController.updateCourse);
 courseRouter.put('/addChapter/:id', courseController.addChapter);
 
+
+courseRouter.put('/enrollCourse', courseController.enrollCourse);
+courseRouter.get('/getEnrolledCourses', courseController.getEnrolledCourses);
+
+
 courseRouter.delete('/deleteCourseByID/:id', courseController.deleteCourseByID);
 
 

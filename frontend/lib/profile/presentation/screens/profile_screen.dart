@@ -17,6 +17,7 @@ import 'package:frontend/cores/const/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
+import 'package:frontend/profile/presentation/component/stats_page.dart';
 import 'package:frontend/profile/presentation/screens/edit_profile.dart';
 import 'package:frontend/profile/presentation/screens/student_courses.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -223,29 +224,6 @@ class ProfileScreenState extends State<ProfileScreen> {
                                     height: 14,
                                   ),
                                   profileScreenList(context, widget.numberP),
-                                  // BlocListener<UserBloc, UserBlocState>(
-                                  //   listener: (context, state) {
-                                  //     if (state is ErrorUserBlocState) {
-                                  //       log('error');
-                                  //     } else if (state is SignOuState) {
-                                  //       log('logging out');
-                                  //       log("in logging out state");
-
-                                  //       // Navigator.of(context).pushReplacement(
-                                  //       //   MaterialPageRoute(
-                                  //       //     builder: (context) => const LoginPage(),
-                                  //       //   ),
-                                  //       // );
-                                  //       ///////////
-                                  //       // Navigator.of(context, rootNavigator: true)
-                                  //       //     .pushReplacement(MaterialPageRoute(
-                                  //       //         builder: (context) =>
-                                  //       //             const LoginPage()));
-
-                                  //     }
-                                  //   },
-                                  //   child: Container(),
-                                  // ),
                                 ],
                               ),
                             ),
@@ -290,9 +268,11 @@ class ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(
             height: 10,
           ),
-          profileScreenCardNoDesc(
+          profileScreenCard(
             Icons.security,
-            "Privacy Policies",
+            "Statistiqs",
+            "stats abour our app",
+            const StatsPage(),
           ),
           const SizedBox(
             height: 10,
