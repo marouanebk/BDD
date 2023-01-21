@@ -8,7 +8,7 @@ class GetEnrolledCoursesUseCase {
 
   GetEnrolledCoursesUseCase(this.repository);
 
-  Future<Either<Failure, List<CourseModel>>> call(String id) async {
-    return await repository.getEnrolledCourses(id);
+  Future<Either<Failure, List<CourseModel>>> call() async {
+    return await repository.getEnrolledCourses();
   }
 }

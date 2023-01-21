@@ -210,7 +210,7 @@ exports.search = async (req, resp) => {
 
 exports.enrollCourse = async (req, res) => {
     let { userid, courseid } = req.body;
-    console.log(userid , courseid);
+    console.log(userid, courseid);
 
     try {
         let user = await User.findOneAndUpdate({ userid: userid }, {
@@ -218,32 +218,32 @@ exports.enrollCourse = async (req, res) => {
 
         })
 
-        let user2 = await User.findOne({userid : userid})
+        let user2 = await User.findOne({ userid: userid })
 
-        res.status(200).send({result : user2 });
+        res.status(200).send({ result: user2 });
 
     }
     catch (e) {
         console.log(e);
-        res.status(201).send({err : e })
+        res.status(201).send({ err: e })
     }
 }
 
-exports.getEnrolledCourses = async (req,res) => {
-    let {userid} = req.body;
+exports.getEnrolledCourses = async (req, res) => {
+    let userid  = req.params.id;
+    console.log(userid);
     try {
-        let user = await User.findOne({userid: userid})
+        let user = await User.findOne({ userid: userid })
         let coursesArray = user.courses;
         console.log("courses for this user are ");
         // console.log(coursesArray);
-        let founded = courses.find({
-            '_id': { $in: [
-                coursesArray
-            ]}
-        }, function(err, docs){
-             console.log(docs);
-        });
-        console.log(founded);
+        try{
+            const docs = await courses.find({ _id: { $in: coursesArray } });
+            console.log(docs);
+            res.status(200).send({result : docs});
+        } catch(err) {
+            console.log(err);
+        }
 
     } catch (e) {
         console.log(e);

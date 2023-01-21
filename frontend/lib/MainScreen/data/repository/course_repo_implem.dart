@@ -94,8 +94,22 @@ class CourseRepository implements BaseCourseRepository {
   }
 
   @override
-  Future<Either<Failure, List<CourseModel>>> getEnrolledCourses(String id) {
-    // TODO: implement getEnrolledCourses
-    throw UnimplementedError();
+  Future<Either<Failure, List<CourseModel>>> getEnrolledCourses() async {
+    try {
+      final result = await baseCourseRemoteDataSource.getEnrolledCourses();
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> enrollCourse(String id) async {
+    try {
+      final result = await baseCourseRemoteDataSource.enrollCourse(id);
+      return Right(result);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
   }
 }

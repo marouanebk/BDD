@@ -19,5 +19,6 @@ abstract class BaseCourseRepository {
   Future<Either<Failure, List<UserModel>>> searchUsers(String key);
   Future<Either<Failure, List<CourseModel>>> searchCourses(String key);
 
-  Future<Either<Failure, List<CourseModel>>> getEnrolledCourses(String id);
+  Future<Either<Failure, List<CourseModel>>> getEnrolledCourses();
+  Future<Either<Failure, Unit>> enrollCourse(String id);
 }

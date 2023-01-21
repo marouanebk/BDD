@@ -4,6 +4,10 @@ class CourseState extends Equatable {
   final List<Course> getSuggestedCourses;
   final RequestState getSuggestedCoursesState;
   final String getSuggestedCoursesmessage;
+  //
+  final List<Course> getEnrolledCourses;
+  final RequestState getEnrolledCoursesState;
+  final String getEnrolledCoursesmessage;
 
   //
   final CourseDetails? getCourseDetail;
@@ -35,6 +39,10 @@ class CourseState extends Equatable {
     this.getSuggestedCoursesState = RequestState.loading,
     this.getSuggestedCoursesmessage = "",
     //
+    this.getEnrolledCourses = const [],
+    this.getEnrolledCoursesState = RequestState.loading,
+    this.getEnrolledCoursesmessage = '',
+    //
     this.getCourseDetail,
     this.getCourseDetailState = RequestState.loading,
     this.getCourseDetailmessage = "",
@@ -65,6 +73,11 @@ class CourseState extends Equatable {
     List<Course>? getSuggestedCourses,
     RequestState? getSuggestedCoursesState,
     String? getSuggestedCoursesmessage,
+    //
+    List<Course>? getEnrolledCourses,
+    RequestState? getEnrolledCoursesState,
+    String? getEnrolledCoursesmessage,
+
     //
     CourseDetails? getCourseDetail,
     RequestState? getCourseDetailState,
@@ -126,6 +139,12 @@ class CourseState extends Equatable {
       searchUsers: searchUsers ?? this.searchUsers,
       searchUsersState: searchUsersState ?? this.searchUsersState,
       searchUsersmessage: searchUsersmessage ?? this.searchUsersmessage,
+      //
+      getEnrolledCourses: getEnrolledCourses ?? this.getEnrolledCourses,
+      getEnrolledCoursesState:
+          getEnrolledCoursesState ?? this.getEnrolledCoursesState,
+      getEnrolledCoursesmessage:
+          getEnrolledCoursesmessage ?? this.getEnrolledCoursesmessage,
     );
     //
   }
@@ -159,5 +178,9 @@ class CourseState extends Equatable {
         searchUsers,
         searchUsersState,
         searchUsersmessage,
+        //
+        getEnrolledCourses,
+        getEnrolledCoursesState,
+        getEnrolledCoursesmessage,
       ];
 }

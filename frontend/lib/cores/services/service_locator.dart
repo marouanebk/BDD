@@ -3,8 +3,10 @@ import 'package:frontend/MainScreen/data/repository/course_repo_implem.dart';
 import 'package:frontend/MainScreen/domaine/repository/base_course_repo.dart';
 import 'package:frontend/MainScreen/domaine/usecases/add_chapter_usecase.dart';
 import 'package:frontend/MainScreen/domaine/usecases/add_course_usecase.dart';
+import 'package:frontend/MainScreen/domaine/usecases/enroll_course_usecase.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_course_detail.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_courses_by_teacher.dart';
+import 'package:frontend/MainScreen/domaine/usecases/get_enrolled_courses.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_suggested_courses.dart';
 import 'package:frontend/MainScreen/domaine/usecases/search_courses_usecase.dart';
 import 'package:frontend/MainScreen/domaine/usecases/search_users_usecase.dart';
@@ -45,7 +47,8 @@ class ServiceLocator {
     // Bloc
     sl.registerFactory(() => UserBloc(sl(), sl(), sl(), sl(), sl(), sl()));
     sl.registerFactory(() => TodoBloc(sl(), sl(), sl(), sl(), sl()));
-    sl.registerFactory(() => CourseBloc(sl(), sl(), sl(), sl(), sl() ,sl(),sl()));
+    sl.registerFactory(
+        () => CourseBloc(sl(), sl(), sl(), sl(), sl(), sl(), sl(), sl(), sl()));
     sl.registerFactory(() => ChatBloc(sl(), sl(), sl(), sl()));
 
     // sl.registerFactory(() => UserBloc(
@@ -79,6 +82,8 @@ class ServiceLocator {
     sl.registerLazySingleton(() => AddChapterUseCase(sl()));
     sl.registerLazySingleton(() => SearchUsersUsecase(sl()));
     sl.registerLazySingleton(() => SearchCoursesUseCase(sl()));
+    sl.registerLazySingleton(() => GetEnrolledCoursesUseCase(sl()));
+    sl.registerLazySingleton(() => EnrollCourseUseCase(sl()));
 
     // Repository
     sl.registerLazySingleton<BaseUserRepository>(() => UserRepository(sl()));

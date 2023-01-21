@@ -1,0 +1,75 @@
+Date : 2023-01-21 15:51:41
+Directory : d:\dev\1CS Projects\BDD\frontend\lib
+Total : 22 files,  473 codes, -167 comments, 0 blanks, all 306 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         22 |        473 |       -167 |          0 |        306 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                           | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                              |         22 |        473 |       -167 |          0 |        306 |
+| . (Files)                                                                                      |          3 |        -36 |       -206 |        -40 |       -282 |
+| MainScreen                                                                                     |         10 |        168 |         19 |         20 |        207 |
+| MainScreen\data                                                                                |          2 |         55 |          0 |          5 |         60 |
+| MainScreen\data\datasource                                                                     |          1 |         37 |          0 |          3 |         40 |
+| MainScreen\data\repository                                                                     |          1 |         18 |          0 |          2 |         20 |
+| MainScreen\domaine                                                                             |          3 |         23 |          0 |          9 |         32 |
+| MainScreen\domaine\repository                                                                  |          1 |          2 |          0 |          1 |          3 |
+| MainScreen\domaine\usecases                                                                    |          2 |         21 |          0 |          8 |         29 |
+| MainScreen\presentation                                                                        |          5 |         90 |         19 |          6 |        115 |
+| MainScreen\presentation\controller                                                             |          3 |         57 |         19 |          6 |         82 |
+| MainScreen\presentation\controller\bloc                                                        |          3 |         57 |         19 |          6 |         82 |
+| MainScreen\presentation\screens                                                                |          2 |         33 |          0 |          0 |         33 |
+| authentication                                                                                 |          1 |          1 |          0 |          0 |          1 |
+| authentication\data                                                                            |          1 |          1 |          0 |          0 |          1 |
+| authentication\data\datasource                                                                 |          1 |          1 |          0 |          0 |          1 |
+| chat                                                                                           |          5 |         65 |         17 |          9 |         91 |
+| chat\data                                                                                      |          2 |          4 |          0 |         -2 |          2 |
+| chat\data\datasource                                                                           |          1 |         -3 |          0 |         -2 |         -5 |
+| chat\data\model                                                                                |          1 |          7 |          0 |          0 |          7 |
+| chat\domaine                                                                                   |          1 |          3 |          0 |         -1 |          2 |
+| chat\domaine\entities                                                                          |          1 |          3 |          0 |         -1 |          2 |
+| chat\presentation                                                                              |          2 |         58 |         17 |         12 |         87 |
+| chat\presentation\screens                                                                      |          2 |         58 |         17 |         12 |         87 |
+| cores                                                                                          |          1 |          5 |          0 |          0 |          5 |
+| cores\services                                                                                 |          1 |          5 |          0 |          0 |          5 |
+| profile                                                                                        |          2 |        270 |          3 |         11 |        284 |
+| profile\presentation                                                                           |          2 |        270 |          3 |         11 |        284 |
+| profile\presentation\component                                                                 |          1 |        260 |          2 |         10 |        272 |
+| profile\presentation\screens                                                                   |          1 |         10 |          1 |          1 |         12 |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                       | language | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\data\datasource\course_datasource.dart         | Dart     |         37 |          0 |          3 |         40 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\data\repository\course_repo_implem.dart        | Dart     |         18 |          0 |          2 |         20 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\repository\base_course_repo.dart       | Dart     |          2 |          0 |          1 |          3 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\enroll_course_usecase.dart    | Dart     |         10 |          0 |          4 |         14 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\get_enrolled_courses.dart     | Dart     |         11 |          0 |          4 |         15 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\controller\bloc\course_bloc.dart  | Dart     |         33 |         14 |          2 |         49 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\controller\bloc\course_event.dart | Dart     |          7 |          0 |          3 |         10 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\controller\bloc\course_state.dart | Dart     |         17 |          5 |          1 |         23 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\base_screen.dart          | Dart     |          2 |          0 |          0 |          2 |
+| d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\mainpage.dart             | Dart     |         31 |          0 |          0 |         31 |
+| d:\dev\1CS Projects\BDD\frontend\lib\authentication\data\datasource\user_datasource.dart       | Dart     |          1 |          0 |          0 |          1 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\data\datasource\chat_datasource.dart                 | Dart     |         -3 |          0 |         -2 |         -5 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\data\model\message_model.dart                        | Dart     |          7 |          0 |          0 |          7 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\domaine\entities\message_entity.dart                 | Dart     |          3 |          0 |         -1 |          2 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\screens\all_chat_screen.dart            | Dart     |          6 |          5 |          0 |         11 |
+| d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\screens\chat_screen.dart                | Dart     |         52 |         12 |         12 |         76 |
+| d:\dev\1CS Projects\BDD\frontend\lib\cores\services\service_locator.dart                       | Dart     |          5 |          0 |          0 |          5 |
+| d:\dev\1CS Projects\BDD\frontend\lib\main.dart                                                 | Dart     |          0 |          0 |         -2 |         -2 |
+| d:\dev\1CS Projects\BDD\frontend\lib\oldmain.dart                                              | Dart     |        -36 |         -1 |         -7 |        -44 |
+| d:\dev\1CS Projects\BDD\frontend\lib\profile\presentation\component\stats_page.dart            | Dart     |        260 |          2 |         10 |        272 |
+| d:\dev\1CS Projects\BDD\frontend\lib\profile\presentation\screens\profile_screen.dart          | Dart     |         10 |          1 |          1 |         12 |
+| d:\dev\1CS Projects\BDD\frontend\lib\tempfile.dart                                             | Dart     |          0 |       -205 |        -31 |       -236 |
+| Total                                                                                          |          |        473 |       -167 |          0 |        306 |
++------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

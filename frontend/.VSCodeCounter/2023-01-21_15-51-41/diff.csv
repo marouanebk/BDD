@@ -1,0 +1,24 @@
+"filename", "language", "Dart", "comment", "blank", "total"
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\data\datasource\course_datasource.dart", "Dart", 37, 0, 3, 40
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\data\repository\course_repo_implem.dart", "Dart", 18, 0, 2, 20
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\repository\base_course_repo.dart", "Dart", 2, 0, 1, 3
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\enroll_course_usecase.dart", "Dart", 10, 0, 4, 14
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\domaine\usecases\get_enrolled_courses.dart", "Dart", 11, 0, 4, 15
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\controller\bloc\course_bloc.dart", "Dart", 33, 14, 2, 49
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\controller\bloc\course_event.dart", "Dart", 7, 0, 3, 10
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\controller\bloc\course_state.dart", "Dart", 17, 5, 1, 23
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\base_screen.dart", "Dart", 2, 0, 0, 2
+"d:\dev\1CS Projects\BDD\frontend\lib\MainScreen\presentation\screens\mainpage.dart", "Dart", 31, 0, 0, 31
+"d:\dev\1CS Projects\BDD\frontend\lib\authentication\data\datasource\user_datasource.dart", "Dart", 1, 0, 0, 1
+"d:\dev\1CS Projects\BDD\frontend\lib\chat\data\datasource\chat_datasource.dart", "Dart", -3, 0, -2, -5
+"d:\dev\1CS Projects\BDD\frontend\lib\chat\data\model\message_model.dart", "Dart", 7, 0, 0, 7
+"d:\dev\1CS Projects\BDD\frontend\lib\chat\domaine\entities\message_entity.dart", "Dart", 3, 0, -1, 2
+"d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\screens\all_chat_screen.dart", "Dart", 6, 5, 0, 11
+"d:\dev\1CS Projects\BDD\frontend\lib\chat\presentation\screens\chat_screen.dart", "Dart", 52, 12, 12, 76
+"d:\dev\1CS Projects\BDD\frontend\lib\cores\services\service_locator.dart", "Dart", 5, 0, 0, 5
+"d:\dev\1CS Projects\BDD\frontend\lib\main.dart", "Dart", 0, 0, -2, -2
+"d:\dev\1CS Projects\BDD\frontend\lib\oldmain.dart", "Dart", -36, -1, -7, -44
+"d:\dev\1CS Projects\BDD\frontend\lib\profile\presentation\component\stats_page.dart", "Dart", 260, 2, 10, 272
+"d:\dev\1CS Projects\BDD\frontend\lib\profile\presentation\screens\profile_screen.dart", "Dart", 10, 1, 1, 12
+"d:\dev\1CS Projects\BDD\frontend\lib\tempfile.dart", "Dart", 0, -205, -31, -236
+"Total", "-", 473, -167, 0, 306

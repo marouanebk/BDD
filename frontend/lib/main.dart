@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/MainScreen/presentation/screens/base_screen.dart';
@@ -7,11 +5,9 @@ import 'package:frontend/MainScreen/presentation/screens/teacher/teacher_base_sc
 import 'package:frontend/authentication/presentation/screens/login_page.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 int? isLoggedIn;
 int? type;
-// IO.Socket? socket;
 
 void main() async {
   await ServiceLocator().init();

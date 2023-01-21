@@ -42,13 +42,16 @@ app.get('/', (req, res) => {
 });
 // initialize routes
 app.use("/users", require("./routes/users.routes"));
+app.use("/counter", require("./routes/counter"));
 app.use("/", require("./controllers/todoController"))
 app.use("/courses", require("./routes/courseRoutes"))
+app.use("/counter", require("./routes/counter")) 
 app.use('/student', studentRoutes);
 app.use('/teacher', teacherRoutes);
 app.use("/api/message", msgroutes);
 app.use("/api/conversation", cnroutes);
 app.use("/api/groupe", grproutes);
+
 
 
 // middleware for error responses

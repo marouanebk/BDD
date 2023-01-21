@@ -9,8 +9,10 @@ import 'package:frontend/MainScreen/domaine/entities/course_detail_entity.dart';
 import 'package:frontend/MainScreen/domaine/entities/suggested_courses.dart';
 import 'package:frontend/MainScreen/domaine/usecases/add_chapter_usecase.dart';
 import 'package:frontend/MainScreen/domaine/usecases/add_course_usecase.dart';
+import 'package:frontend/MainScreen/domaine/usecases/enroll_course_usecase.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_course_detail.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_courses_by_teacher.dart';
+import 'package:frontend/MainScreen/domaine/usecases/get_enrolled_courses.dart';
 import 'package:frontend/MainScreen/domaine/usecases/get_suggested_courses.dart';
 import 'package:frontend/MainScreen/domaine/usecases/search_courses_usecase.dart';
 import 'package:frontend/MainScreen/domaine/usecases/search_users_usecase.dart';
@@ -28,6 +30,8 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
   final AddChapterUseCase addChapterUseCase;
   final SearchCoursesUseCase searchCoursesUseCase;
   final SearchUsersUsecase searchUsersUsecase;
+  final GetEnrolledCoursesUseCase getEnrolledCoursesUseCase;
+  final EnrollCourseUseCase enrollCourseUseCase;
   CourseBloc(
     this.getCoursedDetailUseCase,
     this.getSuggestedCoursesUseCase,
@@ -36,6 +40,8 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
     this.addChapterUseCase,
     this.searchCoursesUseCase,
     this.searchUsersUsecase,
+    this.getEnrolledCoursesUseCase,
+    this.enrollCourseUseCase,
   ) : super(const CourseState()) {
     on<GetSuggestedCoursesEvent>(_getSuggestedCoursesEvent);
     on<GetCourseDetailEvent>(_getCourseDetailEvent);
@@ -44,6 +50,8 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
     on<AddChapterEvent>(_addChapterEvent);
     on<SearchCoursesEvent>(_seachCoursesEvent);
     on<SearchUsersEvent>(_seachUsersEvent);
+    on<GetEnrolledCoursesEvenet>(_getEnrolledCoursesEvent);
+    on<EnrollCourseEvent>(_enrollCourseEvent);
   }
 
   FutureOr<void> _getSuggestedCoursesEvent(
@@ -60,6 +68,47 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
         state.copyWith(
           getSuggestedCourses: r,
           getSuggestedCoursesState: RequestState.loaded,
+        ),
+      ),
+    );
+  }
+
+  FutureOr<void> _enrollCourseEvent(
+      EnrollCourseEvent event, Emitter<CourseState> emit) async {
+    final result = await enrollCourseUseCase(event.id);
+    log(result.toString());
+    // result.fold(
+    //   (l) => emit(
+    //     state.copyWith(
+    //       getSuggestedCoursesState: RequestState.error,
+    //       getSuggestedCoursesmessage: l.message,
+    //     ),
+    //   ),
+    //   (r) => emit(
+    //     state.copyWith(
+    //       getSuggestedCourses: r,
+    //       getSuggestedCoursesState: RequestState.loaded,
+    //     ),
+    //   ),
+    // );
+  }
+
+  FutureOr<void> _getEnrolledCoursesEvent(
+      GetEnrolledCoursesEvenet event, Emitter<CourseState> emit) async {
+    final result = await getEnrolledCoursesUseCase();
+    log("result ");
+    log(result.toString());
+    result.fold(
+      (l) => emit(
+        state.copyWith(
+          getEnrolledCoursesState: RequestState.error,
+          getEnrolledCoursesmessage: l.message,
+        ),
+      ),
+      (r) => emit(
+        state.copyWith(
+          getEnrolledCourses: r,
+          getEnrolledCoursesState: RequestState.loaded,
         ),
       ),
     );

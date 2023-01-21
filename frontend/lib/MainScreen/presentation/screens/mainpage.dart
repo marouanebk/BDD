@@ -33,7 +33,9 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => sl<CourseBloc>()..add(GetSuggestedCoursesEvent()),
+        create: (context) => sl<CourseBloc>()
+          ..add(GetSuggestedCoursesEvent())
+          ..add(GetEnrolledCoursesEvenet()),
         child: Builder(builder: (context) {
           return SafeArea(
               child: Container(
@@ -53,7 +55,16 @@ class _MainScreenState extends State<MainScreen> {
                     const SizedBox(
                       height: 9,
                     ),
-                    coursesEnrolled(),
+                    BlocBuilder<CourseBloc, CourseState>(
+                      builder: (context, state) {
+                        if (state.getEnrolledCoursesState ==
+                            RequestState.loaded) {
+                          return coursesEnrolled(
+                              context, state.getEnrolledCourses);
+                        }
+                        return const LoadingWidget();
+                      },
+                    ),
                     const SizedBox(
                       height: 27,
                     ),
@@ -354,7 +365,20 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-Widget coursesEnrolled() {
+Widget coursesEnrolled(context, items) {
+  if (items.length == 0) {
+    return Center(
+      child: Text(
+        'You dont have any enrolled courses',
+        style: TextStyle(
+          fontFamily: AppFonts.mainFont,
+          fontWeight: FontWeight.w600,
+          color: Color(AppColors.writting),
+          fontSize: 18,
+        ),
+      ),
+    );
+  }
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -399,9 +423,9 @@ Widget coursesEnrolled() {
           ),
           shrinkWrap: true,
           // physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
+          itemCount: items.length,
           itemBuilder: (context, index) {
-            return courseCard();
+            return courseCard(context, items[index]);
           },
         ),
       ),
@@ -409,77 +433,84 @@ Widget coursesEnrolled() {
   );
 }
 
-Widget courseCard() {
-  return Container(
-    height: 102,
-    width: 230,
-    decoration: BoxDecoration(
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
-      border: Border.all(
-        color: const Color(0xFF0085FF),
+Widget courseCard(context, item) {
+  return GestureDetector(
+    onTap: () => Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(
+        builder: (_) => CourseDetailScreen(id: item.courseid),
       ),
-      color: Color(AppColors.course),
     ),
-    child: Padding(
-      padding: const EdgeInsets.only(top: 20, left: 17),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                'Analyse',
-                style: TextStyle(
-                  fontFamily: AppFonts.mainFont,
-                  fontWeight: FontWeight.w600,
-                  color: Color(AppColors.writting),
-                  fontSize: 16,
+    child: Container(
+      height: 102,
+      width: 230,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        border: Border.all(
+          color: const Color(0xFF0085FF),
+        ),
+        color: Color(AppColors.course),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20, left: 17),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  item.title,
+                  style: TextStyle(
+                    fontFamily: AppFonts.mainFont,
+                    fontWeight: FontWeight.w600,
+                    color: Color(AppColors.writting),
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 3,
-              ),
-              Text(
-                '2nd year - IT',
-                style: TextStyle(
-                  fontFamily: AppFonts.mainFont,
-                  fontWeight: FontWeight.w600,
-                  color: Color(AppColors.greyWritting),
-                  fontSize: 14,
+                const SizedBox(
+                  height: 3,
                 ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Text(
-                'Started 20 days ago',
-                style: TextStyle(
-                  fontFamily: AppFonts.mainFont,
-                  fontWeight: FontWeight.w600,
-                  color: Color(AppColors.blue),
-                  fontSize: 12,
+                Text(
+                  item.year,
+                  style: TextStyle(
+                    fontFamily: AppFonts.mainFont,
+                    fontWeight: FontWeight.w600,
+                    color: Color(AppColors.greyWritting),
+                    fontSize: 14,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Center(
-            child: CircularPercentIndicator(
-              radius: 35.0,
-              lineWidth: 10.0,
-              animation: true,
-              percent: 0.85,
-              center: const Text(
-                "85.0%",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
-              ),
-              circularStrokeCap: CircularStrokeCap.round,
-              progressColor: Color(AppColors.blue),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  'Started 20 days ago',
+                  style: TextStyle(
+                    fontFamily: AppFonts.mainFont,
+                    fontWeight: FontWeight.w600,
+                    color: Color(AppColors.blue),
+                    fontSize: 12,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+            Center(
+              child: CircularPercentIndicator(
+                radius: 35.0,
+                lineWidth: 10.0,
+                animation: true,
+                percent: 0.85,
+                center: const Text(
+                  "85.0%",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                ),
+                circularStrokeCap: CircularStrokeCap.round,
+                progressColor: Color(AppColors.blue),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );

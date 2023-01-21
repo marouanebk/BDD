@@ -9,6 +9,16 @@ abstract class CourseEvent extends Equatable {
 
 class GetSuggestedCoursesEvent extends CourseEvent {}
 
+class GetEnrolledCoursesEvenet extends CourseEvent {}
+
+class EnrollCourseEvent extends CourseEvent {
+  final String id;
+
+  const EnrollCourseEvent(this.id);
+  @override
+  List<Object> get props => [id];
+}
+
 class GetCourseDetailEvent extends CourseEvent {
   final String id;
 

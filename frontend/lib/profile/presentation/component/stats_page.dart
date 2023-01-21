@@ -1,6 +1,7 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 
@@ -12,7 +13,22 @@ class StatsPage extends StatefulWidget {
 }
 
 class _StatsPageState extends State<StatsPage> {
-  void getData() {}
+  int students = 0;
+  int teachers = 0;
+  int courses = 0;
+
+  void getData() async {
+    final response = await Dio().get(
+      "http://10.0.2.2:4000/counter/counter",
+    );
+    log(response.data['result']['student'].toString());
+    setState(() {
+      students = response.data['result']['student'];
+      teachers = response.data['result']['teacher'];
+      courses = response.data['result']['courses'];
+    });
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -55,11 +71,11 @@ class _StatsPageState extends State<StatsPage> {
               const SizedBox(
                 height: 11,
               ),
-              firstRow(),
+              firstRow(courses, teachers),
               const SizedBox(
                 height: 16,
               ),
-              secondRow(),
+              secondRow(students),
             ],
           ),
         ),
@@ -67,7 +83,7 @@ class _StatsPageState extends State<StatsPage> {
     );
   }
 
-  Widget firstRow() {
+  Widget firstRow(courses, teachers) {
     return Row(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -103,9 +119,9 @@ class _StatsPageState extends State<StatsPage> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  "365",
-                  style: TextStyle(
+                Text(
+                  courses.toString(),
+                  style: const TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
@@ -144,9 +160,9 @@ class _StatsPageState extends State<StatsPage> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  "12",
-                  style: TextStyle(
+                Text(
+                  teachers.toString(),
+                  style: const TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF0085FF),
@@ -161,7 +177,7 @@ class _StatsPageState extends State<StatsPage> {
     );
   }
 
-  Widget secondRow() {
+  Widget secondRow(students) {
     return Row(
       children: [
         Expanded(
@@ -225,7 +241,7 @@ class _StatsPageState extends State<StatsPage> {
             child: Column(
               children: [
                 const Text(
-                  "Number of Courses",
+                  "Number of students",
                   style: TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w500,
@@ -236,9 +252,9 @@ class _StatsPageState extends State<StatsPage> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  "365",
-                  style: TextStyle(
+                Text(
+                  students.toString(),
+                  style: const TextStyle(
                     fontFamily: AppFonts.mainFont,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,

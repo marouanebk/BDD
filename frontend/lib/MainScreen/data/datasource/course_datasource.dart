@@ -21,7 +21,7 @@ abstract class BaseCourseRemoteDataSource {
 
   Future<List<UserModel>> searchUsers(String key);
   Future<List<CourseModel>> searchCourses(String key);
-  Future<List<CourseModel>> getEnrolledCourses(String id);
+  Future<List<CourseModel>> getEnrolledCourses();
   Future<Unit> enrollCourse(String id);
 }
 
@@ -184,13 +184,15 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
   }
 
   @override
-  Future<List<CourseModel>> getEnrolledCourses(String id) async {
+  Future<List<CourseModel>> getEnrolledCourses() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = prefs.getString("userid")!;
     final response = await Dio().get(
-      "http://10.0.2.2:4000/courses/search/$id",
+      "http://10.0.2.2:4000/courses/getEnrolledCourses/$id",
     );
 
     if (response.statusCode == 200) {
-      return List<CourseModel>.from((response.data["cours"] as List).map(
+      return List<CourseModel>.from((response.data["result"] as List).map(
         (e) => CourseModel.fromJson(e),
       ));
     } else {
@@ -202,8 +204,20 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
   }
 
   @override
-  Future<Unit> enrollCourse(String id) {
-    // TODO: implement enrollCourse
-    throw UnimplementedError();
+  Future<Unit> enrollCourse(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userid = prefs.getString("userid")!;
+    final response = await Dio().put(
+        "http://10.0.2.2:4000/courses/enrollCourse",
+        data: {"userid": userid, "courseid": id});
+
+    if (response.statusCode == 200) {
+      return Future.value(unit);
+    } else {
+      throw ServerException(
+          errorMessageModel: ErrorMessageModel(
+              statusCode: response.statusCode,
+              statusMessage: response.data['message']));
+    }
   }
 }
