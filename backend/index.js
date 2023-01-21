@@ -83,9 +83,9 @@ io.on("connection", (socket) => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
       console.log("trueeee");
-      let data2 = { from: data.from, conversation: data.conversation, message: data.message };
-      console.log("data2" + data2);
-      socket.to(sendUserSocket).emit("msg-recieve", data2);
+      // { from: data.from, conversation: data.conversation, message: data.message }
+
+      socket.to(sendUserSocket).emit("msg-recieve", data);
     } else {
       console.log("faaaalse");
     }

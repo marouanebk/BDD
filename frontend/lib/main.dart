@@ -15,36 +15,13 @@ int? type;
 
 void main() async {
   await ServiceLocator().init();
-
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isLoggedIn = prefs.getInt("is logged in");
   type = prefs.getInt("type");
   await Firebase.initializeApp();
-
-  ///
-  ///
-  // IO.Socket socket = IO.io('http://localhost:4000', <String, dynamic>{
-  //   "transports": ["websocket"],
-  //   "autoConnect": false,
-  // });
-  // socket.onConnect((_) {
-  //   log('connect');
-  //   socket.emit('msg', 'test');
-  // });
-  // socket.on('connection', (data) => print("data"));
-  // socket.onDisconnect((_) => print('disconnect'));
-  // socket.on('fromServer', (_) => print(_));
-
   runApp(const MyApp());
 }
-
-// void connect() {
-//   socket = IO.io('http://localhost:4000', <String, dynamic>{
-//     "transports": ["websocket"],
-//     "autoConnect": false,
-//   });
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

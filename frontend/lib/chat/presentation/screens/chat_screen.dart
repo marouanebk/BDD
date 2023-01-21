@@ -77,14 +77,10 @@ class _ChatScreenState extends State<ChatScreen> {
     socket!.connect();
     socket!.onConnect((_) {});
     socket!.emit('add-user', widget.userid);
-    socket!.on("msg-recieve", (data) {
-      refresh = true;
-      log("message reciever $data");
-
-      setState(() {
-        refresh = true;
-      });
-    });
+    // socket!.on("msg-recieve", (data) {
+    //   refresh = true;
+    //   log("message reciever $data");
+    // });
   }
 
   @override
@@ -107,12 +103,17 @@ class _ChatScreenState extends State<ChatScreen> {
                   //     sender: data.from,
                   //     message: data.message);
                   // log(" eentity ${data.message.toString()}");
-                  log("DAAAAAAATAAAAAAAAA");
-                  log(jsonDecode(data));
 
-                  // state.getMessages.add(data);
+                  // log(temp.from);
 
-                  setState(() {});
+                  MessageModel messageEntity = MessageModel(
+                      conversationId: data["conversation"],
+                      sender: data["from"],
+                      message: data["message"]);
+
+                  setState(() {
+                    state.getMessages.add(messageEntity);
+                  });
                 });
               },
               child: BlocBuilder<ChatBloc, ChatState>(
