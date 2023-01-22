@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/MainScreen/presentation/controller/bloc/course_bloc.dart';
@@ -11,15 +12,40 @@ import 'package:frontend/cores/const/colors.dart';
 import 'package:frontend/cores/const/const.dart';
 import 'package:frontend/cores/services/service_locator.dart';
 import 'package:frontend/cores/utils/enums.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CourseDetailScreen extends StatelessWidget {
+class CourseDetailScreen extends StatefulWidget {
   final String id;
   const CourseDetailScreen({super.key, required this.id});
 
   @override
+  State<CourseDetailScreen> createState() => _CourseDetailScreenState();
+}
+
+class _CourseDetailScreenState extends State<CourseDetailScreen> {
+  var courseState = false;
+  void getCourseState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userid = prefs.getString("userid")!;
+    final response = await Dio().get(
+      "http://10.0.2.2:4000/courses/checkEnrolled/$userid--${widget.id}",
+    );
+    setState(() {
+      courseState = response.data['result'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCourseState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<CourseBloc>()..add(GetCourseDetailEvent(id)),
+      create: (context) =>
+          sl<CourseBloc>()..add(GetCourseDetailEvent(widget.id)),
       child: Builder(builder: (context) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -106,7 +132,18 @@ class CourseDetailScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      startCourseButton(),
+                      InkWell(
+                        onTap: () {
+                          if (courseState == false) {
+                            BlocProvider.of<CourseBloc>(context).add(
+                                EnrollCourseEvent(
+                                    state.getCourseDetail!.courseid!));
+                          } else {
+                            log("course Already Started ");
+                          }
+                        },
+                        child: startCourseButton(courseState),
+                      ),
                     ],
                   );
                 case RequestState.error:
@@ -275,7 +312,9 @@ Widget courseContentCard(context, item) {
         log(item.url);
         Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
-            builder: (_) =>  PdfPreviewPage(pdfUrl: item.url,),
+            builder: (_) => PdfPreviewPage(
+              pdfUrl: item.url,
+            ),
           ),
         );
       } else if (item.type == "quizz") {
@@ -349,29 +388,27 @@ Widget courseContentCard(context, item) {
   );
 }
 
-Widget startCourseButton() {
+Widget startCourseButton(courseState) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 8.0, left: 20, right: 20),
-    child: InkWell(
-      onTap: () => {},
-      child: Container(
-        width: double.infinity,
-        height: 45,
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            border: Border.all(
-              color: const Color(0xFFBEC5D1),
-            ),
-            color: Color(AppColors.blue)),
-        child: const Center(
-          child: Text(
-            'Start Course',
-            style: TextStyle(
-              fontFamily: AppFonts.mainFont,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              fontSize: 17,
-            ),
+    child: Container(
+      width: double.infinity,
+      height: 45,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        border: Border.all(
+          color: const Color(0xFFBEC5D1),
+        ),
+        color: (courseState ? (Colors.red) : (Color(AppColors.blue))),
+      ),
+      child: Center(
+        child: Text(
+          courseState ? 'Course Already Started ' : "Start Course",
+          style: const TextStyle(
+            fontFamily: AppFonts.mainFont,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+            fontSize: 17,
           ),
         ),
       ),

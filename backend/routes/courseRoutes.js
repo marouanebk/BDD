@@ -18,6 +18,7 @@ courseRouter.put('/addChapter/:id', courseController.addChapter);
 
 courseRouter.put('/enrollCourse', courseController.enrollCourse);
 courseRouter.get('/getEnrolledCourses/:id', courseController.getEnrolledCourses);
+courseRouter.get('/checkEnrolled/:id--:courseid', courseController.checkEnrolled);
 
 
 courseRouter.delete('/deleteCourseByID/:id', courseController.deleteCourseByID);

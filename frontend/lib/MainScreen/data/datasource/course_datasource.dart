@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:frontend/MainScreen/data/model/course_detail_model.dart';
@@ -49,7 +47,6 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
     final response = await Dio().get(
       "http://10.0.2.2:4000/courses/getCourseByID/$id",
     );
-    log(response.toString());
 
     if (response.statusCode == 200) {
       return CourseDetailModel.fromJson(response.data['result']);
@@ -80,7 +77,6 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
         headers: requestHeaders,
       ),
     );
-    log(response.statusCode.toString());
     if (response.statusCode == 200) {
       return Future.value(unit);
     } else {
@@ -123,8 +119,6 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
       'Content-Type': 'application/json',
     };
 
-    log("in data source ");
-    log(courseContent.toMap().toString());
     final response = await Dio().put(
       "http://10.0.2.2:4000/courses/addChapter/$id",
       data: courseContent.toMap(),
@@ -136,7 +130,6 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
         headers: requestHeaders,
       ),
     );
-    log(response.toString());
     if (response.statusCode == 200) {
       return Future.value(unit);
     } else {
@@ -152,7 +145,6 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
     final response = await Dio().get(
       "http://10.0.2.2:4000/courses/search/$key",
     );
-    log(response.toString());
     if (response.statusCode == 200) {
       return List<UserModel>.from((response.data["users"] as List).map(
         (e) => UserModel.fromJson(e),

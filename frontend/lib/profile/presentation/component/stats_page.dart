@@ -191,8 +191,8 @@ class _StatsPageState extends State<StatsPage> {
                 color: Colors.white),
             padding: const EdgeInsets.only(top: 12, left: 5, right: 5),
             child: Column(
-              children: [
-                const Text(
+              children: const [
+                Text(
                   "Number of Teaachers",
                   style: TextStyle(
                     fontFamily: AppFonts.mainFont,
@@ -201,10 +201,10 @@ class _StatsPageState extends State<StatsPage> {
                     fontSize: 16,
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 5,
                 ),
-                const Text(
+                Text(
                   "12",
                   style: TextStyle(
                     fontFamily: AppFonts.mainFont,
