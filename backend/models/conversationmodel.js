@@ -1,17 +1,20 @@
-const  mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 const conversationSchema = new mongoose.Schema({
-   groupe_id:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref : "Groupe"
-   },
-    users:{
-        type : Array,
+    groupe_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Groupe"
     },
-  
+    users: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user"
+
+    }]
+
+
 },
     {
-            timestamps:true,
+        timestamps: true,
     }
 );
 

@@ -13,6 +13,7 @@ router.put("/setProfilePicture/:id", usersController.setProfilePicture);
 
 
 router.get("/getUserDetails/:id", usersController.getUserDetails);
+router.get("/getUserDetailsById/:id", usersController.getUserDetailsById);
 router.get("/user-Profile", usersController.userProfile);
 
 

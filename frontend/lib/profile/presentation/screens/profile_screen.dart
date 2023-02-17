@@ -91,6 +91,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         headers: requestHeaders,
       ),
     );
+    setState(() {});
     log(response.statusCode.toString());
   }
 

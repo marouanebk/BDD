@@ -242,8 +242,25 @@ class _SearchScreenState extends State<SearchScreen> {
               width: 50,
               height: 50,
               decoration: const BoxDecoration(
-                color: Colors.orange,
                 shape: BoxShape.circle,
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(28),
+                ),
+                child: (item.picture != null)
+                    ? Image.network(
+                        item.picture!,
+                        // width: 44,
+                        // height: 26,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        'https://picsum.photos/250?image=9',
+                        // width: 44,
+                        // height: 26,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             const SizedBox(

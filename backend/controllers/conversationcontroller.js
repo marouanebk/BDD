@@ -4,6 +4,10 @@ const conversationmodel = require("../models/conversationmodel");
 module.exports.addconversation = async (req, res, next) => {
     try {
         const { from, to } = req.body;
+        console.log(req.body);
+        if (from == to) {
+
+        }
         const data = await conversationmodel.create({
             users: [from, to],
         });

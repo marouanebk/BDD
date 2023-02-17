@@ -18,9 +18,10 @@ class CourseModel extends Course {
   factory CourseModel.fromJson(Map<String, dynamic> json) {
     return CourseModel(
       courseid: json["_id"],
-      teacherid: json["user"],
+      teacherid: json["user"]["id"],
       year: json["year"],
       title: json["title"],
+      picture: json["user"]["profile_picture"],
     );
   }
 

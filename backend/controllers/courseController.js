@@ -6,7 +6,8 @@ const User = require("../models/user.model");
 exports.getCourse = async (req, res, next) => {
     let course
     try {
-        course = await courses.find()
+        // course = await courses.find()
+        course = await courses.find().populate('user')
 
         // .then(async cours => {
         //     let teachProfile = {};
@@ -38,7 +39,7 @@ exports.getCourseByTeacherId = async (req, res, next) => {
 
     let course
     try {
-        course = await courses.find({ user: userid });
+        course = await courses.find({ user: userid }).populate('user');
     } catch (err) {
         return res.status(500).json({ message: err.message })
     }
@@ -53,12 +54,15 @@ exports.addCourse = async (req, res, next) => {
 
 
 
-    const { title, description, user, year, courseContent } = req.body
+    const { title, description, year, courseContent } = req.body;
+    let user = req.body.user;
     var array = JSON.parse(courseContent.quizzContent);
     courseContent.quizzContent = array;
 
     let userM;
-    userM = await User.findById({ _id: user });
+    userM = await User.findOne({ userid: user });
+    let idM = userM._id;
+    user = idM;
 
 
     if (courseContent.quizzContent == null) {
@@ -69,12 +73,13 @@ exports.addCourse = async (req, res, next) => {
     }
 
     const newCourse = new courses({
-        title,
-        description,
-        userM,
-        year,
-        courseContent
+        title: title,
+        descirption: description,
+        user: idM,
+        year: year,
+        courseContent: courseContent
     })
+    console.log(newCourse);
 
     try {
         await newCourse.save()
@@ -118,8 +123,9 @@ exports.getCourseByID = async (req, res, next) => {
     if (!course) {
         return res.status(404).json({ message: 'Cannot find course' })
     }
-    teacherid = course.user;
-    const _user = await User.findOne({ userid: teacherid });
+    teacherid = course.user.toString();
+    const _user = await User.findById(teacherid);
+    console.log(_user);
     fullname = _user.fullname;
     return res.status(200).send({ result: { course, fullname } })
 }
@@ -186,7 +192,7 @@ exports.search = async (req, resp) => {
                 { title: { $regex: req.params.key } },
             ]
         }
-    )
+    ).populate('user');
     let users = await User.find(
         {
             fullname: { $regex: req.params.key },
@@ -225,7 +231,7 @@ exports.getEnrolledCourses = async (req, res) => {
         let coursesArray = user.courses;
         // console.log(coursesArray);
         try {
-            const docs = await courses.find({ _id: { $in: coursesArray } });
+            const docs = await courses.find({ _id: { $in: coursesArray } }).populate('user');
             res.status(200).send({ result: docs });
         } catch (err) {
         }
@@ -240,12 +246,18 @@ exports.checkEnrolled = async (req, res) => {
     try {
         let user = await User.findOne({ userid: userid })
         let coursesArray = user.courses;
+
+        console.log(user);
+        console.log("course id : " + courseid);
         let temp = false;
         for (let i = 0; i < coursesArray.length; i++) {
-            if (coursesArray[i] == courseid);
-            temp = true;
-            break;
+            if (coursesArray[i] == courseid) {
+                console.log(coursesArray[i] + " the course is " + courseid)
+                temp = true;
+                break;
+            }
         }
+        console.log(temp);
         res.status(200).send({ result: temp });
 
 

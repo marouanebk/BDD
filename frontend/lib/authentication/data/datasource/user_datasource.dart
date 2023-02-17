@@ -183,26 +183,44 @@ class UserRemoteDataSource extends BaseUserRemoteDateSource {
     if (id == "userid") {
       final prefs = await SharedPreferences.getInstance();
       id = prefs.getString("userid")!;
-    }
-
-    final response = await Dio().get(
-      "http://10.0.2.2:4000/users/getUserDetails/$id",
-      options: Options(
-        followRedirects: false,
-        validateStatus: (status) {
-          return status! < 500;
-        },
-        headers: requestHeaders,
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      return UserModel.fromJson(response.data['result']);
+      final response = await Dio().get(
+        "http://10.0.2.2:4000/users/getUserDetailsById/$id",
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+          headers: requestHeaders,
+        ),
+      );
+      if (response.statusCode == 200) {
+        return UserModel.fromJson(response.data['result']);
+      } else {
+        throw ServerException(
+            errorMessageModel: ErrorMessageModel(
+                statusCode: response.statusCode,
+                statusMessage: response.data['message']));
+      }
     } else {
-      throw ServerException(
-          errorMessageModel: ErrorMessageModel(
-              statusCode: response.statusCode,
-              statusMessage: response.data['message']));
+      final response = await Dio().get(
+        "http://10.0.2.2:4000/users/getUserDetails/$id",
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+          headers: requestHeaders,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return UserModel.fromJson(response.data['result']);
+      } else {
+        throw ServerException(
+            errorMessageModel: ErrorMessageModel(
+                statusCode: response.statusCode,
+                statusMessage: response.data['message']));
+      }
     }
   }
 }

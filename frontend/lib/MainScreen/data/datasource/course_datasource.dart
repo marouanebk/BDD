@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:frontend/MainScreen/data/model/course_detail_model.dart';
@@ -30,6 +32,7 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
       "http://10.0.2.2:4000/courses/getCourse",
     );
 
+    log(response.toString());
     if (response.statusCode == 200) {
       return List<CourseModel>.from((response.data["result"] as List).map(
         (e) => CourseModel.fromJson(e),
@@ -47,7 +50,7 @@ class CourseRemoteDataSource extends BaseCourseRemoteDataSource {
     final response = await Dio().get(
       "http://10.0.2.2:4000/courses/getCourseByID/$id",
     );
-
+    log(response.toString());
     if (response.statusCode == 200) {
       return CourseDetailModel.fromJson(response.data['result']);
     } else {

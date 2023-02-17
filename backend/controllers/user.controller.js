@@ -106,7 +106,20 @@ exports.getUserDetails = async (req, res, next) => {
   id = req.params.id
   let user
   try {
-    user = await User.findOne({ userid: id });
+    user = await User.findById(id);
+  } catch (err) {
+    return res.status(500).json({ message: err.message })
+  }
+  if (!user) {
+    return res.status(404).json({ message: 'Cannot find user' })
+  }
+  return res.status(200).send({ result: user })
+}; 
+exports.getUserDetailsById = async (req, res, next) => {
+  id = req.params.id
+  let user
+  try {
+    user = await User.findOne({userid : id});
   } catch (err) {
     return res.status(500).json({ message: err.message })
   }
